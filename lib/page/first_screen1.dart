@@ -151,13 +151,17 @@ class _FirstScreen1State extends State<FirstScreen1> {
                               height: 180,
                               fit: BoxFit.cover,
                             ),
-                            Text(
-                              this.records[index]['fields']['title'].toString(),
-                              style: GoogleFonts.nanumGothic(
-                                  // backgroundColor: Colors.white70,
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.white,
-                                  fontSize: 18),
+                            SingleChildScrollView(
+                              child: Text(
+                                this
+                                    .records[index]['fields']['title']
+                                    .toString(),
+                                style: GoogleFonts.nanumGothic(
+                                    // backgroundColor: Colors.white70,
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.white,
+                                    fontSize: 18),
+                              ),
                             ),
                           ]),
                         ),
