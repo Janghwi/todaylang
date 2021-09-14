@@ -1,3 +1,5 @@
+// ignore_for_file: sized_box_for_whitespace
+
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -8,13 +10,14 @@ import 'package:google_fonts/google_fonts.dart';
 //import '2menutwolevel_page2.dart';
 //import '2menutwolevel_page_p.dart';
 import 'package:http/http.dart' as http;
+import 'package:flutter_markdown/flutter_markdown.dart';
 
-class FirstScreen1 extends StatefulWidget {
+class FirstScreenMd extends StatefulWidget {
   @override
-  State<FirstScreen1> createState() => _FirstScreen1State();
+  State<FirstScreenMd> createState() => _FirstScreenMdState();
 }
 
-class _FirstScreen1State extends State<FirstScreen1> {
+class _FirstScreenMdState extends State<FirstScreenMd> {
   List records = [];
   // final style = const TextStyle(fontSize: 32, fontWeight: FontWeight.bold);
   // final style1 = const TextStyle(
@@ -78,24 +81,24 @@ class _FirstScreen1State extends State<FirstScreen1> {
           future: _fetchMenus(),
           builder: (context, snapshot) {
             print('snapshot No.=>');
-            print(this.records.length);
+            print(records.length);
 
-            if (!snapshot.hasData)
+            if (!snapshot.hasData) {
               return Center(
                   child: CircularProgressIndicator(
                 valueColor: const AlwaysStoppedAnimation(Colors.amber),
               ));
-            else {
+            } else {
               return ListView.builder(
-                physics: BouncingScrollPhysics(),
-                itemCount: this.records.length,
+                physics: const BouncingScrollPhysics(),
+                itemCount: records.length,
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: Column(
                       children: [
                         Text(
-                          this.records[index]['fields']['title'].toString(),
+                          records[index]['fields']['title'].toString(),
                           style: GoogleFonts.nanumGothic(
                               // backgroundColor: Colors.white70,
                               fontStyle: FontStyle.normal,
@@ -108,9 +111,7 @@ class _FirstScreen1State extends State<FirstScreen1> {
                         Padding(
                           padding: const EdgeInsets.fromLTRB(0, 4, 0, 0),
                           child: Text(
-                              this
-                                  .records[index]['fields']['content']
-                                  .toString(),
+                              records[index]['fields']['content'].toString(),
                               style: GoogleFonts.nanumGothic(
                                 // backgroundColor: Colors.white70,
                                 // fontStyle: FontStyle.italic,
@@ -132,17 +133,17 @@ class _FirstScreen1State extends State<FirstScreen1> {
                               // image: NetworkImage(
                               //   this.records[index]['fields']['image_url'].toString(),
                               // ),
-                              image: AssetImage('assets/images/012.png'),
+                              image: const AssetImage('assets/images/012.png'),
                               // colorFilter: ColorFilters.greyscale,
                               colorFilter: ColorFilter.mode(
                                   Colors.black.withOpacity(0.3),
                                   BlendMode.dstATop),
                               child: InkWell(
                                 // onTap: () {},
-                                onTap: () => Get.to(DetailPage(),
+                                onTap: () => Get.to(const DetailPage(),
                                     arguments: [
-                                      this.records[index]['fields']['title'],
-                                      this.records[index]['fields']['content'],
+                                      records[index]['fields']['title'],
+                                      records[index]['fields']['content'],
                                       //this.records[index]['fields']['cat1'],
                                     ],
                                     transition: Transition.zoom),
@@ -150,17 +151,13 @@ class _FirstScreen1State extends State<FirstScreen1> {
                               height: 180,
                               fit: BoxFit.cover,
                             ),
-                            SingleChildScrollView(
-                              child: Text(
-                                this
-                                    .records[index]['fields']['title']
-                                    .toString(),
-                                style: GoogleFonts.nanumGothic(
-                                    // backgroundColor: Colors.white70,
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.white,
-                                    fontSize: 18),
-                              ),
+                            Text(
+                              records[index]['fields']['title'].toString(),
+                              style: GoogleFonts.nanumGothic(
+                                  // backgroundColor: Colors.white70,
+                                  fontStyle: FontStyle.italic,
+                                  color: Colors.white,
+                                  fontSize: 18),
                             ),
                           ]),
                         ),
@@ -177,6 +174,8 @@ class _FirstScreen1State extends State<FirstScreen1> {
 }
 
 class DetailPage extends StatefulWidget {
+  const DetailPage({Key? key}) : super(key: key);
+
   @override
   _DetailPageState createState() => _DetailPageState();
 }
@@ -191,45 +190,21 @@ class _DetailPageState extends State<DetailPage> {
       appBar: AppBar(
         title: Text(
           Get.arguments[0],
-          style: TextStyle(color: Colors.black),
+          style: const TextStyle(color: Colors.black, fontSize: 16),
         ),
         backgroundColor: Colors.white,
-        iconTheme: IconThemeData(color: Colors.black),
+        iconTheme: const IconThemeData(color: Colors.black),
       ),
       body: SafeArea(
-        child: SingleChildScrollView(
-          child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
-            child: Padding(
-              padding: const EdgeInsets.all(8.0),
-              child: Column(children: <Widget>[
-                Text(
-                  Get.arguments[0],
-                  style: GoogleFonts.nanumGothic(
-                      // backgroundColor: Colors.white70,
-                      fontStyle: FontStyle.normal,
-                      color: Colors.black,
-                      fontWeight: FontWeight.bold,
-                      fontSize: 20),
-                  textAlign: TextAlign.justify,
-                ),
-                Padding(
-                  padding: const EdgeInsets.only(top: 30),
-                  child: Text(
-                    Get.arguments[1],
-                    style: GoogleFonts.nanumGothic(
-                        // backgroundColor: Colors.white70,
-                        fontStyle: FontStyle.normal,
-                        color: Colors.black,
-                        fontWeight: FontWeight.bold,
-                        fontSize: 16),
-                    textAlign: TextAlign.justify,
-                  ),
-                ),
-              ]),
-            ),
-          ),
+        child: Markdown(
+          data: Get.arguments[1],
+          // style: GoogleFonts.nanumGothic(
+          //     // backgroundColor: Colors.white70,
+          //     fontStyle: FontStyle.normal,
+          //     color: Colors.black,
+          //     fontWeight: FontWeight.bold,
+          //     fontSize: 20),
+          // textAlign: TextAlign.justify,
         ),
       ),
     );

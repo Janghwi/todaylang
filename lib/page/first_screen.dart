@@ -8,7 +8,6 @@ import 'package:google_fonts/google_fonts.dart';
 //import '2menutwolevel_page2.dart';
 //import '2menutwolevel_page_p.dart';
 import 'package:http/http.dart' as http;
-import 'package:infinite_scroll_pagination/infinite_scroll_pagination.dart';
 
 class FirstScreen extends StatefulWidget {
   @override

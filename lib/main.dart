@@ -7,7 +7,7 @@ import 'package:get/get.dart';
 // import 'package:staggered_gridview_example/widget/tabbar_widget.dart';
 
 import 'page/first_screen.dart';
-import 'page/first_screen1.dart';
+import 'page/first_screen_md.dart';
 import 'widget/tabbar_widget.dart';
 
 Future main() async {
@@ -47,32 +47,32 @@ class MainPage extends StatelessWidget {
         title: title,
         tabs: const [
           Tab(
-            text: ' 좋은글 ',
+            text: '좋은글',
             // icon: Icon(Icons.feed_outlined),
           ),
           Tab(
-            text: ' 명언 ',
+            text: '명언',
             // icon: Icon(Icons.dynamic_feed),
           ),
           Tab(
-            text: ' 자기개발 ',
+            text: '자기개발',
             // icon: Icon(Icons.dynamic_form_sharp),
           ),
           Tab(
-            text: ' 자기개발 ',
+            text: '자기개발',
             // icon: Icon(Icons.dynamic_form_sharp),
           ),
           Tab(
-            text: ' 즐겨찾기',
+            text: '즐겨찾기',
             // icon: Icon(Icons.favorite_border),
           ),
         ],
         children: [
-          FirstScreen1(),
-          FirstScreen1(),
-          FirstScreen1(),
-          FirstScreen1(),
-          FirstScreen1(),
+          FirstScreenMd(),
+          FirstScreenMd(),
+          FirstScreenMd(),
+          FirstScreenMd(),
+          FirstScreenMd(),
         ],
       );
 }
