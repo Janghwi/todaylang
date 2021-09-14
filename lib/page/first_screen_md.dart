@@ -195,9 +195,22 @@ class _DetailPageState extends State<DetailPage> {
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Colors.black),
       ),
+      floatingActionButton: FloatingActionButton(
+        onPressed: () => setState(() {}),
+        tooltip: 'Increment Counter',
+        child: const Icon(Icons.add),
+      ),
       body: SafeArea(
-        child: Markdown(
-          data: Get.arguments[1],
+        child: Padding(
+          padding: const EdgeInsets.all(8.0),
+          child: Markdown(
+              data: Get.arguments[1],
+              styleSheetTheme: MarkdownStyleSheetBaseTheme.cupertino,
+              physics: const BouncingScrollPhysics(),
+              styleSheet: MarkdownStyleSheet(
+                  h1: const TextStyle(color: Colors.red),
+                  strong: const TextStyle(color: Colors.blue),
+                  blockquote: const TextStyle(color: Colors.red))),
           // style: GoogleFonts.nanumGothic(
           //     // backgroundColor: Colors.white70,
           //     fontStyle: FontStyle.normal,
