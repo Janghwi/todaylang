@@ -7,6 +7,8 @@ import 'package:get/get.dart';
 // import 'package:staggered_gridview_example/widget/tabbar_widget.dart';
 
 import 'page/first_screen.dart';
+import 'page/first_screen_ai.dart';
+import 'page/first_screen_dt.dart';
 import 'page/first_screen_md.dart';
 import 'widget/tabbar_widget.dart';
 
@@ -55,11 +57,11 @@ class MainPage extends StatelessWidget {
             // icon: Icon(Icons.dynamic_feed),
           ),
           Tab(
-            text: '자기개발',
+            text: 'Ai',
             // icon: Icon(Icons.dynamic_form_sharp),
           ),
           Tab(
-            text: '자기개발',
+            text: '디지털트윈',
             // icon: Icon(Icons.dynamic_form_sharp),
           ),
           Tab(
@@ -70,8 +72,8 @@ class MainPage extends StatelessWidget {
         children: [
           FirstScreenMd(),
           FirstScreenMd(),
-          FirstScreenMd(),
-          FirstScreenMd(),
+          FirstScreenAi(),
+          FirstScreenDt(),
           FirstScreenMd(),
         ],
       );

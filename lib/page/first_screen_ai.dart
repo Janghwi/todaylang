@@ -12,12 +12,12 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_markdown/flutter_markdown.dart';
 
-class FirstScreenMd extends StatefulWidget {
+class FirstScreenAi extends StatefulWidget {
   @override
-  State<FirstScreenMd> createState() => _FirstScreenMdState();
+  State<FirstScreenAi> createState() => _FirstScreenAiState();
 }
 
-class _FirstScreenMdState extends State<FirstScreenMd> {
+class _FirstScreenAiState extends State<FirstScreenAi> {
   List records = [];
   // final style = const TextStyle(fontSize: 32, fontWeight: FontWeight.bold);
   // final style1 = const TextStyle(
@@ -29,7 +29,7 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
     final url = Uri.parse(
       //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Gridview",
       //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&cat2=2",
-      "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest?maxRecords=500&view=Grid view",
+      "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/aiTbl?maxRecords=500&view=Grid view",
       //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?%3D1&maxRecords=500&filterByFormula=({cat1}='2')&fields[]=id",
       //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?fields%5B%5D=&filterByFormula=%7Bcat1%7D+%3D+%222%22',
     );
@@ -95,74 +95,46 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Text(
-                          records[index]['fields']['title'].toString(),
-                          style: GoogleFonts.nanumGothic(
-                              // backgroundColor: Colors.white70,
-                              fontStyle: FontStyle.normal,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                          textAlign: TextAlign.justify,
-                        ),
-                        //const Divider(),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 4, 0, 0),
-                          child: Text(
-                              records[index]['fields']['content'].toString(),
-                              style: GoogleFonts.nanumGothic(
+                    child: InkWell(
+                      onTap: () => Get.to(const DetailPage(),
+                          arguments: [
+                            records[index]['fields']['title'],
+                            records[index]['fields']['content'],
+                            //this.records[index]['fields']['cat1'],
+                          ],
+                          transition: Transition.zoom),
+                      child: Column(
+                        mainAxisAlignment: MainAxisAlignment.start,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          Text(
+                            records[index]['fields']['title'].toString(),
+                            style: GoogleFonts.nanumGothic(
                                 // backgroundColor: Colors.white70,
-                                // fontStyle: FontStyle.italic,
+                                fontStyle: FontStyle.normal,
                                 color: Colors.black,
-                                fontSize: 15,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2),
-                        ),
-                        Card(
-                          color: Colors.black54,
-                          shadowColor: Colors.grey,
-                          elevation: 8,
-                          clipBehavior: Clip.antiAlias,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(14)),
-                          child: Stack(alignment: Alignment.center, children: [
-                            Ink.image(
-                              // image: NetworkImage(
-                              //   this.records[index]['fields']['image_url'].toString(),
-                              // ),
-                              image: const AssetImage('assets/images/012.png'),
-                              // colorFilter: ColorFilters.greyscale,
-                              colorFilter: ColorFilter.mode(
-                                  Colors.black.withOpacity(0.3),
-                                  BlendMode.dstATop),
-                              child: InkWell(
-                                // onTap: () {},
-                                onTap: () => Get.to(const DetailPage(),
-                                    arguments: [
-                                      records[index]['fields']['title'],
-                                      records[index]['fields']['content'],
-                                      //this.records[index]['fields']['cat1'],
-                                    ],
-                                    transition: Transition.zoom),
-                              ),
-                              height: 180,
-                              fit: BoxFit.cover,
-                            ),
-                            Text(
-                              records[index]['fields']['title'].toString(),
-                              style: GoogleFonts.nanumGothic(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                            textAlign: TextAlign.start,
+                          ),
+                          //const Divider(),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 4, 0, 0),
+                            child: Text(
+                                records[index]['fields']['content'].toString(),
+                                style: GoogleFonts.nanumGothic(
                                   // backgroundColor: Colors.white70,
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.white,
-                                  fontSize: 18),
-                            ),
-                          ]),
-                        ),
-                        const Divider(),
-                      ],
+                                  // fontStyle: FontStyle.italic,
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2),
+                          ),
+
+                          const Divider(),
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -209,7 +181,7 @@ class _DetailPageState extends State<DetailPage> {
               physics: const BouncingScrollPhysics(),
               styleSheet: MarkdownStyleSheet(
                   h2: const TextStyle(color: Colors.red),
-                  p: const TextStyle(color: Colors.black45),
+                  p: const TextStyle(color: Colors.black38),
                   strong: const TextStyle(color: Colors.blue),
                   blockquote: const TextStyle(color: Colors.red))),
         ),
