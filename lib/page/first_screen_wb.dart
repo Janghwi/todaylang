@@ -1,7 +1,6 @@
 // ignore_for_file: sized_box_for_whitespace
 
 import 'dart:convert';
-import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:async';
@@ -129,7 +128,7 @@ class _FirstScreenWbState extends State<FirstScreenWb> {
                                   fontSize: 15,
                                 ),
                                 overflow: TextOverflow.ellipsis,
-                                maxLines: 2),
+                                maxLines: 8),
                           ),
 
                           const Divider(),
