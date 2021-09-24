@@ -10,6 +10,7 @@ import 'page/first_screen.dart';
 import 'page/first_screen_ai.dart';
 import 'page/first_screen_dt.dart';
 import 'page/first_screen_md.dart';
+import 'page/first_screen_wb.dart';
 import 'widget/tabbar_widget.dart';
 
 Future main() async {
@@ -65,6 +66,10 @@ class MainPage extends StatelessWidget {
             // icon: Icon(Icons.dynamic_form_sharp),
           ),
           Tab(
+            text: '웹뷰',
+            // icon: Icon(Icons.dynamic_form_sharp),
+          ),
+          Tab(
             text: '즐겨찾기',
             // icon: Icon(Icons.favorite_border),
           ),
@@ -74,6 +79,7 @@ class MainPage extends StatelessWidget {
           FirstScreenMd(),
           FirstScreenAi(),
           FirstScreenDt(),
+          FirstScreenWb(),
           FirstScreenMd(),
         ],
       );
