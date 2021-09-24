@@ -128,7 +128,7 @@ class _FirstScreenWbState extends State<FirstScreenWb> {
                                   fontSize: 15,
                                 ),
                                 overflow: TextOverflow.ellipsis,
-                                maxLines: 8),
+                                maxLines: 7),
                           ),
 
                           const Divider(),
