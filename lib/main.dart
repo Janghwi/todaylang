@@ -6,7 +6,9 @@ import 'package:get/get.dart';
 // import 'package:staggered_gridview_example/widget/dynamic_size_grid_widget.dart';
 // import 'package:staggered_gridview_example/widget/tabbar_widget.dart';
 
+import 'page/barmenu.dart';
 import 'page/first_screen.dart';
+import 'page/first_screen_ad.dart';
 import 'page/first_screen_ai.dart';
 import 'page/first_screen_dt.dart';
 import 'page/first_screen_md.dart';
@@ -54,7 +56,7 @@ class MainPage extends StatelessWidget {
             // icon: Icon(Icons.feed_outlined),
           ),
           Tab(
-            text: '명언',
+            text: '아코디언',
             // icon: Icon(Icons.dynamic_feed),
           ),
           Tab(
@@ -70,16 +72,21 @@ class MainPage extends StatelessWidget {
             // icon: Icon(Icons.dynamic_form_sharp),
           ),
           Tab(
+            text: '메뉴',
+            // icon: Icon(Icons.dynamic_form_sharp),
+          ),
+          Tab(
             text: '즐겨찾기',
             // icon: Icon(Icons.favorite_border),
           ),
         ],
         children: [
           FirstScreenMd(),
-          FirstScreenMd(),
+          FirstScreenAd(),
           FirstScreenAi(),
           FirstScreenDt(),
           FirstScreenWb(),
+          BarMenu(),
           FirstScreenMd(),
         ],
       );
