@@ -184,6 +184,8 @@ class _DetailPageState extends State<DetailPage> {
   var title = Get.arguments[0];
   var content = Get.arguments[1];
 
+  int index = 0;
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -208,12 +210,90 @@ class _DetailPageState extends State<DetailPage> {
               styleSheetTheme: MarkdownStyleSheetBaseTheme.cupertino,
               physics: const BouncingScrollPhysics(),
               styleSheet: MarkdownStyleSheet(
+                  h1: const TextStyle(color: Colors.red),
                   h2: const TextStyle(color: Colors.red),
-                  p: const TextStyle(color: Colors.black45),
-                  strong: const TextStyle(color: Colors.blue),
+                  h3: const TextStyle(color: Colors.red),
+                  h4: const TextStyle(color: Colors.red),
+                  h5: const TextStyle(color: Colors.black54),
+                  p: const TextStyle(color: Colors.black26),
+                  strong: const TextStyle(color: Colors.black87),
                   blockquote: const TextStyle(color: Colors.red))),
         ),
       ),
+      bottomNavigationBar: buildNavigationBar(),
     );
+  }
+
+  Widget buildNavigationBar() => NavigationBarTheme(
+        data: NavigationBarThemeData(
+          labelTextStyle: MaterialStateProperty.all(
+            TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+          ),
+          indicatorColor: Colors.blue.shade100,
+        ),
+        child: NavigationBar(
+          height: 60,
+          backgroundColor: Color(0xFFf1f5fb),
+          selectedIndex: index,
+          onDestinationSelected: (index) => setState(() => this.index = index),
+          // labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+          // animationDuration: Duration(seconds: 3),
+          destinations: [
+            NavigationDestination(
+              icon: Icon(Icons.email_outlined),
+              selectedIcon: Icon(Icons.email),
+              label: 'Mail',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.chat_bubble_outline),
+              selectedIcon: Icon(Icons.chat_bubble),
+              label: 'Chat',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.group_outlined),
+              selectedIcon: Icon(Icons.group),
+              label: 'Spaces',
+            ),
+            NavigationDestination(
+              icon: Icon(Icons.videocam_outlined, size: 30),
+              selectedIcon: Icon(Icons.videocam, size: 30),
+              label: 'Meet',
+            ),
+          ],
+        ),
+      );
+
+  Widget? buildFAB() {
+    final shape =
+        RoundedRectangleBorder(borderRadius: BorderRadius.circular(16));
+
+    switch (index) {
+      case 0:
+        return Container(
+          height: 54,
+          child: FloatingActionButton.extended(
+            shape: shape,
+            icon: Icon(Icons.edit_outlined),
+            label: Text('Compose'),
+            onPressed: () {},
+          ),
+        );
+      case 1:
+        return FloatingActionButton.extended(
+          shape: shape,
+          icon: Icon(Icons.chat_bubble_outline),
+          label: Text('New Chat'),
+          onPressed: () {},
+        );
+      case 2:
+        return FloatingActionButton.extended(
+          shape: shape,
+          icon: Icon(Icons.add),
+          label: Text('New Space'),
+          onPressed: () {},
+        );
+      default:
+        return null;
+    }
   }
 }

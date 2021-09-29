@@ -7,6 +7,7 @@ import 'package:get/get.dart';
 // import 'package:staggered_gridview_example/widget/tabbar_widget.dart';
 
 import 'page/barmenu.dart';
+import 'page/comments.dart';
 import 'page/first_screen.dart';
 import 'page/first_screen_ad.dart';
 import 'page/first_screen_ai.dart';
@@ -79,6 +80,10 @@ class MainPage extends StatelessWidget {
             text: '즐겨찾기',
             // icon: Icon(Icons.favorite_border),
           ),
+          Tab(
+            text: '코멘트',
+            // icon: Icon(Icons.favorite_border),
+          ),
         ],
         children: [
           FirstScreenMd(),
@@ -86,8 +91,9 @@ class MainPage extends StatelessWidget {
           FirstScreenAi(),
           FirstScreenDt(),
           FirstScreenWb(),
-          BarMenu(),
+          const BarMenu(),
           FirstScreenMd(),
+          const CommentsPage(),
         ],
       );
 }
