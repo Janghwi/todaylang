@@ -197,11 +197,7 @@ class _DetailPageState extends State<DetailPage> {
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Colors.black),
       ),
-      floatingActionButton: FloatingActionButton(
-        onPressed: () => setState(() {}),
-        tooltip: 'Increment Counter',
-        child: const Icon(Icons.add),
-      ),
+      floatingActionButton: buildFAB(),
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
@@ -255,9 +251,9 @@ class _DetailPageState extends State<DetailPage> {
               label: 'Spaces',
             ),
             NavigationDestination(
-              icon: Icon(Icons.videocam_outlined, size: 30),
-              selectedIcon: Icon(Icons.videocam, size: 30),
-              label: 'Meet',
+              icon: Icon(Icons.chat_outlined, size: 30),
+              selectedIcon: Icon(Icons.chat, size: 30),
+              label: 'Comment',
             ),
           ],
         ),
@@ -290,6 +286,13 @@ class _DetailPageState extends State<DetailPage> {
           shape: shape,
           icon: Icon(Icons.add),
           label: Text('New Space'),
+          onPressed: () {},
+        );
+      case 3:
+        return FloatingActionButton.extended(
+          shape: shape,
+          icon: Icon(Icons.add),
+          label: Text('View Comment'),
           onPressed: () {},
         );
       default:
