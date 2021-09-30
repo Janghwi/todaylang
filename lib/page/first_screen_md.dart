@@ -12,6 +12,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_markdown/flutter_markdown.dart';
 
+import 'commentlist.dart';
+
 class FirstScreenMd extends StatefulWidget {
   @override
   State<FirstScreenMd> createState() => _FirstScreenMdState();
@@ -99,7 +101,7 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
                       children: [
                         Text(
                           records[index]['fields']['title'].toString(),
-                          style: GoogleFonts.nanumGothic(
+                          style: GoogleFonts.jua(
                               // backgroundColor: Colors.white70,
                               fontStyle: FontStyle.normal,
                               color: Colors.black,
@@ -112,7 +114,7 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
                           padding: const EdgeInsets.fromLTRB(0, 4, 0, 0),
                           child: Text(
                               records[index]['fields']['content'].toString(),
-                              style: GoogleFonts.nanumGothic(
+                              style: GoogleFonts.nanumPenScript(
                                 // backgroundColor: Colors.white70,
                                 // fontStyle: FontStyle.italic,
                                 color: Colors.black,
@@ -220,44 +222,47 @@ class _DetailPageState extends State<DetailPage> {
     );
   }
 
-  Widget buildNavigationBar() => NavigationBarTheme(
-        data: NavigationBarThemeData(
-          labelTextStyle: MaterialStateProperty.all(
-            TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+  Widget buildNavigationBar() {
+    return NavigationBarTheme(
+      data: NavigationBarThemeData(
+        labelTextStyle: MaterialStateProperty.all(
+          TextStyle(fontSize: 14, fontWeight: FontWeight.w500),
+        ),
+        indicatorColor: Colors.blue.shade100,
+      ),
+      child: NavigationBar(
+        height: 60,
+        backgroundColor: Color(0xFFf1f5fb),
+        selectedIndex: index,
+        onDestinationSelected: (index) => setState(() => this.index = index),
+        // labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
+        // animationDuration: Duration(seconds: 3),
+        // ignore: prefer_const_literals_to_create_immutables
+        destinations: [
+          NavigationDestination(
+            icon: Icon(Icons.share_outlined),
+            selectedIcon: Icon(Icons.share),
+            label: 'Share',
           ),
-          indicatorColor: Colors.blue.shade100,
-        ),
-        child: NavigationBar(
-          height: 60,
-          backgroundColor: Color(0xFFf1f5fb),
-          selectedIndex: index,
-          onDestinationSelected: (index) => setState(() => this.index = index),
-          // labelBehavior: NavigationDestinationLabelBehavior.onlyShowSelected,
-          // animationDuration: Duration(seconds: 3),
-          destinations: [
-            NavigationDestination(
-              icon: Icon(Icons.email_outlined),
-              selectedIcon: Icon(Icons.email),
-              label: 'Mail',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.chat_bubble_outline),
-              selectedIcon: Icon(Icons.chat_bubble),
-              label: 'Chat',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.group_outlined),
-              selectedIcon: Icon(Icons.group),
-              label: 'Spaces',
-            ),
-            NavigationDestination(
-              icon: Icon(Icons.chat_outlined, size: 30),
-              selectedIcon: Icon(Icons.chat, size: 30),
-              label: 'Comment',
-            ),
-          ],
-        ),
-      );
+          NavigationDestination(
+            icon: Icon(Icons.chat_bubble_outline),
+            selectedIcon: Icon(Icons.chat_bubble),
+            label: 'Translation',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.group_outlined),
+            selectedIcon: Icon(Icons.group),
+            label: 'Speak',
+          ),
+          NavigationDestination(
+            icon: Icon(Icons.chat_outlined, size: 30),
+            selectedIcon: Icon(Icons.chat, size: 30),
+            label: 'Comment',
+          ),
+        ],
+      ),
+    );
+  }
 
   Widget? buildFAB() {
     final shape =
@@ -293,7 +298,7 @@ class _DetailPageState extends State<DetailPage> {
           shape: shape,
           icon: Icon(Icons.add),
           label: Text('View Comment'),
-          onPressed: () {},
+          onPressed: () => Get.to(CommentsList()),
         );
       default:
         return null;
