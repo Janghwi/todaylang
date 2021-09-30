@@ -3,10 +3,13 @@ import 'package:flutter/material.dart';
 import 'dart:convert';
 import 'dart:async';
 import 'package:http/http.dart' as http;
+import 'package:get/get.dart';
 
 import 'package:flutter/rendering.dart';
 import 'package:flutter/services.dart';
 import 'package:fluttertoast/fluttertoast.dart';
+
+import 'comments.dart';
 
 class CommentsList extends StatefulWidget {
   @override
@@ -74,16 +77,18 @@ class _CommentsListState extends State<CommentsList> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.arrow_forward),
-        onPressed: () {
-          final nextIndex = controller.selectedItem + 1;
-
-          controller.animateToItem(
-            nextIndex,
-            duration: Duration(seconds: 1),
-            curve: Curves.easeInOut,
-          );
-        },
+        onPressed: () => Get.to(CommentsPage()),
       ),
+      // () {
+      //   final nextIndex = controller.selectedItem + 1;
+
+      //   controller.animateToItem(
+      //     nextIndex,
+      //     duration: Duration(seconds: 1),
+      //     curve: Curves.easeInOut,
+      //   );
+      // },
+      // );
       body: FutureBuilder(
           future: _fetchMenus(),
           builder: (context, snapshot) {
