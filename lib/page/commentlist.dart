@@ -58,6 +58,8 @@ class _CommentsListState extends State<CommentsList> {
   @override
   void initState() {
     super.initState();
+    setState(() {});
+    // new Timer.periodic(Duration(seconds: 3), (Timer t) => setState(() {}));
 
     controller = FixedExtentScrollController();
   }
@@ -65,8 +67,21 @@ class _CommentsListState extends State<CommentsList> {
   @override
   void dispose() {
     controller.dispose();
-
     super.dispose();
+  }
+
+  void refreshData() {
+    setState(() {});
+  }
+
+  FutureOr onGoBack(dynamic value) {
+    refreshData();
+    setState(() {});
+  }
+
+  void navigateSecondPage() {
+    Route route = MaterialPageRoute(builder: (context) => CommentsPage());
+    Navigator.push(context, route).then(onGoBack);
   }
 
   @override
@@ -77,7 +92,10 @@ class _CommentsListState extends State<CommentsList> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.arrow_forward),
-        onPressed: () => Get.to(CommentsPage()),
+        onPressed: navigateSecondPage,
+        // onPressed: () => Get.to(CommentsPage()),
+
+        // onPressed: () => Get.to(CommentsPage()),
       ),
       // () {
       //   final nextIndex = controller.selectedItem + 1;

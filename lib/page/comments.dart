@@ -89,10 +89,14 @@ class _CommentsPageState extends State<CommentsPage> {
                     // Navigator.pop(context);
                     // ScaffoldMessenger.of(context).showSnackBar(
                     //     const SnackBar(content: Text('Submitted')));
-                    Navigator.pop;
+                    Navigator.pop(context, true);
                     //Get.to(() => MyApp());
                   },
                 )
+              },
+              onPageStarted: (url) async {
+                webViewController.evaluateJavascript(
+                    "document.getElementByTagName('footer').style.display='none'");
               },
               onPageFinished: (url) async {
                 final result =
@@ -102,12 +106,28 @@ class _CommentsPageState extends State<CommentsPage> {
               onProgress: (progress) {
                 setState(() {
                   _progress = progress / 100.0;
+                  // Get.to(const MyApp());
                 });
               },
             ),
           ),
         ],
       ),
+      floatingActionButton: FloatingActionButton(
+        child: Icon(Icons.import_export, size: 32),
+        onPressed: () async {
+          webViewController.loadUrl('https://youtube.com');
+        },
+      ),
+      // floatingActionButton: FloatingActionButton(
+      //   child: Icon(Icons.import_export, size: 32),
+      //   onPressed: () async {
+      //     webViewController.evaluateJavascript(
+      //         "document.getElementByTagName('header')[0].style.display='none'");
+      //     webViewController.evaluateJavascript(
+      //         "document.getElementByTagName('footer')[0].style.display='none'");
+      //   },
+      // ),
     );
   }
 }
