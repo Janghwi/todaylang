@@ -79,7 +79,7 @@ class _CommentsListState extends State<CommentsList> {
     setState(() {});
   }
 
-  void navigateSecondPage() {
+  void commentsPage() {
     Route route = MaterialPageRoute(builder: (context) => CommentsPage());
     Navigator.push(context, route).then(onGoBack);
   }
@@ -92,7 +92,7 @@ class _CommentsListState extends State<CommentsList> {
       ),
       floatingActionButton: FloatingActionButton(
         child: Icon(Icons.arrow_forward),
-        onPressed: navigateSecondPage,
+        onPressed: commentsPage,
         // onPressed: () => Get.to(CommentsPage()),
 
         // onPressed: () => Get.to(CommentsPage()),

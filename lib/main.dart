@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 // import 'package:staggered_gridview_example/widget/basic_grid_widget.dart';
 // import 'package:staggered_gridview_example/widget/custom_scroll_view_grid_widget.dart';
 // import 'package:staggered_gridview_example/widget/dynamic_size_grid_widget.dart';

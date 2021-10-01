@@ -97,74 +97,78 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
                 itemBuilder: (BuildContext context, int index) {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
-                    child: Column(
-                      children: [
-                        Text(
-                          records[index]['fields']['title'].toString(),
-                          style: GoogleFonts.jua(
-                              // backgroundColor: Colors.white70,
-                              fontStyle: FontStyle.normal,
-                              color: Colors.black,
-                              fontWeight: FontWeight.bold,
-                              fontSize: 20),
-                          textAlign: TextAlign.justify,
-                        ),
-                        //const Divider(),
-                        Padding(
-                          padding: const EdgeInsets.fromLTRB(0, 4, 0, 0),
-                          child: Text(
-                              records[index]['fields']['content'].toString(),
-                              style: GoogleFonts.nanumPenScript(
+                    child: InkWell(
+                      onTap: () => Get.to(const DetailPage(),
+                          arguments: [
+                            records[index]['fields']['title'],
+                            records[index]['fields']['content'],
+                            //this.records[index]['fields']['cat1'],
+                          ],
+                          transition: Transition.zoom),
+                      child: Column(
+                        children: [
+                          Text(
+                            records[index]['fields']['title'].toString(),
+                            style: GoogleFonts.amiko(
                                 // backgroundColor: Colors.white70,
-                                // fontStyle: FontStyle.italic,
+                                fontStyle: FontStyle.normal,
                                 color: Colors.black,
-                                fontSize: 15,
-                              ),
-                              overflow: TextOverflow.ellipsis,
-                              maxLines: 2),
-                        ),
-                        Card(
-                          color: Colors.black54,
-                          shadowColor: Colors.grey,
-                          elevation: 8,
-                          clipBehavior: Clip.antiAlias,
-                          shape: RoundedRectangleBorder(
-                              borderRadius: BorderRadius.circular(14)),
-                          child: Stack(alignment: Alignment.center, children: [
-                            Ink.image(
-                              // image: NetworkImage(
-                              //   this.records[index]['fields']['image_url'].toString(),
-                              // ),
-                              image: const AssetImage('assets/images/012.png'),
-                              // colorFilter: ColorFilters.greyscale,
-                              colorFilter: ColorFilter.mode(
-                                  Colors.black.withOpacity(0.3),
-                                  BlendMode.dstATop),
-                              child: InkWell(
-                                // onTap: () {},
-                                onTap: () => Get.to(const DetailPage(),
-                                    arguments: [
-                                      records[index]['fields']['title'],
-                                      records[index]['fields']['content'],
-                                      //this.records[index]['fields']['cat1'],
-                                    ],
-                                    transition: Transition.zoom),
-                              ),
-                              height: 180,
-                              fit: BoxFit.cover,
-                            ),
-                            Text(
-                              records[index]['fields']['title'].toString(),
-                              style: GoogleFonts.nanumGothic(
+                                fontWeight: FontWeight.bold,
+                                fontSize: 20),
+                            textAlign: TextAlign.justify,
+                          ),
+                          //const Divider(),
+                          Padding(
+                            padding: const EdgeInsets.fromLTRB(0, 4, 0, 0),
+                            child: Text(
+                                records[index]['fields']['content'].toString(),
+                                style: GoogleFonts.acme(
                                   // backgroundColor: Colors.white70,
-                                  fontStyle: FontStyle.italic,
-                                  color: Colors.white,
-                                  fontSize: 18),
-                            ),
-                          ]),
-                        ),
-                        const Divider(),
-                      ],
+                                  // fontStyle: FontStyle.italic,
+                                  color: Colors.black,
+                                  fontSize: 15,
+                                ),
+                                overflow: TextOverflow.ellipsis,
+                                maxLines: 2),
+                          ),
+                          Card(
+                            color: Colors.black54,
+                            shadowColor: Colors.grey,
+                            elevation: 8,
+                            clipBehavior: Clip.antiAlias,
+                            shape: RoundedRectangleBorder(
+                                borderRadius: BorderRadius.circular(14)),
+                            child:
+                                Stack(alignment: Alignment.center, children: [
+                              Ink.image(
+                                // image: NetworkImage(
+                                //   this.records[index]['fields']['image_url'].toString(),
+                                // ),
+                                image:
+                                    const AssetImage('assets/images/012.png'),
+                                // colorFilter: ColorFilters.greyscale,
+                                colorFilter: ColorFilter.mode(
+                                    Colors.black.withOpacity(0.8),
+                                    BlendMode.dstATop),
+                                height: 180,
+                                fit: BoxFit.cover,
+                              ),
+                              Text(
+                                records[index]['fields']['title'].toString(),
+                                style: GoogleFonts.aBeeZee(
+                                    // backgroundColor: Colors.white70,
+                                    fontStyle: FontStyle.italic,
+                                    color: Colors.white,
+                                    fontSize: 18),
+                              ),
+                            ]),
+                          ),
+                          const Divider(
+                            color: Colors.black12,
+                            thickness: 8.0,
+                          ),
+                        ],
+                      ),
                     ),
                   );
                 },
@@ -212,8 +216,12 @@ class _DetailPageState extends State<DetailPage> {
                   h2: const TextStyle(color: Colors.red),
                   h3: const TextStyle(color: Colors.red),
                   h4: const TextStyle(color: Colors.red),
-                  h5: const TextStyle(color: Colors.black54),
-                  p: const TextStyle(color: Colors.black26),
+                  h5: const TextStyle(
+                    color: Colors.black54,
+                  ),
+                  p: const TextStyle(
+                    color: Colors.black26,
+                  ),
                   strong: const TextStyle(color: Colors.black87),
                   blockquote: const TextStyle(color: Colors.red))),
         ),

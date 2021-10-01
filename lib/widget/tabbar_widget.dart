@@ -1,5 +1,5 @@
-import 'package:flutter/widgets.dart';
 import 'package:flutter/material.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
 class TabBarWidget extends StatelessWidget {
@@ -23,21 +23,28 @@ class TabBarWidget extends StatelessWidget {
             child: Container(
               decoration: BoxDecoration(boxShadow: const [
                 BoxShadow(
-                  color: Colors.purple,
+                  color: Colors.black26,
                   offset: Offset(0, 2.0),
                   blurRadius: 20.0,
                 )
               ]),
               child: NewGradientAppBar(
-                title: Text(title,
-                    style: TextStyle(fontSize: 25, color: Colors.white)),
+                title: Text(
+                  title,
+                  // style: TextStyle(fontSize: 25, color: Colors.white)),
+                  style: GoogleFonts.singleDay(
+                      // backgroundColor: Colors.white70,
+                      fontStyle: FontStyle.italic,
+                      color: Colors.yellow,
+                      fontSize: 30),
+                ),
                 gradient: LinearGradient(
-                    colors: const [Colors.amber, Colors.black54]),
+                    colors: const [Colors.transparent, Colors.black54]),
                 centerTitle: true,
                 bottom: TabBar(
                   isScrollable: true,
                   indicatorColor: Colors.yellowAccent,
-                  indicator: new BubbleTabIndicator(
+                  indicator: BubbleTabIndicator(
                     indicatorHeight: 25.0,
                     indicatorColor: Colors.white,
                     tabBarIndicatorSize: TabBarIndicatorSize.tab,
@@ -46,7 +53,7 @@ class TabBarWidget extends StatelessWidget {
                   unselectedLabelColor: Colors.white,
                   tabs: tabs,
                 ),
-                elevation: 20,
+                elevation: 5,
                 titleSpacing: 20,
               ),
             ),
@@ -63,6 +70,7 @@ class BubbleTabIndicator extends Decoration {
   final double indicatorHeight;
   final Color indicatorColor;
   final double indicatorRadius;
+  @override
   final EdgeInsetsGeometry padding;
   final EdgeInsetsGeometry insets;
   final TabBarIndicatorSize tabBarIndicatorSize;
@@ -79,7 +87,7 @@ class BubbleTabIndicator extends Decoration {
   @override
   Decoration? lerpFrom(Decoration? a, double t) {
     if (a is BubbleTabIndicator) {
-      return new BubbleTabIndicator(
+      return BubbleTabIndicator(
         padding: EdgeInsetsGeometry.lerp(a.padding, padding, t)!,
         insets: EdgeInsetsGeometry.lerp(a.insets, insets, t)!,
       );
@@ -90,7 +98,7 @@ class BubbleTabIndicator extends Decoration {
   @override
   Decoration? lerpTo(Decoration? b, double t) {
     if (b is BubbleTabIndicator) {
-      return new BubbleTabIndicator(
+      return BubbleTabIndicator(
         padding: EdgeInsetsGeometry.lerp(padding, b.padding, t)!,
         insets: EdgeInsetsGeometry.lerp(insets, b.insets, t)!,
       );
@@ -100,7 +108,7 @@ class BubbleTabIndicator extends Decoration {
 
   @override
   _BubblePainter createBoxPainter([VoidCallback? onChanged]) {
-    return new _BubblePainter(this, onChanged);
+    return _BubblePainter(this, onChanged);
   }
 }
 
@@ -123,6 +131,7 @@ class _BubblePainter extends BoxPainter {
       indicator = insets.resolve(textDirection).deflateRect(rect);
     }
 
+    // ignore: unnecessary_new
     return new Rect.fromLTWH(
       indicator.left,
       indicator.top,
