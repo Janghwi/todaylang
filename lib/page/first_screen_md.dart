@@ -122,7 +122,8 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
                             padding: const EdgeInsets.fromLTRB(0, 4, 0, 0),
                             child: Text(
                                 records[index]['fields']['content'].toString(),
-                                style: GoogleFonts.acme(
+                                // style: GoogleFonts.acme(
+                                style: GoogleFonts.singleDay(
                                   // backgroundColor: Colors.white70,
                                   // fontStyle: FontStyle.italic,
                                   color: Colors.black,
@@ -155,7 +156,8 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
                               ),
                               Text(
                                 records[index]['fields']['title'].toString(),
-                                style: GoogleFonts.aBeeZee(
+                                // style: GoogleFonts.aBeeZee(
+                                style: GoogleFonts.singleDay(
                                     // backgroundColor: Colors.white70,
                                     fontStyle: FontStyle.italic,
                                     color: Colors.white,
@@ -212,17 +214,30 @@ class _DetailPageState extends State<DetailPage> {
               styleSheetTheme: MarkdownStyleSheetBaseTheme.cupertino,
               physics: const BouncingScrollPhysics(),
               styleSheet: MarkdownStyleSheet(
-                  h1: const TextStyle(color: Colors.red),
-                  h2: const TextStyle(color: Colors.red),
-                  h3: const TextStyle(color: Colors.red),
-                  h4: const TextStyle(color: Colors.red),
+                  h1: const TextStyle(color: Colors.blue),
+                  h2: const TextStyle(color: Colors.blue),
+                  h3: const TextStyle(color: Colors.blue),
+                  h4: const TextStyle(
+                      color: Colors.indigo, fontWeight: FontWeight.w100),
                   h5: const TextStyle(
-                    color: Colors.black54,
+                    color: Colors.black87,
                   ),
+                  h6: const TextStyle(
+                      color: Colors.indigo, fontWeight: FontWeight.w600),
                   p: const TextStyle(
                     color: Colors.black26,
                   ),
-                  strong: const TextStyle(color: Colors.black87),
+                  strong: const TextStyle(color: Colors.lightBlueAccent),
+                  blockSpacing: 10.0,
+                  listIndent: 24.0,
+                  horizontalRuleDecoration: BoxDecoration(
+                    border: Border(
+                      top: BorderSide(
+                        width: 3.0,
+                        color: Colors.grey,
+                      ),
+                    ),
+                  ),
                   blockquote: const TextStyle(color: Colors.red))),
         ),
       ),

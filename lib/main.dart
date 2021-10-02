@@ -15,6 +15,8 @@ import 'page/first_screen_ai.dart';
 import 'page/first_screen_dt.dart';
 import 'page/first_screen_md.dart';
 import 'page/first_screen_wb.dart';
+import 'page/first_screen_yt.dart';
+import 'page/first_screen_ytLan.dart';
 import 'widget/tabbar_widget.dart';
 
 Future main() async {
@@ -78,7 +80,11 @@ class MainPage extends StatelessWidget {
             // icon: Icon(Icons.dynamic_form_sharp),
           ),
           Tab(
-            text: '즐겨찾기',
+            text: '유투브언어',
+            // icon: Icon(Icons.favorite_border),
+          ),
+          Tab(
+            text: '유투브',
             // icon: Icon(Icons.favorite_border),
           ),
           Tab(
@@ -93,7 +99,8 @@ class MainPage extends StatelessWidget {
           FirstScreenDt(),
           FirstScreenWb(),
           const BarMenu(),
-          FirstScreenMd(),
+          FirstScreenYtLan(),
+          FirstScreenYt(),
           const CommentsPage(),
         ],
       );

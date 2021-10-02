@@ -88,20 +88,23 @@ class _FirstScreenWbState extends State<FirstScreenWb> {
                 valueColor: const AlwaysStoppedAnimation(Colors.amber),
               ));
             } else {
-              return ListView.builder(
+              return GridView.builder(
+                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                  crossAxisCount: 3,
+                ),
                 physics: const BouncingScrollPhysics(),
                 itemCount: records.length,
                 itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                      onTap: () => Get.to(const DetailPage(),
-                          arguments: [
-                            records[index]['fields']['title'],
-                            records[index]['fields']['url'],
-                            //this.records[index]['fields']['cat1'],
-                          ],
-                          transition: Transition.zoom),
+                  return InkWell(
+                    onTap: () => Get.to(const DetailPage(),
+                        arguments: [
+                          records[index]['fields']['title'],
+                          records[index]['fields']['url'],
+                          //this.records[index]['fields']['cat1'],
+                        ],
+                        transition: Transition.zoom),
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.start,
                         crossAxisAlignment: CrossAxisAlignment.start,
@@ -113,7 +116,7 @@ class _FirstScreenWbState extends State<FirstScreenWb> {
                                 fontStyle: FontStyle.normal,
                                 color: Colors.black,
                                 fontWeight: FontWeight.bold,
-                                fontSize: 20),
+                                fontSize: 16),
                             textAlign: TextAlign.start,
                           ),
                           //const Divider(),
@@ -125,10 +128,10 @@ class _FirstScreenWbState extends State<FirstScreenWb> {
                                   // backgroundColor: Colors.white70,
                                   // fontStyle: FontStyle.italic,
                                   color: Colors.black,
-                                  fontSize: 15,
+                                  fontSize: 12,
                                 ),
                                 overflow: TextOverflow.ellipsis,
-                                maxLines: 7),
+                                maxLines: 2),
                           ),
 
                           const Divider(),
@@ -155,6 +158,19 @@ class _DetailPageState extends State<DetailPage> {
   var title = Get.arguments[0];
   var url = Get.arguments[1];
   late WebViewController controller;
+
+  _goBack() async {
+    if (await controller.canGoBack()) {
+      await controller.goBack();
+    }
+  }
+
+  _goForward() async {
+    if (await controller.canGoForward()) {
+      await controller.goForward();
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -165,35 +181,45 @@ class _DetailPageState extends State<DetailPage> {
           ),
           backgroundColor: Colors.white,
           iconTheme: const IconThemeData(color: Colors.black),
+          actions: [
+            IconButton(onPressed: _goBack, icon: Icon(Icons.arrow_back)),
+            IconButton(onPressed: _goForward, icon: Icon(Icons.arrow_forward)),
+          ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () => setState(() {}),
+          onPressed: () => _goBack(),
           tooltip: 'Increment Counter',
-          child: const Icon(Icons.add),
+          child: const Icon(Icons.arrow_back),
         ),
         body: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(8.0),
             child: WebView(
-              javascriptMode: JavascriptMode.unrestricted,
-              initialUrl: url, // https://facebook.com
-              onWebViewCreated: (controller) {
-                this.controller = controller;
-              },
-              onPageStarted: (url) {
-                print('New website: $url');
+                javascriptMode: JavascriptMode.unrestricted,
+                initialUrl: url, // https://facebook.com
+                onWebViewCreated: (controller) {
+                  this.controller = controller;
+                },
+                onPageStarted: (url) {
+                  print('New website: $url');
 
-                /// Hide Header & Footer
-                if (url.contains('www.amazon.com')) {
-                  Future.delayed(const Duration(milliseconds: 300), () {
-                    controller.evaluateJavascript(
-                        "document.getElementsByTagName('header')[0].style.display='none'");
-                    controller.evaluateJavascript(
-                        "document.getElementsByTagName('footer')[0].style.display='none'");
-                  });
-                }
-              },
-            ),
+                  /// Hide Header & Footer
+                  if (url.contains('translate.google.com')) {
+                    Future.delayed(const Duration(milliseconds: 300), () {
+                      controller.evaluateJavascript(
+                          "document.getElementsByTagName('header')[0].style.display='none'");
+                      controller.evaluateJavascript(
+                          "document.getElementsByTagName('footer')[0].style.display='none'");
+                    });
+                  } else if (url.contains('englishcube')) {
+                    Future.delayed(const Duration(milliseconds: 300), () {
+                      controller.evaluateJavascript(
+                          "document.getElementsByTagName('header')[0].style.display='none'");
+                      controller.evaluateJavascript(
+                          "document.getElementsByTagName('footer')[0].style.display='none'");
+                    });
+                  }
+                }),
           ),
         ));
   }
