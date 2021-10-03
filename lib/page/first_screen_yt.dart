@@ -284,27 +284,59 @@ class _YoutubePageState extends State<YoutubePage> {
                   );
                 },
               ),
+              // Expanded(
+              //   child: ListView(
+              //     children: [
+              //       Divider(
+              //         thickness: 2,
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: Text(
+              //           details.toString(),
+              //           style: GoogleFonts.lato(
+              //               // backgroundColor: Colors.white70,
+              //               fontStyle: FontStyle.normal,
+              //               color: Colors.black,
+              //               fontWeight: FontWeight.w300,
+              //               fontSize: 17),
+              //           textAlign: TextAlign.justify,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               Expanded(
-                child: ListView(
-                  children: [
-                    Divider(
-                      thickness: 2,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        details.toString(),
-                        style: GoogleFonts.lato(
-                            // backgroundColor: Colors.white70,
-                            fontStyle: FontStyle.normal,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w300,
-                            fontSize: 17),
-                        textAlign: TextAlign.justify,
-                      ),
-                    ),
-                  ],
-                ),
+                child: Markdown(
+                    data: Get.arguments[2],
+                    styleSheetTheme: MarkdownStyleSheetBaseTheme.cupertino,
+                    physics: const BouncingScrollPhysics(),
+                    styleSheet: MarkdownStyleSheet(
+                        h1: const TextStyle(color: Colors.blue),
+                        h2: const TextStyle(color: Colors.blue),
+                        h3: const TextStyle(color: Colors.blue),
+                        h4: const TextStyle(
+                            color: Colors.indigo, fontWeight: FontWeight.w100),
+                        h5: const TextStyle(
+                          color: Colors.black87,
+                        ),
+                        h6: const TextStyle(
+                            color: Colors.indigo, fontWeight: FontWeight.w600),
+                        p: const TextStyle(
+                          color: Colors.black26,
+                        ),
+                        strong: const TextStyle(color: Colors.lightBlueAccent),
+                        blockSpacing: 10.0,
+                        listIndent: 24.0,
+                        horizontalRuleDecoration: BoxDecoration(
+                          border: Border(
+                            top: BorderSide(
+                              width: 3.0,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                        blockquote: const TextStyle(color: Colors.red))),
               ),
             ],
           ),

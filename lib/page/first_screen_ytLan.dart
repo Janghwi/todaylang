@@ -1,6 +1,8 @@
+// ignore: file_names
+// ignore_for_file: file_names
+
 import 'dart:convert';
-import 'dart:developer';
-import 'package:flutter/foundation.dart';
+import 'dart:developer' show log;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -183,12 +185,13 @@ class _YoutubePageState extends State<YoutubePage> {
         //   '7QUtEmBT_-w',
         //   '34_PXCzGw1M',
         // ],
-        startAt: const Duration(minutes: 0, seconds: 10),
+        startAt: Duration(minutes: 0, seconds: 10),
         showControls: true,
         showFullscreenButton: true,
         desktopMode: false,
         privacyEnhanced: true,
         useHybridComposition: true,
+        color: 'Colors.red',
       ),
     );
     YoutubePlayerIFrame(
@@ -240,10 +243,28 @@ class _YoutubePageState extends State<YoutubePage> {
           ],
         ),
         floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          // onPressed: () => _goBack(),
+          // onPressed: () {},
+          //onPressed: () => deactivate(),
+          onPressed: () {
+            // Wrap the play or pause in a call to `setState`. This ensures the
+            // correct icon is shown.
+            setState(() {
+              // If the video is playing, pause it.
+              if (_controller.value.playerState == PlayerState.playing) {
+                _controller.pause();
+              } else {
+                // If the video is paused, play it.
+                _controller.play();
+              }
+            });
+          },
+          // Display the correct icon depending on the state of the player.
+          child: Icon(
+            _controller.value.playerState == PlayerState.playing
+                ? Icons.play_arrow
+                : Icons.pause,
+          ),
           tooltip: 'stop/start',
-          child: const Icon(Icons.pause),
         ),
         // ignore: unnecessary_null_comparison
         body: YoutubePlayerControllerProvider(
@@ -282,27 +303,59 @@ class _YoutubePageState extends State<YoutubePage> {
                   );
                 },
               ),
+              // Expanded(
+              //   child: ListView(
+              //     children: [
+              //       Divider(
+              //         thickness: 2,
+              //       ),
+              //       Padding(
+              //         padding: const EdgeInsets.all(8.0),
+              //         child: Text(
+              //           details.toString(),
+              //           style: GoogleFonts.lato(
+              //               // backgroundColor: Colors.white70,
+              //               fontStyle: FontStyle.normal,
+              //               color: Colors.black,
+              //               fontWeight: FontWeight.w300,
+              //               fontSize: 17),
+              //           textAlign: TextAlign.justify,
+              //         ),
+              //       ),
+              //     ],
+              //   ),
+              // ),
               Expanded(
-                child: ListView(
-                  children: [
-                    Divider(
-                      thickness: 2,
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(
-                        details.toString(),
-                        style: GoogleFonts.lato(
-                            // backgroundColor: Colors.white70,
-                            fontStyle: FontStyle.normal,
-                            color: Colors.black,
-                            fontWeight: FontWeight.w300,
-                            fontSize: 17),
-                        textAlign: TextAlign.justify,
-                      ),
-                    ),
-                  ],
-                ),
+                child: Markdown(
+                    data: details.toString(),
+                    styleSheetTheme: MarkdownStyleSheetBaseTheme.cupertino,
+                    physics: const BouncingScrollPhysics(),
+                    styleSheet: MarkdownStyleSheet(
+                        h1: const TextStyle(color: Colors.blue),
+                        h2: const TextStyle(color: Colors.blue),
+                        h3: const TextStyle(color: Colors.blue),
+                        h4: const TextStyle(
+                            color: Colors.indigo, fontWeight: FontWeight.w100),
+                        h5: const TextStyle(
+                          color: Colors.black87,
+                        ),
+                        h6: const TextStyle(
+                            color: Colors.indigo, fontWeight: FontWeight.w600),
+                        p: const TextStyle(
+                          color: Colors.black26,
+                        ),
+                        strong: const TextStyle(color: Colors.lightBlueAccent),
+                        blockSpacing: 10.0,
+                        listIndent: 24.0,
+                        horizontalRuleDecoration: BoxDecoration(
+                          border: Border(
+                            top: BorderSide(
+                              width: 3.0,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                        blockquote: const TextStyle(color: Colors.red))),
               ),
             ],
           ),
@@ -313,5 +366,11 @@ class _YoutubePageState extends State<YoutubePage> {
   void dispose() {
     _controller.close();
     super.dispose();
+  }
+
+  @override
+  void deactivate() {
+    _controller.pause();
+    super.deactivate();
   }
 }
