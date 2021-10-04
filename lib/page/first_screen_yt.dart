@@ -1,8 +1,9 @@
-// ignore_for_file: sized_box_for_whitespace
+// ignore: duplicate_ignore
+// ignore: file_names
+// ignore_for_file: file_names
 
 import 'dart:convert';
-import 'dart:developer';
-import 'package:flutter/foundation.dart';
+import 'dart:developer' show log;
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -13,10 +14,11 @@ import 'package:google_fonts/google_fonts.dart';
 //import '2menutwolevel_page2.dart';
 //import '2menutwolevel_page_p.dart';
 import 'package:http/http.dart' as http;
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class FirstScreenYt extends StatefulWidget {
+  const FirstScreenYt({Key? key}) : super(key: key);
+
   @override
   State<FirstScreenYt> createState() => _FirstScreenYtState();
 }
@@ -29,12 +31,14 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
   //   fontSize: 15,
   // );
 
-  Future _fetchMenus() async {
+  Future _fetchMenus(
+    String view,
+  ) async {
     bool loadRemoteDatatSucceed = false;
     final url = Uri.parse(
       //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Gridview",
       //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&cat2=2",
-      "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/YtTbl?maxRecords=500&view=Gridview",
+      "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/YtTbl?maxRecords=500&view=$view",
       //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?%3D1&maxRecords=500&filterByFormula=({cat1}='2')&fields[]=id",
       //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?fields%5B%5D=&filterByFormula=%7Bcat1%7D+%3D+%222%22',
     );
@@ -57,99 +61,204 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _fetchMenus('Gridview');
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.list),
-            color: Colors.black,
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.speaker_notes),
-            color: Colors.black,
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.nature_people),
-            color: Colors.black,
-          )
-        ],
-      ),
+      // extendBodyBehindAppBar: true,
+      // appBar: AppBar(
+      //   backgroundColor: Colors.transparent,
+      //   elevation: 0,
+      //   actions: [
+      //     IconButton(
+      //       onPressed: () {
+      //         setState(() {});
+      //       },
+      //       icon: const Icon(Icons.list),
+      //       color: Colors.black,
+      //     ),
+      //     IconButton(
+      //       onPressed: () {},
+      //       icon: const Icon(Icons.speaker_notes),
+      //       color: Colors.black,
+      //     ),
+      //     IconButton(
+      //       onPressed: () {},
+      //       icon: const Icon(Icons.nature_people),
+      //       color: Colors.black,
+      //     )
+      //   ],
+      // ),
       // ignore: unnecessary_null_comparison
-      body: FutureBuilder(
-          future: _fetchMenus(),
-          builder: (context, snapshot) {
-            // print('snapshot No.=>');
-            // print(records.length);
-
-            if (!snapshot.hasData) {
-              return Center(
-                  child: CircularProgressIndicator(
-                valueColor: const AlwaysStoppedAnimation(Colors.amber),
-              ));
-            } else {
-              return GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Wrap(
+              alignment: WrapAlignment.start,
+              children: [
+                OutlinedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                  ),
+                  child: Text("전체", style: TextStyle(fontSize: 16)),
+                  onPressed: () {
+                    setState(() {
+                      _fetchMenus("Gridview");
+                    });
+                  },
                 ),
-                physics: const BouncingScrollPhysics(),
-                itemCount: records.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return InkWell(
-                    onTap: () => Get.to(const YoutubePage(),
-                        arguments: [
-                          records[index]['fields']['content'],
-                          records[index]['fields']['vid'],
-                          records[index]['fields']['details'],
-                          //this.records[index]['fields']['cat1'],
-                        ],
-                        transition: Transition.zoom),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            records[index]['fields']['title'].toString(),
-                            style: GoogleFonts.nanumGothic(
-                                // backgroundColor: Colors.white70,
-                                fontStyle: FontStyle.normal,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16),
-                            textAlign: TextAlign.start,
-                          ),
-                          //const Divider(),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 4, 0, 0),
-                            child: Text(
-                                records[index]['fields']['content'].toString(),
-                                style: GoogleFonts.nanumGothic(
-                                  // backgroundColor: Colors.white70,
-                                  // fontStyle: FontStyle.italic,
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2),
-                          ),
+                OutlinedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                  ),
+                  child: Text("명언", style: TextStyle(fontSize: 16)),
+                  onPressed: () {
+                    setState(() {
+                      _fetchMenus("quoteview");
+                    });
+                  },
+                ),
+                OutlinedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                  ),
+                  child: Text("IT지식", style: TextStyle(fontSize: 16)),
+                  onPressed: () {
+                    setState(() {
+                      _fetchMenus("itview");
+                    });
+                  },
+                ),
+                OutlinedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                  ),
+                  child: Text("도서", style: TextStyle(fontSize: 16)),
+                  onPressed: () {
+                    setState(() {
+                      _fetchMenus("bookview");
+                    });
+                  },
+                ),
+                OutlinedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                  ),
+                  child: Text("음악", style: TextStyle(fontSize: 16)),
+                  onPressed: () {
+                    setState(() {
+                      _fetchMenus("musicview");
+                    });
+                  },
+                ),
+                OutlinedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                  ),
+                  child: Text("골프", style: TextStyle(fontSize: 16)),
+                  onPressed: () {
+                    setState(() {
+                      _fetchMenus("golfview");
+                    });
+                  },
+                ),
+                OutlinedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                  ),
+                  child: Text("기타", style: TextStyle(fontSize: 16)),
+                  onPressed: () {
+                    setState(() {
+                      _fetchMenus("etcview");
+                    });
+                  },
+                ),
+              ],
+            ),
+            Divider(
+              height: 2,
+            ),
+            Expanded(
+              child: FutureBuilder(
+                  future: _fetchMenus("Gridview"),
+                  builder: (context, snapshot) {
+                    // print('snapshot No.=>');
+                    // print(records.length);
 
-                          const Divider(),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              );
-            }
-          }),
+                    if (!snapshot.hasData) {
+                      return Center(
+                          child: CircularProgressIndicator(
+                        valueColor: const AlwaysStoppedAnimation(Colors.amber),
+                      ));
+                    } else {
+                      return ListView.builder(
+                        // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                        //   crossAxisCount: 2,
+                        // ),
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: records.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return InkWell(
+                            onTap: () => Get.to(const YoutubePage(),
+                                arguments: [
+                                  records[index]['fields']['content'],
+                                  records[index]['fields']['vid'],
+                                  records[index]['fields']['details'],
+                                  //this.records[index]['fields']['cat1'],
+                                ],
+                                transition: Transition.zoom),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    records[index]['fields']['title']
+                                        .toString(),
+                                    style: GoogleFonts.nanumGothic(
+                                        // backgroundColor: Colors.white70,
+                                        fontStyle: FontStyle.normal,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                  //const Divider(),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 4, 0, 0),
+                                    child: Text(
+                                        records[index]['fields']['content']
+                                            .toString(),
+                                        style: GoogleFonts.nanumGothic(
+                                          // backgroundColor: Colors.white70,
+                                          // fontStyle: FontStyle.italic,
+                                          color: Colors.black,
+                                          fontSize: 12,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2),
+                                  ),
+
+                                  const Divider(),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  }),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -191,6 +300,7 @@ class _YoutubePageState extends State<YoutubePage> {
         desktopMode: false,
         privacyEnhanced: true,
         useHybridComposition: true,
+        color: 'Colors.blue',
       ),
     );
     YoutubePlayerIFrame(
@@ -215,37 +325,88 @@ class _YoutubePageState extends State<YoutubePage> {
     const player = YoutubePlayerIFrame();
 
     return Scaffold(
-        //extendBodyBehindAppBar: false,
-        // appBar: AppBar(
-        //   title: Text(
-        //     Get.arguments[0],
-        //     style: const TextStyle(color: Colors.black, fontSize: 16),
-        //   ),
-        //   backgroundColor: Colors.grey,
-        //   elevation: 0,
-        //   actions: [
-        //     IconButton(
-        //       onPressed: () {},
-        //       icon: const Icon(Icons.list),
-        //       color: Colors.black,
-        //     ),
-        //     IconButton(
-        //       onPressed: () {},
-        //       icon: const Icon(Icons.speaker_notes),
-        //       color: Colors.black,
-        //     ),
-        //     IconButton(
-        //       onPressed: () {},
-        //       icon: const Icon(Icons.nature_people),
-        //       color: Colors.black,
-        //     )
-        //   ],
-        // ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () {},
-          // onPressed: () => _goBack(),
-          tooltip: 'stop/start',
-          child: const Icon(Icons.pause),
+        extendBodyBehindAppBar: false,
+        appBar: AppBar(
+          title: Text(
+            Get.arguments[0],
+            style: const TextStyle(color: Colors.black, fontSize: 16),
+          ),
+          backgroundColor: Colors.grey,
+          elevation: 0,
+          // actions: [
+
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: const Icon(Icons.list),
+          //   color: Colors.black,
+          // ),
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: const Icon(Icons.speaker_notes),
+          //   color: Colors.black,
+          // ),
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: const Icon(Icons.nature_people),
+          //   color: Colors.black,
+          // )
+          // ],
+        ),
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              // onPressed: () {},
+              //onPressed: () => deactivate(),
+              onPressed: () {
+                // Wrap the play or pause in a call to `setState`. This ensures the
+                // correct icon is shown.
+                setState(() {
+                  // If the video is playing, pause it.
+                  if (_controller.value.playerState == PlayerState.playing) {
+                    _controller.pause();
+                  } else {
+                    // If the video is paused, play it.
+                    _controller.play();
+                  }
+                });
+              },
+              // Display the correct icon depending on the state of the player.
+              child: Icon(
+                _controller.value.playerState == PlayerState.playing
+                    ? Icons.play_arrow
+                    : Icons.pause,
+              ),
+            ),
+            // SizedBox(
+            //   height: 8,
+            // ),
+            // FloatingActionButton(
+            //   // onPressed: () {},
+            //   //onPressed: () => deactivate(),
+            //   onPressed: () {
+            //     // Wrap the play or pause in a call to `setState`. This ensures the
+            //     // correct icon is shown.
+            //     setState(() {
+            //       // If the video is playing, pause it.
+            //       if (_controller.value.playerState == PlayerState.playing) {
+            //         _controller.pause();
+            //       } else {
+            //         // If the video is paused, play it.
+            //         _controller.play();
+            //       }
+            //     });
+            //   },
+            //   // Display the correct icon depending on the state of the player.
+            //   child: Icon(
+            //     _controller.value.playerState == PlayerState.playing
+            //         ? Icons.play_arrow
+            //         : Icons.pause,
+            //   ),
+            //   backgroundColor: Colors.red.withOpacity(0.5)
+            // ),
+          ],
         ),
         // ignore: unnecessary_null_comparison
         body: YoutubePlayerControllerProvider(

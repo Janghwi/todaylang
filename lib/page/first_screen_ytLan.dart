@@ -116,10 +116,10 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                   ),
-                  child: Text("유투브", style: TextStyle(fontSize: 16)),
+                  child: Text("영어", style: TextStyle(fontSize: 16)),
                   onPressed: () {
                     setState(() {
-                      _fetchMenus("basicview");
+                      _fetchMenus("engview");
                     });
                   },
                 ),
@@ -127,10 +127,10 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                   ),
-                  child: Text("IT지식", style: TextStyle(fontSize: 16)),
+                  child: Text("한국어", style: TextStyle(fontSize: 16)),
                   onPressed: () {
                     setState(() {
-                      _fetchMenus("basicview");
+                      _fetchMenus("korview");
                     });
                   },
                 ),
@@ -138,10 +138,10 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                   ),
-                  child: Text("도서", style: TextStyle(fontSize: 16)),
+                  child: Text("일어", style: TextStyle(fontSize: 16)),
                   onPressed: () {
                     setState(() {
-                      _fetchMenus("basicview");
+                      _fetchMenus("japview");
                     });
                   },
                 ),
@@ -149,35 +149,46 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                   ),
-                  child: Text("음악", style: TextStyle(fontSize: 16)),
+                  child: Text("단어", style: TextStyle(fontSize: 16)),
                   onPressed: () {
                     setState(() {
-                      _fetchMenus("basicview");
+                      _fetchMenus("wordview");
                     });
                   },
                 ),
-                OutlinedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
-                  ),
-                  child: Text("골프", style: TextStyle(fontSize: 16)),
-                  onPressed: () {
-                    setState(() {
-                      _fetchMenus("basicview");
-                    });
-                  },
-                ),
-                OutlinedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
-                  ),
-                  child: Text("기타", style: TextStyle(fontSize: 16)),
-                  onPressed: () {
-                    setState(() {
-                      _fetchMenus("basicview");
-                    });
-                  },
-                ),
+                // OutlinedButton(
+                //   style: ElevatedButton.styleFrom(
+                //     padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                //   ),
+                //   child: Text("음악", style: TextStyle(fontSize: 16)),
+                //   onPressed: () {
+                //     setState(() {
+                //       _fetchMenus("basicview");
+                //     });
+                //   },
+                // ),
+                // OutlinedButton(
+                //   style: ElevatedButton.styleFrom(
+                //     padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                //   ),
+                //   child: Text("골프", style: TextStyle(fontSize: 16)),
+                //   onPressed: () {
+                //     setState(() {
+                //       _fetchMenus("basicview");
+                //     });
+                //   },
+                // ),
+                // OutlinedButton(
+                //   style: ElevatedButton.styleFrom(
+                //     padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                //   ),
+                //   child: Text("기타", style: TextStyle(fontSize: 16)),
+                //   onPressed: () {
+                //     setState(() {
+                //       _fetchMenus("basicview");
+                //     });
+                //   },
+                // ),
               ],
             ),
             Divider(
@@ -196,10 +207,9 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
                         valueColor: const AlwaysStoppedAnimation(Colors.amber),
                       ));
                     } else {
-                      return GridView.builder(
-                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                          crossAxisCount: 2,
-                        ),
+                      return ListView.separated(
+                        separatorBuilder: (context, index) =>
+                            Divider(color: Colors.amber),
                         physics: const BouncingScrollPhysics(),
                         itemCount: records.length,
                         itemBuilder: (BuildContext context, int index) {
@@ -245,8 +255,6 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
                                         overflow: TextOverflow.ellipsis,
                                         maxLines: 2),
                                   ),
-
-                                  const Divider(),
                                 ],
                               ),
                             ),
