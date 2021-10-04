@@ -188,7 +188,7 @@ class _DetailPageState extends State<DetailPage> {
         ),
         floatingActionButton: FloatingActionButton(
           onPressed: () => _goBack(),
-          tooltip: 'Increment Counter',
+          tooltip: 'Back Page',
           child: const Icon(Icons.arrow_back),
         ),
         body: SafeArea(

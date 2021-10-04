@@ -13,10 +13,11 @@ import 'package:google_fonts/google_fonts.dart';
 //import '2menutwolevel_page2.dart';
 //import '2menutwolevel_page_p.dart';
 import 'package:http/http.dart' as http;
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class FirstScreenYtLan extends StatefulWidget {
+  const FirstScreenYtLan({Key? key}) : super(key: key);
+
   @override
   State<FirstScreenYtLan> createState() => _FirstScreenYtLanState();
 }
@@ -29,12 +30,14 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
   //   fontSize: 15,
   // );
 
-  Future _fetchMenus() async {
+  Future _fetchMenus(
+    String view,
+  ) async {
     bool loadRemoteDatatSucceed = false;
     final url = Uri.parse(
       //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Gridview",
       //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&cat2=2",
-      "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/YtLanTbl?maxRecords=500&view=Grid view",
+      "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/YtLanTbl?maxRecords=500&view=$view",
       //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?%3D1&maxRecords=500&filterByFormula=({cat1}='2')&fields[]=id",
       //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?fields%5B%5D=&filterByFormula=%7Bcat1%7D+%3D+%222%22',
     );
@@ -59,97 +62,163 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.list),
-            color: Colors.black,
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.speaker_notes),
-            color: Colors.black,
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.nature_people),
-            color: Colors.black,
-          )
-        ],
-      ),
+      // extendBodyBehindAppBar: true,
+      // appBar: AppBar(
+      //   backgroundColor: Colors.transparent,
+      //   elevation: 0,
+      //   actions: [
+      //     IconButton(
+      //       onPressed: () {
+      //         setState(() {});
+      //       },
+      //       icon: const Icon(Icons.list),
+      //       color: Colors.black,
+      //     ),
+      //     IconButton(
+      //       onPressed: () {},
+      //       icon: const Icon(Icons.speaker_notes),
+      //       color: Colors.black,
+      //     ),
+      //     IconButton(
+      //       onPressed: () {},
+      //       icon: const Icon(Icons.nature_people),
+      //       color: Colors.black,
+      //     )
+      //   ],
+      // ),
       // ignore: unnecessary_null_comparison
-      body: FutureBuilder(
-          future: _fetchMenus(),
-          builder: (context, snapshot) {
-            // print('snapshot No.=>');
-            // print(records.length);
-
-            if (!snapshot.hasData) {
-              return Center(
-                  child: CircularProgressIndicator(
-                valueColor: const AlwaysStoppedAnimation(Colors.amber),
-              ));
-            } else {
-              return GridView.builder(
-                gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                  crossAxisCount: 2,
+      body: SafeArea(
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+          children: [
+            Wrap(
+              alignment: WrapAlignment.start,
+              children: [
+                TextButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                  ),
+                  child: Text("유투브", style: TextStyle(fontSize: 16)),
+                  onPressed: () {
+                    setState(() {
+                      _fetchMenus("basicview");
+                    });
+                  },
                 ),
-                physics: const BouncingScrollPhysics(),
-                itemCount: records.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return InkWell(
-                    onTap: () => Get.to(const YoutubePage(),
-                        arguments: [
-                          records[index]['fields']['content'],
-                          records[index]['fields']['vid'],
-                          records[index]['fields']['details'],
-                          //this.records[index]['fields']['cat1'],
-                        ],
-                        transition: Transition.zoom),
-                    child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Column(
-                        mainAxisAlignment: MainAxisAlignment.start,
-                        crossAxisAlignment: CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            records[index]['fields']['title'].toString(),
-                            style: GoogleFonts.nanumGothic(
-                                // backgroundColor: Colors.white70,
-                                fontStyle: FontStyle.normal,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 16),
-                            textAlign: TextAlign.start,
-                          ),
-                          //const Divider(),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 4, 0, 0),
-                            child: Text(
-                                records[index]['fields']['content'].toString(),
-                                style: GoogleFonts.nanumGothic(
-                                  // backgroundColor: Colors.white70,
-                                  // fontStyle: FontStyle.italic,
-                                  color: Colors.black,
-                                  fontSize: 12,
-                                ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2),
-                          ),
+                TextButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                  ),
+                  child: Text("IT지식", style: TextStyle(fontSize: 16)),
+                  onPressed: () {},
+                ),
+                TextButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                  ),
+                  child: Text("도서", style: TextStyle(fontSize: 16)),
+                  onPressed: () {},
+                ),
+                TextButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                  ),
+                  child: Text("음악", style: TextStyle(fontSize: 16)),
+                  onPressed: () {},
+                ),
+                TextButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                  ),
+                  child: Text("골프", style: TextStyle(fontSize: 16)),
+                  onPressed: () {},
+                ),
+                TextButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                  ),
+                  child: Text("기타", style: TextStyle(fontSize: 16)),
+                  onPressed: () {},
+                ),
+              ],
+            ),
+            Divider(),
+            Expanded(
+              child: FutureBuilder(
+                  future: _fetchMenus("Gridview"),
+                  builder: (context, snapshot) {
+                    // print('snapshot No.=>');
+                    // print(records.length);
 
-                          const Divider(),
-                        ],
-                      ),
-                    ),
-                  );
-                },
-              );
-            }
-          }),
+                    if (!snapshot.hasData) {
+                      return Center(
+                          child: CircularProgressIndicator(
+                        valueColor: const AlwaysStoppedAnimation(Colors.amber),
+                      ));
+                    } else {
+                      return GridView.builder(
+                        gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                          crossAxisCount: 2,
+                        ),
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: records.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          return InkWell(
+                            onTap: () => Get.to(const YoutubePage(),
+                                arguments: [
+                                  records[index]['fields']['content'],
+                                  records[index]['fields']['vid'],
+                                  records[index]['fields']['details'],
+                                  //this.records[index]['fields']['cat1'],
+                                ],
+                                transition: Transition.zoom),
+                            child: Padding(
+                              padding: const EdgeInsets.all(8.0),
+                              child: Column(
+                                mainAxisAlignment: MainAxisAlignment.start,
+                                crossAxisAlignment: CrossAxisAlignment.start,
+                                children: [
+                                  Text(
+                                    records[index]['fields']['title']
+                                        .toString(),
+                                    style: GoogleFonts.nanumGothic(
+                                        // backgroundColor: Colors.white70,
+                                        fontStyle: FontStyle.normal,
+                                        color: Colors.black,
+                                        fontWeight: FontWeight.bold,
+                                        fontSize: 16),
+                                    textAlign: TextAlign.start,
+                                  ),
+                                  //const Divider(),
+                                  Padding(
+                                    padding:
+                                        const EdgeInsets.fromLTRB(0, 4, 0, 0),
+                                    child: Text(
+                                        records[index]['fields']['content']
+                                            .toString(),
+                                        style: GoogleFonts.nanumGothic(
+                                          // backgroundColor: Colors.white70,
+                                          // fontStyle: FontStyle.italic,
+                                          color: Colors.black,
+                                          fontSize: 12,
+                                        ),
+                                        overflow: TextOverflow.ellipsis,
+                                        maxLines: 2),
+                                  ),
+
+                                  const Divider(),
+                                ],
+                              ),
+                            ),
+                          );
+                        },
+                      );
+                    }
+                  }),
+            ),
+          ],
+        ),
+      ),
     );
   }
 }
@@ -224,47 +293,80 @@ class _YoutubePageState extends State<YoutubePage> {
           ),
           backgroundColor: Colors.grey,
           elevation: 0,
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.list),
-              color: Colors.black,
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.speaker_notes),
-              color: Colors.black,
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.nature_people),
-              color: Colors.black,
-            )
-          ],
+          // actions: [
+
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: const Icon(Icons.list),
+          //   color: Colors.black,
+          // ),
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: const Icon(Icons.speaker_notes),
+          //   color: Colors.black,
+          // ),
+          // IconButton(
+          //   onPressed: () {},
+          //   icon: const Icon(Icons.nature_people),
+          //   color: Colors.black,
+          // )
+          // ],
         ),
-        floatingActionButton: FloatingActionButton(
-          // onPressed: () {},
-          //onPressed: () => deactivate(),
-          onPressed: () {
-            // Wrap the play or pause in a call to `setState`. This ensures the
-            // correct icon is shown.
-            setState(() {
-              // If the video is playing, pause it.
-              if (_controller.value.playerState == PlayerState.playing) {
-                _controller.pause();
-              } else {
-                // If the video is paused, play it.
-                _controller.play();
-              }
-            });
-          },
-          // Display the correct icon depending on the state of the player.
-          child: Icon(
-            _controller.value.playerState == PlayerState.playing
-                ? Icons.play_arrow
-                : Icons.pause,
-          ),
-          tooltip: 'stop/start',
+        floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
+        floatingActionButton: Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          children: [
+            FloatingActionButton(
+              // onPressed: () {},
+              //onPressed: () => deactivate(),
+              onPressed: () {
+                // Wrap the play or pause in a call to `setState`. This ensures the
+                // correct icon is shown.
+                setState(() {
+                  // If the video is playing, pause it.
+                  if (_controller.value.playerState == PlayerState.playing) {
+                    _controller.pause();
+                  } else {
+                    // If the video is paused, play it.
+                    _controller.play();
+                  }
+                });
+              },
+              // Display the correct icon depending on the state of the player.
+              child: Icon(
+                _controller.value.playerState == PlayerState.playing
+                    ? Icons.play_arrow
+                    : Icons.pause,
+              ),
+            ),
+            // SizedBox(
+            //   height: 8,
+            // ),
+            // FloatingActionButton(
+            //   // onPressed: () {},
+            //   //onPressed: () => deactivate(),
+            //   onPressed: () {
+            //     // Wrap the play or pause in a call to `setState`. This ensures the
+            //     // correct icon is shown.
+            //     setState(() {
+            //       // If the video is playing, pause it.
+            //       if (_controller.value.playerState == PlayerState.playing) {
+            //         _controller.pause();
+            //       } else {
+            //         // If the video is paused, play it.
+            //         _controller.play();
+            //       }
+            //     });
+            //   },
+            //   // Display the correct icon depending on the state of the player.
+            //   child: Icon(
+            //     _controller.value.playerState == PlayerState.playing
+            //         ? Icons.play_arrow
+            //         : Icons.pause,
+            //   ),
+            //   backgroundColor: Colors.red.withOpacity(0.5)
+            // ),
+          ],
         ),
         // ignore: unnecessary_null_comparison
         body: YoutubePlayerControllerProvider(
