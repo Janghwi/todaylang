@@ -1,3 +1,4 @@
+// ignore: duplicate_ignore
 // ignore: file_names
 // ignore_for_file: file_names
 
@@ -60,6 +61,12 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
   }
 
   @override
+  void initState() {
+    super.initState();
+    _fetchMenus('Gridview');
+  }
+
+  @override
   Widget build(BuildContext context) {
     return Scaffold(
       // extendBodyBehindAppBar: true,
@@ -94,7 +101,18 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
             Wrap(
               alignment: WrapAlignment.start,
               children: [
-                TextButton(
+                OutlinedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                  ),
+                  child: Text("전체", style: TextStyle(fontSize: 16)),
+                  onPressed: () {
+                    setState(() {
+                      _fetchMenus("Gridview");
+                    });
+                  },
+                ),
+                OutlinedButton(
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                   ),
@@ -105,44 +123,66 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
                     });
                   },
                 ),
-                TextButton(
+                OutlinedButton(
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                   ),
                   child: Text("IT지식", style: TextStyle(fontSize: 16)),
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      _fetchMenus("basicview");
+                    });
+                  },
                 ),
-                TextButton(
+                OutlinedButton(
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                   ),
                   child: Text("도서", style: TextStyle(fontSize: 16)),
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      _fetchMenus("basicview");
+                    });
+                  },
                 ),
-                TextButton(
+                OutlinedButton(
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                   ),
                   child: Text("음악", style: TextStyle(fontSize: 16)),
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      _fetchMenus("basicview");
+                    });
+                  },
                 ),
-                TextButton(
+                OutlinedButton(
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                   ),
                   child: Text("골프", style: TextStyle(fontSize: 16)),
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      _fetchMenus("basicview");
+                    });
+                  },
                 ),
-                TextButton(
+                OutlinedButton(
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                   ),
                   child: Text("기타", style: TextStyle(fontSize: 16)),
-                  onPressed: () {},
+                  onPressed: () {
+                    setState(() {
+                      _fetchMenus("basicview");
+                    });
+                  },
                 ),
               ],
             ),
-            Divider(),
+            Divider(
+              height: 2,
+            ),
             Expanded(
               child: FutureBuilder(
                   future: _fetchMenus("Gridview"),
@@ -260,7 +300,7 @@ class _YoutubePageState extends State<YoutubePage> {
         desktopMode: false,
         privacyEnhanced: true,
         useHybridComposition: true,
-        color: 'Colors.red',
+        color: 'Colors.blue',
       ),
     );
     YoutubePlayerIFrame(
@@ -444,7 +484,7 @@ class _YoutubePageState extends State<YoutubePage> {
                         h6: const TextStyle(
                             color: Colors.indigo, fontWeight: FontWeight.w600),
                         p: const TextStyle(
-                          color: Colors.black26,
+                          color: Colors.black45,
                         ),
                         strong: const TextStyle(color: Colors.lightBlueAccent),
                         blockSpacing: 10.0,
@@ -468,11 +508,5 @@ class _YoutubePageState extends State<YoutubePage> {
   void dispose() {
     _controller.close();
     super.dispose();
-  }
-
-  @override
-  void deactivate() {
-    _controller.pause();
-    super.deactivate();
   }
 }

@@ -185,7 +185,7 @@ class _YoutubePageState extends State<YoutubePage> {
         //   '7QUtEmBT_-w',
         //   '34_PXCzGw1M',
         // ],
-        startAt: const Duration(minutes: 0, seconds: 10),
+        startAt: Duration(minutes: 0, seconds: 10),
         showControls: true,
         showFullscreenButton: true,
         desktopMode: false,
@@ -215,32 +215,32 @@ class _YoutubePageState extends State<YoutubePage> {
     const player = YoutubePlayerIFrame();
 
     return Scaffold(
-        extendBodyBehindAppBar: false,
-        appBar: AppBar(
-          title: Text(
-            Get.arguments[0],
-            style: const TextStyle(color: Colors.black, fontSize: 16),
-          ),
-          backgroundColor: Colors.grey,
-          elevation: 0,
-          actions: [
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.list),
-              color: Colors.black,
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.speaker_notes),
-              color: Colors.black,
-            ),
-            IconButton(
-              onPressed: () {},
-              icon: const Icon(Icons.nature_people),
-              color: Colors.black,
-            )
-          ],
-        ),
+        //extendBodyBehindAppBar: false,
+        // appBar: AppBar(
+        //   title: Text(
+        //     Get.arguments[0],
+        //     style: const TextStyle(color: Colors.black, fontSize: 16),
+        //   ),
+        //   backgroundColor: Colors.grey,
+        //   elevation: 0,
+        //   actions: [
+        //     IconButton(
+        //       onPressed: () {},
+        //       icon: const Icon(Icons.list),
+        //       color: Colors.black,
+        //     ),
+        //     IconButton(
+        //       onPressed: () {},
+        //       icon: const Icon(Icons.speaker_notes),
+        //       color: Colors.black,
+        //     ),
+        //     IconButton(
+        //       onPressed: () {},
+        //       icon: const Icon(Icons.nature_people),
+        //       color: Colors.black,
+        //     )
+        //   ],
+        // ),
         floatingActionButton: FloatingActionButton(
           onPressed: () {},
           // onPressed: () => _goBack(),
@@ -308,7 +308,7 @@ class _YoutubePageState extends State<YoutubePage> {
               // ),
               Expanded(
                 child: Markdown(
-                    data: Get.arguments[2],
+                    data: details.toString(),
                     styleSheetTheme: MarkdownStyleSheetBaseTheme.cupertino,
                     physics: const BouncingScrollPhysics(),
                     styleSheet: MarkdownStyleSheet(
@@ -323,7 +323,7 @@ class _YoutubePageState extends State<YoutubePage> {
                         h6: const TextStyle(
                             color: Colors.indigo, fontWeight: FontWeight.w600),
                         p: const TextStyle(
-                          color: Colors.black26,
+                          color: Colors.black45,
                         ),
                         strong: const TextStyle(color: Colors.lightBlueAccent),
                         blockSpacing: 10.0,
