@@ -9,7 +9,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:get/get.dart';
 import 'dart:async';
-
+import 'dart:math' as math;
 import 'package:google_fonts/google_fonts.dart';
 //import '2menutwolevel_page2.dart';
 //import '2menutwolevel_page_p.dart';
@@ -38,7 +38,7 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
     final url = Uri.parse(
       //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Gridview",
       //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&cat2=2",
-      "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/YtTbl?maxRecords=500&view=$view",
+      "https://api.airtable.com/v0/app95nB2yi0WAYDyn/YtTbl?maxRecords=500&view=$view",
       //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?%3D1&maxRecords=500&filterByFormula=({cat1}='2')&fields[]=id",
       //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?fields%5B%5D=&filterByFormula=%7Bcat1%7D+%3D+%222%22',
     );
@@ -60,11 +60,11 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _fetchMenus('Gridview');
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _fetchMenus('Gridview');
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +111,11 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
                       _fetchMenus("Gridview");
                     });
                   },
+                  onLongPress: () {
+                    setState(() {
+                      _fetchMenus("Gridview");
+                    });
+                  },
                 ),
                 OutlinedButton(
                   style: ElevatedButton.styleFrom(
@@ -118,6 +123,11 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
                   ),
                   child: Text("명언", style: TextStyle(fontSize: 16)),
                   onPressed: () {
+                    setState(() {
+                      _fetchMenus("quoteview");
+                    });
+                  },
+                  onLongPress: () {
                     setState(() {
                       _fetchMenus("quoteview");
                     });
@@ -133,6 +143,11 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
                       _fetchMenus("itview");
                     });
                   },
+                  onLongPress: () {
+                    setState(() {
+                      _fetchMenus("itview");
+                    });
+                  },
                 ),
                 OutlinedButton(
                   style: ElevatedButton.styleFrom(
@@ -140,6 +155,11 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
                   ),
                   child: Text("도서", style: TextStyle(fontSize: 16)),
                   onPressed: () {
+                    setState(() {
+                      _fetchMenus("bookview");
+                    });
+                  },
+                  onLongPress: () {
                     setState(() {
                       _fetchMenus("bookview");
                     });
@@ -155,6 +175,11 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
                       _fetchMenus("musicview");
                     });
                   },
+                  onLongPress: () {
+                    setState(() {
+                      _fetchMenus("musicview");
+                    });
+                  },
                 ),
                 OutlinedButton(
                   style: ElevatedButton.styleFrom(
@@ -166,6 +191,11 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
                       _fetchMenus("golfview");
                     });
                   },
+                  onLongPress: () {
+                    setState(() {
+                      _fetchMenus("golfview");
+                    });
+                  },
                 ),
                 OutlinedButton(
                   style: ElevatedButton.styleFrom(
@@ -173,6 +203,11 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
                   ),
                   child: Text("기타", style: TextStyle(fontSize: 16)),
                   onPressed: () {
+                    setState(() {
+                      _fetchMenus("etcview");
+                    });
+                  },
+                  onLongPress: () {
                     setState(() {
                       _fetchMenus("etcview");
                     });
@@ -353,10 +388,34 @@ class _YoutubePageState extends State<YoutubePage> {
           // ],
         ),
         floatingActionButtonLocation: FloatingActionButtonLocation.centerFloat,
-        floatingActionButton: Column(
-          mainAxisAlignment: MainAxisAlignment.end,
+        floatingActionButton: Row(
+          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             FloatingActionButton(
+              heroTag: "backward",
+              // onPressed: () {},
+              //onPressed: () => deactivate(),
+              onPressed: () {
+                // Wrap the play or pause in a call to `setState`. This ensures the
+                // correct icon is shown.
+                setState(() {
+                  // If the video is playing, pause it.
+                  int currentPosition = _controller.value.position.inSeconds;
+                  _controller.seekTo(Duration(seconds: currentPosition - 10));
+                });
+              },
+              // Display the correct icon depending on the state of the player.
+              child: Transform.rotate(
+                angle: 180 * math.pi / 180,
+                // transform: Matrix4.rotationY(math.pi),
+                child: Icon(_controller.value.playerState == PlayerState.playing
+                    ? Icons.forward_10
+                    : Icons.forward_10_outlined),
+              ),
+            ),
+            FloatingActionButton(
+              heroTag: "pause",
+
               // onPressed: () {},
               //onPressed: () => deactivate(),
               onPressed: () {
@@ -379,35 +438,45 @@ class _YoutubePageState extends State<YoutubePage> {
                     : Icons.pause,
               ),
             ),
-            // SizedBox(
-            //   height: 8,
-            // ),
-            // FloatingActionButton(
-            //   // onPressed: () {},
-            //   //onPressed: () => deactivate(),
-            //   onPressed: () {
-            //     // Wrap the play or pause in a call to `setState`. This ensures the
-            //     // correct icon is shown.
-            //     setState(() {
-            //       // If the video is playing, pause it.
-            //       if (_controller.value.playerState == PlayerState.playing) {
-            //         _controller.pause();
-            //       } else {
-            //         // If the video is paused, play it.
-            //         _controller.play();
-            //       }
-            //     });
-            //   },
-            //   // Display the correct icon depending on the state of the player.
-            //   child: Icon(
-            //     _controller.value.playerState == PlayerState.playing
-            //         ? Icons.play_arrow
-            //         : Icons.pause,
+            FloatingActionButton(
+              heroTag: "forward",
+              // onPressed: () {},
+              //onPressed: () => deactivate(),
+              onPressed: () {
+                // Wrap the play or pause in a call to `setState`. This ensures the
+                // correct icon is shown.
+                setState(() {
+                  // If the video is playing, pause it.
+                  int currentPosition = _controller.value.position.inSeconds;
+                  _controller.seekTo(Duration(seconds: currentPosition + 10));
+                });
+              },
+              // Display the correct icon depending on the state of the player.
+              child: Icon(_controller.value.playerState == PlayerState.playing
+                  ? Icons.forward_10
+                  : Icons.forward_10_outlined),
+            ),
+            //   FloatingActionButton(
+            //     heroTag: "loop",
+            //     // onPressed: () {},
+            //     //onPressed: () => deactivate(),
+            //     onPressed: () {
+            //       // Wrap the play or pause in a call to `setState`. This ensures the
+            //       // correct icon is shown.
+            //       setState(() {
+            //         // If the video is playing, pause it.
+            //         int currentPosition = _controller.value.position.inSeconds;
+            //         _controller.load(Get.arguments[0],startAt: Duration(seconds: currentPosition -5 , endAt: Duration(seconds:currentPosition + 5 ));
+            //       });
+            //     },
+            //     // Display the correct icon depending on the state of the player.
+            //     child: Icon(_controller.value.playerState == PlayerState.playing
+            //         ? Icons.loop
+            //         : Icons.loop_outlined),
             //   ),
-            //   backgroundColor: Colors.red.withOpacity(0.5)
-            // ),
           ],
         ),
+
         // ignore: unnecessary_null_comparison
         body: YoutubePlayerControllerProvider(
           // Passing controller to widgets below.

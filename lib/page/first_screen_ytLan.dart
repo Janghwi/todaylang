@@ -38,7 +38,7 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
     final url = Uri.parse(
       //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Gridview",
       //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&cat2=2",
-      "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/YtLanTbl?maxRecords=500&view=$view",
+      "https://api.airtable.com/v0/app95nB2yi0WAYDyn/YtLanTbl?maxRecords=500&view=$view",
       //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?%3D1&maxRecords=500&filterByFormula=({cat1}='2')&fields[]=id",
       //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?fields%5B%5D=&filterByFormula=%7Bcat1%7D+%3D+%222%22',
     );
@@ -60,11 +60,11 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
     });
   }
 
-  @override
-  void initState() {
-    super.initState();
-    _fetchMenus('Gridview');
-  }
+  // @override
+  // void initState() {
+  //   super.initState();
+  //   _fetchMenus('Gridview');
+  // }
 
   @override
   Widget build(BuildContext context) {
@@ -111,6 +111,11 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
                       _fetchMenus("Gridview");
                     });
                   },
+                  onLongPress: () {
+                    setState(() {
+                      _fetchMenus("Gridview");
+                    });
+                  },
                 ),
                 OutlinedButton(
                   style: ElevatedButton.styleFrom(
@@ -118,6 +123,11 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
                   ),
                   child: Text("영어", style: TextStyle(fontSize: 16)),
                   onPressed: () {
+                    setState(() {
+                      _fetchMenus("engview");
+                    });
+                  },
+                  onLongPress: () {
                     setState(() {
                       _fetchMenus("engview");
                     });
@@ -133,6 +143,11 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
                       _fetchMenus("korview");
                     });
                   },
+                  onLongPress: () {
+                    setState(() {
+                      _fetchMenus("korview");
+                    });
+                  },
                 ),
                 OutlinedButton(
                   style: ElevatedButton.styleFrom(
@@ -144,6 +159,11 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
                       _fetchMenus("japview");
                     });
                   },
+                  onLongPress: () {
+                    setState(() {
+                      _fetchMenus("japview");
+                    });
+                  },
                 ),
                 OutlinedButton(
                   style: ElevatedButton.styleFrom(
@@ -151,6 +171,11 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
                   ),
                   child: Text("단어", style: TextStyle(fontSize: 16)),
                   onPressed: () {
+                    setState(() {
+                      _fetchMenus("wordview");
+                    });
+                  },
+                  onLongPress: () {
                     setState(() {
                       _fetchMenus("wordview");
                     });
