@@ -3,6 +3,7 @@
 // ignore_for_file: file_names
 
 import 'dart:convert';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:async';
@@ -27,34 +28,89 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
   //   fontSize: 15,
   // );
 
-  Future _fetchMenus(
+  Future<List> _fetchMenus(
     String view,
   ) async {
     bool loadRemoteDatatSucceed = false;
-    final url = Uri.parse(
-      //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Gridview",
-      //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&cat2=2",
-      "https://api.airtable.com/v0/app95nB2yi0WAYDyn/YtTbl?maxRecords=500&view=$view",
-      //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?%3D1&maxRecords=500&filterByFormula=({cat1}='2')&fields[]=id",
-      //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?fields%5B%5D=&filterByFormula=%7Bcat1%7D+%3D+%222%22',
-    );
-    Map<String, String> header = {"Authorization": "Bearer keyyG7I9nxyG5SmTq"};
+    // Response response;
     try {
-      final response = await http.get(url, headers: header);
-      Map<String, dynamic> result = json.decode(response.body);
-      records = result['records'];
-    } catch (e) {
-      if (loadRemoteDatatSucceed == false) retryFuture(_fetchMenus, 2000);
-    }
+      Dio dio = Dio();
+      var response = await dio.get(
+        "https://api.airtable.com/v0/app95nB2yi0WAYDyn/YtTbl?maxRecords=50&view=$view",
+        options: Options(contentType: 'Application/json', headers: {
+          'Authorization': 'Bearer keyyG7I9nxyG5SmTq',
+          'Accept': 'Application/json',
+        }),
+      );
 
+      Map<String, dynamic> result = (response.data);
+
+      records = result['records'];
+    } on DioError catch (e) {
+      if (e.response != null) {
+        print(e.response!.data);
+      } else {
+        // if (loadRemoteDatatSucceed == false) retryFuture(_fetchMenus, 200);
+      }
+    }
     return records;
   }
 
-  retryFuture(future, delay) {
-    Future.delayed(Duration(milliseconds: delay), () {
-      future();
-    });
+  Future<List> _fetchQuery(
+    String searchtext,
+  ) async {
+    // Response response;
+    try {
+      Dio dio = Dio();
+      var response = await dio.get(
+        "https://api.airtable.com/v0/app95nB2yi0WAYDyn/YtTbl?",
+        queryParameters: {'filterByFormula': 'SEARCH("$searchtext",{details})'},
+        options: Options(contentType: 'Application/json', headers: {
+          'Authorization': 'Bearer keyyG7I9nxyG5SmTq',
+          'Accept': 'Application/json',
+        }),
+      );
+
+      Map<String, dynamic> result = (response.data);
+
+      records = result['records'];
+    } on DioError catch (e) {
+      if (e.response != null) {
+        print(e.response!.data);
+      } else {
+        // if (loadRemoteDatatSucceed == false) retryFuture(_fetchMenus, 200);
+      }
+    }
+    return records;
   }
+  // Future _fetchMenus(
+  //   String view,
+  // ) async {
+  //   bool loadRemoteDatatSucceed = false;
+  //   final url = Uri.parse(
+  //     //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Gridview",
+  //     //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&cat2=2",
+  //     "https://api.airtable.com/v0/app95nB2yi0WAYDyn/YtTbl?maxRecords=500&view=$view",
+  //     //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?%3D1&maxRecords=500&filterByFormula=({cat1}='2')&fields[]=id",
+  //     //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?fields%5B%5D=&filterByFormula=%7Bcat1%7D+%3D+%222%22',
+  //   );
+  //   Map<String, String> header = {"Authorization": "Bearer keyyG7I9nxyG5SmTq"};
+  //   try {
+  //     final response = await http.get(url, headers: header);
+  //     Map<String, dynamic> result = json.decode(response.body);
+  //     records = result['records'];
+  //   } catch (e) {
+  //     if (loadRemoteDatatSucceed == false) retryFuture(_fetchMenus, 2000);
+  //   }
+
+  //   return records;
+  // }
+
+  // retryFuture(future, delay) {
+  //   Future.delayed(Duration(milliseconds: delay), () {
+  //     future();
+  //   });
+  // }
 
   // @override
   // void initState() {
@@ -97,13 +153,14 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
             Wrap(
               alignment: WrapAlignment.start,
               children: [
-                OutlinedButton(
+                TextButton(
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                   ),
                   child: Text("전체", style: TextStyle(fontSize: 16)),
                   onPressed: () {
                     setState(() {
+                      print('grivew clicked');
                       _fetchMenus("Gridview");
                     });
                   },
@@ -120,6 +177,8 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
                   child: Text("명언", style: TextStyle(fontSize: 16)),
                   onPressed: () {
                     setState(() {
+                      print('quote clicked');
+
                       _fetchMenus("quoteview");
                     });
                   },
@@ -136,6 +195,8 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
                   child: Text("IT지식", style: TextStyle(fontSize: 16)),
                   onPressed: () {
                     setState(() {
+                      print('itvew clicked');
+
                       _fetchMenus("itview");
                     });
                   },
@@ -152,6 +213,8 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
                   child: Text("도서", style: TextStyle(fontSize: 16)),
                   onPressed: () {
                     setState(() {
+                      print('bookvew clicked');
+
                       _fetchMenus("bookview");
                     });
                   },
@@ -168,6 +231,8 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
                   child: Text("음악", style: TextStyle(fontSize: 16)),
                   onPressed: () {
                     setState(() {
+                      print('musicivew clicked');
+
                       _fetchMenus("musicview");
                     });
                   },
@@ -184,6 +249,8 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
                   child: Text("골프", style: TextStyle(fontSize: 16)),
                   onPressed: () {
                     setState(() {
+                      print('golfvew clicked');
+
                       _fetchMenus("golfview");
                     });
                   },
@@ -200,12 +267,30 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
                   child: Text("기타", style: TextStyle(fontSize: 16)),
                   onPressed: () {
                     setState(() {
-                      _fetchMenus("etcview");
+                      print('gitaview clicked');
+
+                      _fetchMenus("golfview");
                     });
                   },
                   onLongPress: () {
                     setState(() {
-                      _fetchMenus("etcview");
+                      _fetchMenus("golfview");
+                    });
+                  },
+                ),
+                OutlinedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                  ),
+                  child: Text("검색", style: TextStyle(fontSize: 16)),
+                  onPressed: () {
+                    setState(() {
+                      _fetchQuery("말");
+                    });
+                  },
+                  onLongPress: () {
+                    setState(() {
+                      _fetchQuery("말");
                     });
                   },
                 ),
@@ -237,7 +322,8 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
                           return InkWell(
                             onTap: () => Get.to(const YoutubePage(),
                                 arguments: [
-                                  records[index]['fields']['content'],
+                                  records[index]['fields']['content']
+                                      .toString(),
                                   records[index]['fields']['vid'],
                                   records[index]['fields']['details'],
                                   //this.records[index]['fields']['cat1'],
