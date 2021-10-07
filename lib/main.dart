@@ -18,6 +18,7 @@ import 'page/first_screen_wb.dart';
 import 'page/first_screen_yt.dart';
 import 'page/first_screen_yt_nobutton.dart';
 import 'page/first_screen_ytLan.dart';
+import 'page/postpage.dart';
 import 'widget/tabbar_widget.dart';
 
 Future main() async {
@@ -92,6 +93,10 @@ class MainPage extends StatelessWidget {
             text: '코멘트',
             // icon: Icon(Icons.favorite_border),
           ),
+          Tab(
+            text: '포스트',
+            // icon: Icon(Icons.favorite_border),
+          ),
         ],
         children: [
           FirstScreenMd(),
@@ -103,6 +108,7 @@ class MainPage extends StatelessWidget {
           FirstScreenYtLan(),
           FirstScreenYt(),
           const CommentsPage(),
+          PostPage(),
         ],
       );
 }

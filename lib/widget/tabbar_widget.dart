@@ -32,7 +32,7 @@ class TabBarWidget extends StatelessWidget {
                 title: Text(
                   title,
                   // style: TextStyle(fontSize: 25, color: Colors.white)),
-                  style: GoogleFonts.singleDay(
+                  style: GoogleFonts.nanumGothic(
                       // backgroundColor: Colors.white70,
                       fontStyle: FontStyle.italic,
                       color: Colors.yellow,

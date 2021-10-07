@@ -45,6 +45,7 @@ dependencies:
   url_launcher_web: ^2.0.4
   marquee: ^2.2.0
   menu_button: ^1.4.2+1
+  dio: ^4.0.0
 
    
 

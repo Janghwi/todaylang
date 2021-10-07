@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:async';
@@ -23,11 +24,32 @@ class FirstScreenMd extends StatefulWidget {
 
 class _FirstScreenMdState extends State<FirstScreenMd> {
   List records = [];
+  bool loadRemoteDatatSucceed = false;
+
   // final style = const TextStyle(fontSize: 32, fontWeight: FontWeight.bold);
   // final style1 = const TextStyle(
   //   fontSize: 15,
   // );
+// Future<dynamic> _fetchMenus   async {
+//   var response = await Dio().get(
+//   'https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest?maxRecords=500&view=Grid view',
+//   options: Options(
+//       contentType: 'Application/json',
+//       headers: {
+//         'Authorization': 'Bearer keyyG7I9nxyG5SmTq',
+//         'Accept': 'Application/json',
+//       },
+//     ),
+// );
+//     try {
+//       Map<String, dynamic> result = json.decode(response.body);
+//       records = result['records'];
+//     } catch (e) {
+//       if (loadRemoteDatatSucceed == false) retryFuture(_fetchMenus, 2000);
+//     }
 
+//     return records;
+//   }
   Future _fetchMenus() async {
     bool loadRemoteDatatSucceed = false;
     final url = Uri.parse(
@@ -125,7 +147,7 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
                             child: Text(
                                 records[index]['fields']['content'].toString(),
                                 // style: GoogleFonts.acme(
-                                style: GoogleFonts.singleDay(
+                                style: GoogleFonts.nanumGothic(
                                   // backgroundColor: Colors.white70,
                                   // fontStyle: FontStyle.italic,
                                   color: Colors.black,
@@ -159,7 +181,7 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
                               Text(
                                 records[index]['fields']['title'].toString(),
                                 // style: GoogleFonts.aBeeZee(
-                                style: GoogleFonts.singleDay(
+                                style: GoogleFonts.nanumGothic(
                                     // backgroundColor: Colors.white70,
                                     fontStyle: FontStyle.italic,
                                     color: Colors.white,
