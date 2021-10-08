@@ -14,6 +14,7 @@ import 'page/first_screen_ad.dart';
 import 'page/first_screen_ai.dart';
 import 'page/first_screen_dt.dart';
 import 'page/first_screen_md.dart';
+import 'page/first_screen_of.dart';
 import 'page/first_screen_wb.dart';
 import 'page/first_screen_yt.dart';
 import 'page/first_screen_yt_nobutton.dart';
@@ -97,6 +98,10 @@ class MainPage extends StatelessWidget {
             text: '포스트',
             // icon: Icon(Icons.favorite_border),
           ),
+          Tab(
+            text: '오픈파일',
+            // icon: Icon(Icons.favorite_border),
+          ),
         ],
         children: [
           FirstScreenMd(),
@@ -109,6 +114,7 @@ class MainPage extends StatelessWidget {
           FirstScreenYt(),
           const CommentsPage(),
           PostPage(),
+          OpenPage(),
         ],
       );
 }
