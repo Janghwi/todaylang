@@ -56,96 +56,11 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
     return records;
   }
 
-  Future<List> _fetchQuery(
-    String searchtext,
-  ) async {
-    // Response response;
-    try {
-      Dio dio = Dio();
-      var response = await dio.get(
-        "https://api.airtable.com/v0/app95nB2yi0WAYDyn/YtTbl?",
-        queryParameters: {'filterByFormula': 'SEARCH("$searchtext",{details})'},
-        options: Options(contentType: 'Application/json', headers: {
-          'Authorization': 'Bearer keyyG7I9nxyG5SmTq',
-          'Accept': 'Application/json',
-        }),
-      );
-
-      Map<String, dynamic> result = (response.data);
-
-      records = result['records'];
-    } on DioError catch (e) {
-      if (e.response != null) {
-        print(e.response!.data);
-      } else {
-        // if (loadRemoteDatatSucceed == false) retryFuture(_fetchMenus, 200);
-      }
-    }
-    return records;
-  }
-  // Future _fetchMenus(
-  //   String view,
-  // ) async {
-  //   bool loadRemoteDatatSucceed = false;
-  //   final url = Uri.parse(
-  //     //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Gridview",
-  //     //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&cat2=2",
-  //     "https://api.airtable.com/v0/app95nB2yi0WAYDyn/YtTbl?maxRecords=500&view=$view",
-  //     //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?%3D1&maxRecords=500&filterByFormula=({cat1}='2')&fields[]=id",
-  //     //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?fields%5B%5D=&filterByFormula=%7Bcat1%7D+%3D+%222%22',
-  //   );
-  //   Map<String, String> header = {"Authorization": "Bearer keyyG7I9nxyG5SmTq"};
-  //   try {
-  //     final response = await http.get(url, headers: header);
-  //     Map<String, dynamic> result = json.decode(response.body);
-  //     records = result['records'];
-  //   } catch (e) {
-  //     if (loadRemoteDatatSucceed == false) retryFuture(_fetchMenus, 2000);
-  //   }
-
-  //   return records;
-  // }
-
-  // retryFuture(future, delay) {
-  //   Future.delayed(Duration(milliseconds: delay), () {
-  //     future();
-  //   });
-  // }
-
-  // @override
-  // void initState() {
-  //   super.initState();
-  //   _fetchMenus('Gridview');
-  // }
+  late String currentView = "Gridview";
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      // extendBodyBehindAppBar: true,
-      // appBar: AppBar(
-      //   backgroundColor: Colors.transparent,
-      //   elevation: 0,
-      //   actions: [
-      //     IconButton(
-      //       onPressed: () {
-      //         setState(() {});
-      //       },
-      //       icon: const Icon(Icons.list),
-      //       color: Colors.black,
-      //     ),
-      //     IconButton(
-      //       onPressed: () {},
-      //       icon: const Icon(Icons.speaker_notes),
-      //       color: Colors.black,
-      //     ),
-      //     IconButton(
-      //       onPressed: () {},
-      //       icon: const Icon(Icons.nature_people),
-      //       color: Colors.black,
-      //     )
-      //   ],
-      // ),
-      // ignore: unnecessary_null_comparison
       body: SafeArea(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
@@ -158,139 +73,76 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
                     padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                   ),
                   child: Text("전체", style: TextStyle(fontSize: 16)),
-                  onPressed: () {
-                    setState(() {
-                      print('grivew clicked');
-                      _fetchMenus("Gridview");
-                    });
-                  },
-                  onLongPress: () {
+                  onPressed: () async {
+                    await _fetchMenus("Gridview");
                     setState(() {
                       _fetchMenus("Gridview");
+                      currentView = "Gridview";
                     });
                   },
                 ),
-                OutlinedButton(
+                TextButton(
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                   ),
                   child: Text("명언", style: TextStyle(fontSize: 16)),
-                  onPressed: () {
-                    setState(() {
-                      print('quote clicked');
-
-                      _fetchMenus("quoteview");
-                    });
-                  },
-                  onLongPress: () {
+                  onPressed: () async {
+                    await _fetchMenus("quoteview");
                     setState(() {
                       _fetchMenus("quoteview");
+                      currentView = "quoteview";
                     });
                   },
                 ),
-                OutlinedButton(
+                TextButton(
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                   ),
                   child: Text("IT지식", style: TextStyle(fontSize: 16)),
-                  onPressed: () {
-                    setState(() {
-                      print('itvew clicked');
-
-                      _fetchMenus("itview");
-                    });
-                  },
-                  onLongPress: () {
+                  onPressed: () async {
+                    await _fetchMenus("itview");
                     setState(() {
                       _fetchMenus("itview");
+                      currentView = "itview";
                     });
                   },
                 ),
-                OutlinedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
-                  ),
-                  child: Text("도서", style: TextStyle(fontSize: 16)),
-                  onPressed: () {
-                    setState(() {
-                      print('bookvew clicked');
-
-                      _fetchMenus("bookview");
-                    });
-                  },
-                  onLongPress: () {
-                    setState(() {
-                      _fetchMenus("bookview");
-                    });
-                  },
-                ),
-                OutlinedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
-                  ),
-                  child: Text("음악", style: TextStyle(fontSize: 16)),
-                  onPressed: () {
-                    setState(() {
-                      print('musicivew clicked');
-
-                      _fetchMenus("musicview");
-                    });
-                  },
-                  onLongPress: () {
-                    setState(() {
-                      _fetchMenus("musicview");
-                    });
-                  },
-                ),
-                OutlinedButton(
+                TextButton(
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                   ),
                   child: Text("골프", style: TextStyle(fontSize: 16)),
-                  onPressed: () {
-                    setState(() {
-                      print('golfvew clicked');
-
-                      _fetchMenus("golfview");
-                    });
-                  },
-                  onLongPress: () {
+                  onPressed: () async {
+                    await _fetchMenus("golfview");
                     setState(() {
                       _fetchMenus("golfview");
+                      currentView = "golfview";
                     });
                   },
                 ),
-                OutlinedButton(
+                TextButton(
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                   ),
-                  child: Text("기타", style: TextStyle(fontSize: 16)),
-                  onPressed: () {
+                  child: Text("도서", style: TextStyle(fontSize: 16)),
+                  onPressed: () async {
+                    await _fetchMenus("bookview");
                     setState(() {
-                      print('gitaview clicked');
-
-                      _fetchMenus("golfview");
-                    });
-                  },
-                  onLongPress: () {
-                    setState(() {
-                      _fetchMenus("golfview");
+                      _fetchMenus("bookview");
+                      currentView = "bookview";
                     });
                   },
                 ),
-                OutlinedButton(
+                TextButton(
                   style: ElevatedButton.styleFrom(
                     padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                   ),
-                  child: Text("검색", style: TextStyle(fontSize: 16)),
-                  onPressed: () {
+                  child: Text("음악", style: TextStyle(fontSize: 16)),
+                  onPressed: () async {
+                    await _fetchMenus("musicview");
                     setState(() {
-                      _fetchQuery("말");
-                    });
-                  },
-                  onLongPress: () {
-                    setState(() {
-                      _fetchQuery("말");
+                      _fetchMenus("musicview");
+                      currentView = "musicview";
                     });
                   },
                 ),
@@ -301,7 +153,7 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
             ),
             Expanded(
               child: FutureBuilder(
-                  future: _fetchMenus("Gridview"),
+                  future: _fetchMenus(currentView),
                   builder: (context, snapshot) {
                     // print('snapshot No.=>');
                     // print(records.length);

@@ -12,6 +12,7 @@ import 'package:google_fonts/google_fonts.dart';
 //import '2menutwolevel_page_p.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:todaylang/page/commentbox.dart';
 
 import 'commentlist.dart';
 
@@ -53,11 +54,9 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
   Future _fetchMenus() async {
     bool loadRemoteDatatSucceed = false;
     final url = Uri.parse(
-      //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Gridview",
       //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&cat2=2",
       "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest?maxRecords=500&view=Grid view",
       //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?%3D1&maxRecords=500&filterByFormula=({cat1}='2')&fields[]=id",
-      //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?fields%5B%5D=&filterByFormula=%7Bcat1%7D+%3D+%222%22',
     );
     Map<String, String> header = {"Authorization": "Bearer keyyG7I9nxyG5SmTq"};
     try {
@@ -116,89 +115,124 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
               ));
             } else {
               return ListView.builder(
-                physics: const BouncingScrollPhysics(),
-                itemCount: records.length,
-                itemBuilder: (BuildContext context, int index) {
-                  return Padding(
-                    padding: const EdgeInsets.all(8.0),
-                    child: InkWell(
-                      onTap: () => Get.to(const DetailPage(),
-                          arguments: [
-                            records[index]['fields']['title'],
-                            records[index]['fields']['content'],
-                            //this.records[index]['fields']['cat1'],
-                          ],
-                          transition: Transition.zoom),
+                  physics: const BouncingScrollPhysics(),
+                  itemCount: records.length,
+                  itemBuilder: (BuildContext context, int index) {
+                    return Padding(
+                      padding: const EdgeInsets.all(8.0),
                       child: Column(
                         children: [
-                          Text(
-                            records[index]['fields']['title'].toString(),
-                            style: GoogleFonts.amiko(
-                                // backgroundColor: Colors.white70,
-                                fontStyle: FontStyle.normal,
-                                color: Colors.black,
-                                fontWeight: FontWeight.bold,
-                                fontSize: 20),
-                            textAlign: TextAlign.justify,
-                          ),
-                          //const Divider(),
-                          Padding(
-                            padding: const EdgeInsets.fromLTRB(0, 4, 0, 0),
-                            child: Text(
-                                records[index]['fields']['content'].toString(),
-                                // style: GoogleFonts.acme(
-                                style: GoogleFonts.nanumGothic(
-                                  // backgroundColor: Colors.white70,
-                                  // fontStyle: FontStyle.italic,
-                                  color: Colors.black,
-                                  fontSize: 15,
+                          GestureDetector(
+                            onTap: () => Get.to(const DetailPage(),
+                                arguments: [
+                                  records[index]['fields']['title'],
+                                  records[index]['fields']['content'],
+                                  //this.records[index]['fields']['cat1'],
+                                ],
+                                transition: Transition.zoom),
+                            child: Column(
+                              children: [
+                                Text(
+                                  records[index]['fields']['title'].toString(),
+                                  style: GoogleFonts.amiko(
+                                      // backgroundColor: Colors.white70,
+                                      fontStyle: FontStyle.normal,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                  textAlign: TextAlign.justify,
                                 ),
-                                overflow: TextOverflow.ellipsis,
-                                maxLines: 2),
+                                //const Divider(),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 4, 0, 0),
+                                  child: Text(
+                                      records[index]['fields']['content']
+                                          .toString(),
+                                      // style: GoogleFonts.acme(
+                                      style: GoogleFonts.nanumGothic(
+                                        // backgroundColor: Colors.white70,
+                                        // fontStyle: FontStyle.italic,
+                                        color: Colors.black,
+                                        fontSize: 15,
+                                      ),
+                                      overflow: TextOverflow.ellipsis,
+                                      maxLines: 2),
+                                ),
+                                Card(
+                                  color: Colors.black54,
+                                  shadowColor: Colors.grey,
+                                  elevation: 8,
+                                  clipBehavior: Clip.antiAlias,
+                                  shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(14)),
+                                  child: Stack(
+                                      alignment: Alignment.center,
+                                      children: [
+                                        Ink.image(
+                                          // image: NetworkImage(
+                                          //   this.records[index]['fields']['image_url'].toString(),
+                                          // ),
+                                          image: const AssetImage(
+                                              'assets/images/012.png'),
+                                          // colorFilter: ColorFilters.greyscale,
+                                          colorFilter: ColorFilter.mode(
+                                              Colors.black.withOpacity(0.8),
+                                              BlendMode.dstATop),
+                                          height: 180,
+                                          fit: BoxFit.cover,
+                                        ),
+                                        Text(
+                                          records[index]['fields']['title']
+                                              .toString(),
+                                          // style: GoogleFonts.aBeeZee(
+                                          style: GoogleFonts.nanumGothic(
+                                              // backgroundColor: Colors.white70,
+                                              fontStyle: FontStyle.italic,
+                                              color: Colors.white,
+                                              fontSize: 18),
+                                        ),
+                                      ]),
+                                ),
+                              ],
+                            ),
                           ),
-                          Card(
-                            color: Colors.black54,
-                            shadowColor: Colors.grey,
-                            elevation: 8,
-                            clipBehavior: Clip.antiAlias,
-                            shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(14)),
-                            child:
-                                Stack(alignment: Alignment.center, children: [
-                              Ink.image(
-                                // image: NetworkImage(
-                                //   this.records[index]['fields']['image_url'].toString(),
+                          Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Row(
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                              children: <Widget>[
+                                // Divider(
+                                //   indent: 30,
                                 // ),
-                                image:
-                                    const AssetImage('assets/images/012.png'),
-                                // colorFilter: ColorFilters.greyscale,
-                                colorFilter: ColorFilter.mode(
-                                    Colors.black.withOpacity(0.8),
-                                    BlendMode.dstATop),
-                                height: 180,
-                                fit: BoxFit.cover,
-                              ),
-                              Text(
-                                records[index]['fields']['title'].toString(),
-                                // style: GoogleFonts.aBeeZee(
-                                style: GoogleFonts.nanumGothic(
-                                    // backgroundColor: Colors.white70,
-                                    fontStyle: FontStyle.italic,
-                                    color: Colors.white,
-                                    fontSize: 18),
-                              ),
-                            ]),
+                                IconButton(
+                                  icon: Icon(Icons.list, color: Colors.amber),
+                                  onPressed: () {
+                                    Get.to(CommentWrite());
+                                  },
+                                ),
+                                Text('229'),
+                                Divider(
+                                  indent: 30,
+                                ),
+                                Icon(Icons.favorite),
+                                Text('1,204'),
+                                Divider(
+                                  indent: 30,
+                                ),
+                                Icon(Icons.share),
+                                Text('Share!'),
+                              ],
+                            ),
                           ),
-                          const Divider(
+                          Divider(
                             color: Colors.black12,
                             thickness: 8.0,
                           ),
                         ],
                       ),
-                    ),
-                  );
-                },
-              );
+                    );
+                  });
             }
           }),
     );

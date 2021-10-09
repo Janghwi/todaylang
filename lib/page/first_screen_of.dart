@@ -56,112 +56,138 @@ class _OpenPageState extends State<OpenPage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: SafeArea(
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+        body: SafeArea(
+      child:
+          Column(mainAxisAlignment: MainAxisAlignment.spaceEvenly, children: [
+        Wrap(
+          alignment: WrapAlignment.start,
           children: [
-            Wrap(
-              alignment: WrapAlignment.start,
-              children: [
-                TextButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
-                  ),
-                  child: Text("전체", style: TextStyle(fontSize: 16)),
-                  onPressed: () {
-                    setState(() {
-                      print('grivew clicked');
-                      _fetchMenus("Gridview");
-                    });
-                  },
-                  onLongPress: () {
-                    setState(() {
-                      _fetchMenus("Gridview");
-                    });
-                  },
-                ),
-                OutlinedButton(
-                  style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
-                  ),
-                  child: Text("명언", style: TextStyle(fontSize: 16)),
-                  onPressed: () {
-                    setState(() {
-                      print('quote clicked');
-
-                      _fetchMenus("quoteview");
-                    });
-                  },
-                  onLongPress: () {
-                    setState(() {
-                      _fetchMenus("quoteview");
-                    });
-                  },
-                ),
-              ],
+            TextButton(
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+              ),
+              child: Text("전체", style: TextStyle(fontSize: 16)),
+              onPressed: () {
+                setState(() {
+                  print('grivew clicked');
+                  _fetchMenus("Gridview");
+                });
+              },
+              onLongPress: () {
+                setState(() {
+                  _fetchMenus("Gridview");
+                });
+              },
             ),
-            Divider(
-              height: 2,
-            ),
-            Expanded(
-              child: FutureBuilder(
-                  future: _fetchMenus("Gridview"),
-                  builder: (context, snapshot) {
-                    // print('snapshot No.=>');
-                    // print(records.length);
+            OutlinedButton(
+              style: ElevatedButton.styleFrom(
+                padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+              ),
+              child: Text("사진", style: TextStyle(fontSize: 16)),
+              onPressed: () {
+                setState(() {
+                  print('quote clicked');
 
-                    if (!snapshot.hasData) {
-                      return Center(
-                          child: CircularProgressIndicator(
-                        valueColor: const AlwaysStoppedAnimation(Colors.amber),
-                      ));
-                    } else {
-                      return ListView.builder(
-                        // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
-                        //   crossAxisCount: 2,
-                        // ),
-                        physics: const BouncingScrollPhysics(),
-                        itemCount: records.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Column(
-                            children: [
-                              Card(
-                                child: Column(
-                                  children: [
-                                    InkWell(
-                                        onTap: () => openFile(
-                                            url: records[index]['fields']['url']
-                                                .toString()
-                                            // opt. fileName: 'video.mp4',
-                                            )),
-                                    Positioned(
-                                      top: 16,
-                                      right: 16,
-                                      left: 16,
-                                      child: Text(
-                                        records[index]['fields']['title']
-                                            .toString(),
-                                        style: GoogleFonts.nanumGothic(
-                                          // backgroundColor: Colors.white70,
-                                          // fontStyle: FontStyle.italic,
-                                          color: Colors.white,
-                                        ),
-                                      ),
-                                    ),
-                                  ],
-                                ),
-                              ),
-                            ],
-                          );
-                        },
-                      );
-                    }
-                  }),
+                  _fetchMenus("quoteview");
+                });
+              },
+              onLongPress: () {
+                setState(() {
+                  _fetchMenus("quoteview");
+                });
+              },
             ),
           ],
         ),
-      ),
-    );
+        Divider(
+          height: 2,
+        ),
+        Expanded(
+          child: FutureBuilder(
+              future: _fetchMenus("Gridview"),
+              builder: (context, snapshot) {
+                // print('snapshot No.=>');
+                // print(records.length);
+
+                if (!snapshot.hasData) {
+                  return Center(
+                      child: CircularProgressIndicator(
+                    valueColor: const AlwaysStoppedAnimation(Colors.amber),
+                  ));
+                } else {
+                  return ListView.builder(
+                      // gridDelegate: SliverGridDelegateWithFixedCrossAxisCount(
+                      //   crossAxisCount: 2,
+                      // ),
+                      physics: const BouncingScrollPhysics(),
+                      itemCount: records.length,
+                      itemBuilder: (BuildContext context, int index) {
+                        return Padding(
+                          padding: const EdgeInsets.all(8.0),
+                          child: InkWell(
+                            onTap: () => openFile(
+                              url: records[index]['fields']['url'].toString(),
+                              fileName: records[index]['fields']['filename'],
+                            ),
+                            child: Column(
+                              mainAxisAlignment: MainAxisAlignment.start,
+                              crossAxisAlignment: CrossAxisAlignment.start,
+                              children: [
+                                Text(
+                                  records[index]['fields']['title'].toString(),
+                                  style: GoogleFonts.nanumGothic(
+                                      // backgroundColor: Colors.white70,
+                                      fontStyle: FontStyle.normal,
+                                      color: Colors.black,
+                                      fontWeight: FontWeight.bold,
+                                      fontSize: 20),
+                                  textAlign: TextAlign.start,
+                                ),
+                                //const Divider(),
+                                Padding(
+                                  padding:
+                                      const EdgeInsets.fromLTRB(0, 4, 0, 0),
+                                  child: Row(
+                                    mainAxisAlignment:
+                                        MainAxisAlignment.spaceBetween,
+                                    children: [
+                                      Text(
+                                          records[index]['fields']['content']
+                                              .toString(),
+                                          style: GoogleFonts.nanumGothic(
+                                            // backgroundColor: Colors.white70,
+                                            // fontStyle: FontStyle.italic,
+                                            color: Colors.black,
+                                            fontSize: 15,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2),
+                                      Text(
+                                          records[index]['fields']['type']
+                                              .toString(),
+                                          style: GoogleFonts.nanumGothic(
+                                            // backgroundColor: Colors.white70,
+                                            // fontStyle: FontStyle.italic,
+                                            color: Colors.black,
+                                            fontSize: 15,
+                                          ),
+                                          overflow: TextOverflow.ellipsis,
+                                          maxLines: 2),
+                                    ],
+                                  ),
+                                ),
+
+                                const Divider(),
+                              ],
+                            ),
+                          ),
+                        );
+                      });
+                }
+              }),
+        )
+      ]),
+    ));
   }
 
   Future openFile({required String url, String? fileName}) async {
