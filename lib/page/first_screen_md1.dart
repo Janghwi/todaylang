@@ -17,16 +17,16 @@ import 'package:todaylang/widget/commentbox.dart';
 
 import 'commentlist.dart';
 
-class FirstScreenMd extends StatefulWidget {
-  const FirstScreenMd({Key? key}) : super(key: key);
+class FirstScreenMd1 extends StatefulWidget {
+  const FirstScreenMd1({Key? key}) : super(key: key);
 
   // const FirstScreenMd({Key? key}) : super(key: key);
 
   @override
-  State<FirstScreenMd> createState() => _FirstScreenMdState();
+  State<FirstScreenMd1> createState() => _FirstScreenMd1State();
 }
 
-class _FirstScreenMdState extends State<FirstScreenMd> {
+class _FirstScreenMd1State extends State<FirstScreenMd1> {
   List records = [];
 
   bool isLiked = false;
@@ -34,8 +34,7 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
   int likeCount = 0;
   // String? currentId;
 
-  // final key1 = GlobalKey();
-  final key1 = GlobalKey<LikeButtonState>();
+  // final key1 = GlobalKey<LikeButtonState>();
   // final TextEditingController likeController = TextEditingController();
   // final gkey = GlobalKey<LikeButtonState>();
 
@@ -91,7 +90,8 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
     });
   }
 
-  _postRequest(String? currentId) async {
+  _postRequest() async {
+    String? currentId;
     final response = await Dio().patch(
       'https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest',
       options: Options(
@@ -117,6 +117,7 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
 
   @override
   Widget build(BuildContext context) {
+    const double size = 20;
     final animationDuration = Duration(milliseconds: 1500);
 
     return Scaffold(
@@ -160,6 +161,7 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
                   physics: const BouncingScrollPhysics(),
                   itemCount: records.length,
                   itemBuilder: (BuildContext context, int index) {
+                    String? currentIdSave = records[index]['id'];
                     // print(records[index]['id']);
                     // print(records[index]['fields']['likeCnt']);
                     likeCount = records[index]['fields']['likeCnt'];
@@ -245,7 +247,7 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
                           Padding(
                             padding: const EdgeInsets.all(8.0),
                             child: Row(
-                              mainAxisAlignment: MainAxisAlignment.start,
+                              mainAxisAlignment: MainAxisAlignment.spaceEvenly,
                               children: <Widget>[
                                 // Divider(
                                 //   indent: 30,
@@ -256,11 +258,11 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
                                     Get.to(CommentWrite());
                                   },
                                 ),
-                                Text(records[index]['fields']['cmtCnt']
+                                Text(records[index]['fields']['cmtCount']
                                     .toString()),
-                                Divider(
-                                  indent: 20,
-                                ),
+                                // Divider(
+                                //   indent: 20,
+                                // ),
                                 //--------------------------------------------------------
                                 OutlinedButton(
                                   style: OutlinedButton.styleFrom(
@@ -274,10 +276,10 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
                                     await Future.delayed(
                                         Duration(milliseconds: 100));
 
-                                    key1.currentState!.onTap;
+                                    // key1.currentState!.onTap;
                                   },
                                   child: LikeButton(
-                                    key: key1,
+                                    // key: key1,
                                     size: 20,
                                     circleColor: CircleColor(
                                       start: Colors.blue,
@@ -288,20 +290,14 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
                                       dotSecondaryColor: Colors.greenAccent,
                                     ),
                                     likeBuilder: (bool isLiked) {
-                                      String? currentIdSave =
-                                          records[index]['id'];
-                                      print("1.current id save :"
-                                          "{$currentIdSave}");
-                                      print("2.likecount :" "{$likeCount}");
-                                      print("3.isliked :" "{$isLiked}");
-                                      // final color =
-                                      //     isLiked ? Colors.red : Colors.grey;
+                                      final color =
+                                          isLiked ? Colors.red : Colors.grey;
                                       return Icon(
                                         Icons.favorite,
                                         color: isLiked
-                                            ? Colors.red.shade400
+                                            ? Colors.deepPurpleAccent
                                             : Colors.grey,
-                                        size: 18,
+                                        size: 20,
                                       );
                                     },
                                     // likeCount: records[index]['fields']
@@ -321,7 +317,7 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
                                         text,
                                         style: TextStyle(
                                           color: color,
-                                          fontSize: 16,
+                                          fontSize: 20,
                                           fontWeight: FontWeight.bold,
                                         ),
                                       );
@@ -340,7 +336,7 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
                                       // TextField(controller: likeController);
                                       // likeController.text = int.parse(likeCountNo.toString());
                                       // likeCount = likeController.value;
-                                      _postRequest(records[index]['id']);
+                                      _postRequest();
                                       // setState(() {});
 
                                       return !isLiked;

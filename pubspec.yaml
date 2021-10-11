@@ -50,6 +50,7 @@ dependencies:
   path_provider: ^2.0.5
   file_picker: ^4.1.3
   comment_box: ^0.0.16
+  like_button: ^2.0.3
 
    
 
