@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:like_button/like_button.dart';
 
 class LikeButtonWidget extends StatefulWidget {
+  const LikeButtonWidget({Key? key}) : super(key: key);
+
   @override
   _LikeButtonWidgetState createState() => _LikeButtonWidgetState();
 }
@@ -14,68 +16,53 @@ class _LikeButtonWidgetState extends State<LikeButtonWidget> {
 
   @override
   Widget build(BuildContext context) {
-    final double size = 40;
+    const double size = 40;
     final animationDuration = Duration(milliseconds: 1500);
 
-    return OutlinedButton(
-      style: OutlinedButton.styleFrom(
-        backgroundColor: hasBackground ? Colors.red.shade100 : null,
-        fixedSize: Size.fromWidth(160),
-        padding: EdgeInsets.zero,
+    return LikeButton(
+      // key: key2,
+      padding: EdgeInsets.all(12),
+      size: size,
+      isLiked: isLiked,
+      likeCount: likeCount,
+      circleColor: CircleColor(
+        start: Colors.blue,
+        end: Colors.blue,
       ),
-      onPressed: () async {
-        setState(() => hasBackground = !isLiked);
+      bubblesColor: BubblesColor(
+        dotPrimaryColor: Colors.green,
+        dotSecondaryColor: Colors.greenAccent,
+      ),
+      likeBuilder: (isLiked) {
+        final color = isLiked ? Colors.red : Colors.grey;
 
-        await Future.delayed(Duration(milliseconds: 100));
-        // key2.currentState!.onTap();
+        return Icon(Icons.favorite, color: color, size: size);
       },
-      child: IgnorePointer(
-        child: LikeButton(
-          // key: key2,
-          padding: EdgeInsets.all(12),
-          size: size,
-          isLiked: isLiked,
-          likeCount: likeCount,
-          circleColor: CircleColor(
-            start: Colors.blue,
-            end: Colors.blue,
+      animationDuration: animationDuration,
+      likeCountPadding: EdgeInsets.only(left: 12),
+      countBuilder: (count, isLiked, text) {
+        final color = isLiked ? Colors.black : Colors.grey;
+
+        return Text(
+          text,
+          style: TextStyle(
+            color: color,
+            fontSize: 24,
+            fontWeight: FontWeight.bold,
           ),
-          bubblesColor: BubblesColor(
-            dotPrimaryColor: Colors.green,
-            dotSecondaryColor: Colors.greenAccent,
-          ),
-          likeBuilder: (isLiked) {
-            final color = isLiked ? Colors.red : Colors.grey;
+        );
+      },
+      onTap: (isLiked) async {
+        this.isLiked = !isLiked;
+        likeCount += this.isLiked ? 1 : -1;
 
-            return Icon(Icons.favorite, color: color, size: size);
-          },
-          animationDuration: animationDuration,
-          likeCountPadding: EdgeInsets.only(left: 12),
-          countBuilder: (count, isLiked, text) {
-            final color = isLiked ? Colors.black : Colors.grey;
+        Future.delayed(animationDuration)
+            .then((_) => setState(() => hasBackground = !isLiked));
 
-            return Text(
-              text,
-              style: TextStyle(
-                color: color,
-                fontSize: 24,
-                fontWeight: FontWeight.bold,
-              ),
-            );
-          },
-          onTap: (isLiked) async {
-            this.isLiked = !isLiked;
-            likeCount += this.isLiked ? 1 : -1;
+        // server request
 
-            Future.delayed(animationDuration)
-                .then((_) => setState(() => hasBackground = !isLiked));
-
-            // server request
-
-            return !isLiked;
-          },
-        ),
-      ),
+        return !isLiked;
+      },
     );
   }
 }

@@ -14,6 +14,7 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:like_button/like_button.dart';
 import 'package:todaylang/widget/commentbox.dart';
+import 'package:todaylang/widget/like_button.dart';
 
 import 'commentlist.dart';
 
@@ -163,6 +164,7 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
                     // print(records[index]['id']);
                     // print(records[index]['fields']['likeCnt']);
                     likeCount = records[index]['fields']['likeCnt'];
+                    String? currentIdSave = records[index]['id'];
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -251,7 +253,8 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
                                 //   indent: 30,
                                 // ),
                                 IconButton(
-                                  icon: Icon(Icons.list, color: Colors.amber),
+                                  icon: Icon(Icons.speaker_notes,
+                                      color: Colors.amber),
                                   onPressed: () {
                                     Get.to(CommentWrite());
                                   },
@@ -262,91 +265,19 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
                                   indent: 20,
                                 ),
                                 //--------------------------------------------------------
-                                OutlinedButton(
-                                  style: OutlinedButton.styleFrom(
-                                    backgroundColor:
-                                        hasBackground ? Colors.white : null,
-                                    fixedSize: Size.fromWidth(150),
-                                    padding: EdgeInsets.zero,
+                                GestureDetector(
+                                  child: Icon(
+                                    isLiked
+                                        ? Icons.favorite
+                                        : Icons.favorite_border,
+                                    size: 28.0,
+                                    color: Colors.pink,
                                   ),
-                                  onPressed: () async {
-                                    setState(() => hasBackground = !isLiked);
-                                    await Future.delayed(
-                                        Duration(milliseconds: 100));
-
-                                    key1.currentState!.onTap;
-                                  },
-                                  child: LikeButton(
-                                    key: key1,
-                                    size: 20,
-                                    circleColor: CircleColor(
-                                      start: Colors.blue,
-                                      end: Colors.blue,
-                                    ),
-                                    bubblesColor: BubblesColor(
-                                      dotPrimaryColor: Colors.green,
-                                      dotSecondaryColor: Colors.greenAccent,
-                                    ),
-                                    likeBuilder: (bool isLiked) {
-                                      String? currentIdSave =
-                                          records[index]['id'];
-                                      print("1.current id save :"
-                                          "{$currentIdSave}");
-                                      print("2.likecount :" "{$likeCount}");
-                                      print("3.isliked :" "{$isLiked}");
-                                      // final color =
-                                      //     isLiked ? Colors.red : Colors.grey;
-                                      return Icon(
-                                        Icons.favorite,
-                                        color: isLiked
-                                            ? Colors.red.shade400
-                                            : Colors.grey,
-                                        size: 18,
-                                      );
-                                    },
-                                    // likeCount: records[index]['fields']
-                                    //     ['likeCount'],
-                                    likeCount: likeCount,
-                                    isLiked: isLiked,
-                                    //     ["likeCnt"],
-                                    // likeCount: records[index]['fields']
-                                    //     ["likeCnt"],
-                                    countBuilder:
-                                        (count, bool isLiked, String text) {
-                                      likeCount =
-                                          records[index]['fields']['likeCnt'];
-                                      var color =
-                                          isLiked ? Colors.red : Colors.grey;
-                                      return Text(
-                                        text,
-                                        style: TextStyle(
-                                          color: color,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      );
-                                    },
-                                    onTap: (isLiked) async {
-                                      this.isLiked = !isLiked;
-                                      likeCount += this.isLiked ? 1 : -1;
-                                      print('ontap passed');
-
-                                      Future.delayed(animationDuration).then(
-                                          (_) => setState(
-                                              () => hasBackground = !isLiked));
-                                      //     ['likeCount']);
-
-                                      // server request
-                                      // TextField(controller: likeController);
-                                      // likeController.text = int.parse(likeCountNo.toString());
-                                      // likeCount = likeController.value;
-                                      _postRequest(records[index]['id']);
-                                      // setState(() {});
-
-                                      return !isLiked;
-                                    },
-                                  ),
+                                  onTap: () => handleLikePost(currentIdSave),
                                 ),
+
+                                Text(records[index]['fields']['likeCnt']
+                                    .toString()),
 
                                 // Divider(
                                 //   indent: 10,
@@ -367,6 +298,32 @@ class _FirstScreenMdState extends State<FirstScreenMd> {
             }
           }),
     );
+  }
+
+  handleLikePost(String? currentIdSave) {
+    // bool isLiked = true;
+
+    if (isLiked) {
+      //post plus
+      print('isLiked yes');
+
+      setState(() {
+        likeCount -= 1;
+        isLiked = false;
+      });
+    } else if (!isLiked) {
+      //false를 처음 만난다
+      print('isLiked no');
+      print(likeCount);
+      likeCount += 1;
+      print(likeCount);
+
+      setState(() {
+        likeCount += 1;
+        isLiked = true;
+        _postRequest(currentIdSave);
+      });
+    }
   }
 }
 

@@ -16,6 +16,7 @@ import 'page/first_screen_dt.dart';
 import 'page/first_screen_md.dart';
 import 'page/first_screen_of.dart';
 import 'page/first_screen_wb.dart';
+import 'page/first_screen_wb1.dart';
 import 'page/first_screen_yt.dart';
 import 'page/first_screen_yt_nobutton.dart';
 import 'page/first_screen_ytLan.dart';
@@ -79,7 +80,7 @@ class MainPage extends StatelessWidget {
             // icon: Icon(Icons.dynamic_form_sharp),
           ),
           Tab(
-            text: '메뉴',
+            text: '웹뷰1',
             // icon: Icon(Icons.dynamic_form_sharp),
           ),
           Tab(
@@ -88,14 +89,6 @@ class MainPage extends StatelessWidget {
           ),
           Tab(
             text: '유투브',
-            // icon: Icon(Icons.favorite_border),
-          ),
-          Tab(
-            text: '코멘트',
-            // icon: Icon(Icons.favorite_border),
-          ),
-          Tab(
-            text: '포스트',
             // icon: Icon(Icons.favorite_border),
           ),
           Tab(
@@ -109,11 +102,10 @@ class MainPage extends StatelessWidget {
           FirstScreenAi(),
           FirstScreenDt(),
           FirstScreenWb(),
-          const BarMenu(),
+          FirstScreenWb1(),
+          // const BarMenu(),
           FirstScreenYtLan(),
           FirstScreenYt(),
-          const CommentsPage(),
-          PostPage(),
           OpenPage(),
         ],
       );
