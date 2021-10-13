@@ -57,9 +57,7 @@ class _FirstScreenMd2State extends State<FirstScreenMd2> {
   // Future _fetchMenus() async {
   //   bool loadRemoteDatatSucceed = false;
   //   final url = Uri.parse(
-  //     //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&cat2=2",
   //     "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest?maxRecords=500&view=Gridview",
-  //     //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?%3D1&maxRecords=500&filterByFormula=({cat1}='2')&fields[]=id",
   //   );
   //   Map<String, String> header = {"Authorization": "Bearer keyyG7I9nxyG5SmTq"};
   //   try {
@@ -74,8 +72,6 @@ class _FirstScreenMd2State extends State<FirstScreenMd2> {
   Future<List> _fetchMenus(
       //  String view,
       ) async {
-    // bool loadRemoteDatatSucceed = false;
-    // Response response;
     try {
       Dio dio = Dio();
       var response = await dio.get(
@@ -92,7 +88,32 @@ class _FirstScreenMd2State extends State<FirstScreenMd2> {
       records = result['records'];
     } on DioError catch (e) {
       if (e.response != null) {
-        print(e.response!.data);
+      } else {
+        // if (loadRemoteDatatSucceed == false) retryFuture(_fetchMenus, 200);
+      }
+    }
+    return records;
+  }
+
+  Future<List> _fetchComments(
+      //  String view,
+      ) async {
+    try {
+      Dio dio = Dio();
+      var response = await dio.get(
+        // "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest?maxRecords=500&view=Gridview",
+        "https://api.airtable.com/v0/app95nB2yi0WAYDyn/comments?maxRecords=500&view=Gridview",
+        options: Options(contentType: 'Application/json', headers: {
+          'Authorization': 'Bearer keyyG7I9nxyG5SmTq',
+          'Accept': 'Application/json',
+        }),
+      );
+
+      Map<String, dynamic> result = (response.data);
+
+      records = result['records'];
+    } on DioError catch (e) {
+      if (e.response != null) {
       } else {
         // if (loadRemoteDatatSucceed == false) retryFuture(_fetchMenus, 200);
       }

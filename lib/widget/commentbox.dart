@@ -120,7 +120,7 @@ class _CommentWriteState extends State<CommentWrite> {
                                   BorderRadius.all(Radius.circular(50))),
                           child: CircleAvatar(
                               radius: 50,
-                              backgroundImage: NetworkImage(data[1]['pic'])),
+                              backgroundImage: NetworkImage(data[0]['pic'])),
                         ),
                       ),
                       title: Text(
