@@ -14,27 +14,43 @@ import 'package:http/http.dart' as http;
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:like_button/like_button.dart';
 import 'package:todaylang/widget/commentbox.dart';
+import 'package:todaylang/widget/like_button.dart';
 
 import 'commentlist.dart';
 
-class FirstScreenMd1 extends StatefulWidget {
-  const FirstScreenMd1({Key? key}) : super(key: key);
+class FirstScreenMd2 extends StatefulWidget {
+  const FirstScreenMd2({Key? key}) : super(key: key);
 
   // const FirstScreenMd({Key? key}) : super(key: key);
 
   @override
-  State<FirstScreenMd1> createState() => _FirstScreenMd1State();
+  State<FirstScreenMd2> createState() => _FirstScreenMd2State();
 }
 
-class _FirstScreenMd1State extends State<FirstScreenMd1> {
+class _FirstScreenMd2State extends State<FirstScreenMd2> {
   List records = [];
 
-  bool isLiked = false;
   bool hasBackground = false;
-  int likeCount = 0;
+  // int likeCount = 0;
   // String? currentId;
 
-  final key1 = GlobalKey<LikeButtonState>();
+  // final key1 = GlobalKey();
+  late GlobalKey<LikeButtonState> _globalkey;
+
+  @override
+  void initState() {
+    // Initialize the values here
+    super.initState();
+    _globalkey = GlobalKey<LikeButtonState>();
+  }
+
+  @override
+  void dispose() {
+    // Remember that you have to dispose of the controllers once the widget is ready to be disposed of
+    _globalkey;
+    super.dispose();
+  }
+
   // final TextEditingController likeController = TextEditingController();
   // final gkey = GlobalKey<LikeButtonState>();
 
@@ -90,7 +106,7 @@ class _FirstScreenMd1State extends State<FirstScreenMd1> {
     });
   }
 
-  _postRequest(String? currentId) async {
+  _postRequest(String? currentId, int likeCount) async {
     final response = await Dio().patch(
       'https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest',
       options: Options(
@@ -114,33 +130,14 @@ class _FirstScreenMd1State extends State<FirstScreenMd1> {
     );
   }
 
+  bool isLiked = false;
   @override
   Widget build(BuildContext context) {
     final animationDuration = Duration(milliseconds: 1500);
 
     return Scaffold(
       extendBodyBehindAppBar: true,
-      appBar: AppBar(
-        backgroundColor: Colors.transparent,
-        elevation: 0,
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.list),
-            color: Colors.black,
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.speaker_notes),
-            color: Colors.black,
-          ),
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.nature_people),
-            color: Colors.black,
-          )
-        ],
-      ),
+
       // ignore: unnecessary_null_comparison
       body: FutureBuilder(
           future: _fetchMenus(),
@@ -156,12 +153,14 @@ class _FirstScreenMd1State extends State<FirstScreenMd1> {
               ));
             } else {
               return ListView.builder(
+                  key: _globalkey,
                   physics: const BouncingScrollPhysics(),
                   itemCount: records.length,
                   itemBuilder: (BuildContext context, int index) {
                     // print(records[index]['id']);
                     // print(records[index]['fields']['likeCnt']);
-                    likeCount = records[index]['fields']['likeCnt'];
+                    // likeCount = records[index]['fields']['likeCnt'];
+                    // String? currentIdSave = records[index]['id'];
                     return Padding(
                       padding: const EdgeInsets.all(8.0),
                       child: Column(
@@ -250,102 +249,67 @@ class _FirstScreenMd1State extends State<FirstScreenMd1> {
                                 //   indent: 30,
                                 // ),
                                 IconButton(
-                                  icon: Icon(Icons.list, color: Colors.amber),
+                                  icon: Icon(Icons.speaker_notes,
+                                      color: Colors.amber),
                                   onPressed: () {
                                     Get.to(CommentWrite());
                                   },
                                 ),
+                                // Divider(
+                                //   indent: 10,
+                                // ),
                                 Text(records[index]['fields']['cmtCnt']
                                     .toString()),
                                 Divider(
-                                  indent: 20,
+                                  indent: 30,
                                 ),
                                 //--------------------------------------------------------
-                                OutlinedButton(
-                                  style: OutlinedButton.styleFrom(
-                                    backgroundColor:
-                                        hasBackground ? Colors.white : null,
-                                    fixedSize: Size.fromWidth(150),
-                                    padding: EdgeInsets.zero,
-                                  ),
-                                  onPressed: () async {
-                                    setState(() => hasBackground = !isLiked);
-                                    await Future.delayed(
-                                        Duration(milliseconds: 100));
-
-                                    key1.currentState!.onTap;
-                                  },
-                                  child: LikeButton(
-                                    key: key1,
-                                    size: 20,
-                                    circleColor: CircleColor(
-                                      start: Colors.blue,
-                                      end: Colors.blue,
+                                GestureDetector(
+                                    child: Icon(
+                                      isLiked
+                                          ? Icons.favorite
+                                          : Icons.favorite_border,
+                                      size: 28.0,
+                                      color: Colors.pink,
                                     ),
-                                    bubblesColor: BubblesColor(
-                                      dotPrimaryColor: Colors.green,
-                                      dotSecondaryColor: Colors.greenAccent,
-                                    ),
-                                    likeBuilder: (bool isLiked) {
-                                      String? currentIdSave =
-                                          records[index]['id'];
-                                      print("1.current id save :"
-                                          "{$currentIdSave}");
-                                      print("2.likecount :" "{$likeCount}");
-                                      print("3.isliked :" "{$isLiked}");
-                                      // final color =
-                                      //     isLiked ? Colors.red : Colors.grey;
-                                      return Icon(
-                                        Icons.favorite,
-                                        color: isLiked
-                                            ? Colors.red.shade400
-                                            : Colors.grey,
-                                        size: 18,
-                                      );
-                                    },
-                                    // likeCount: records[index]['fields']
-                                    //     ['likeCount'],
-                                    likeCount: likeCount,
-                                    isLiked: isLiked,
-                                    //     ["likeCnt"],
-                                    // likeCount: records[index]['fields']
-                                    //     ["likeCnt"],
-                                    countBuilder:
-                                        (count, bool isLiked, String text) {
-                                      likeCount =
+                                    onTap: () async {
+                                      int likeCount =
                                           records[index]['fields']['likeCnt'];
-                                      var color =
-                                          isLiked ? Colors.red : Colors.grey;
-                                      return Text(
-                                        text,
-                                        style: TextStyle(
-                                          color: color,
-                                          fontSize: 16,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      );
-                                    },
-                                    onTap: (isLiked) async {
-                                      this.isLiked = !isLiked;
-                                      likeCount += this.isLiked ? 1 : -1;
-                                      print('ontap passed');
+                                      int count = 0;
+                                      if (!isLiked && count == 0) {
+                                        setState(() {
+                                          likeCount += 1;
+                                          _postRequest(
+                                              records[index]['id'], likeCount);
+                                          count = 1;
+                                          isLiked = !isLiked;
+                                        });
+                                      } else if (isLiked && count == 1) {
+                                        setState(() {
+                                          likeCount -= 1;
 
-                                      Future.delayed(animationDuration).then(
-                                          (_) => setState(
-                                              () => hasBackground = !isLiked));
-                                      //     ['likeCount']);
+                                          _postRequest(
+                                              records[index]['id'], likeCount);
+                                          isLiked = !isLiked;
+                                          count = 0;
+                                        });
+                                      } else if (isLiked && count == 0) {
+                                        setState(() {
+                                          likeCount -= 1;
 
-                                      // server request
-                                      // TextField(controller: likeController);
-                                      // likeController.text = int.parse(likeCountNo.toString());
-                                      // likeCount = likeController.value;
-                                      _postRequest(records[index]['id']);
-                                      setState(() {});
-
-                                      return !isLiked;
-                                    },
-                                  ),
+                                          _postRequest(
+                                              records[index]['id'], likeCount);
+                                          isLiked = !isLiked;
+                                          count = 1;
+                                        });
+                                      }
+                                    }),
+                                // handleLikePost(records[index]['id']),
+                                Divider(
+                                  indent: 10,
                                 ),
+                                Text(records[index]['fields']['likeCnt']
+                                    .toString()),
 
                                 // Divider(
                                 //   indent: 10,
@@ -367,6 +331,30 @@ class _FirstScreenMd1State extends State<FirstScreenMd1> {
           }),
     );
   }
+
+  // handleLikePost(String? currentIdSave) {
+  //   print(currentIdSave);
+  //   if (isLiked = true) {
+  //     //post plus
+  //     print('isLiked yes');
+
+  //     setState(() {
+  //       likeCount -= 1;
+  //       isLiked = false;
+  //       _postRequest(currentIdSave, likeCount);
+  //     });
+
+  //     // if (isLiked = false) {
+  //     //   //post plus
+  //     //   print('isLiked no');
+  //     //   likeCount += 1;
+  //     //   isLiked = true;
+  //     //   _postRequest(currentIdSave, likeCount);
+
+  //     //   setState(() {});
+  //     // }
+  //   }
+  // }
 }
 
 class DetailPage extends StatefulWidget {

@@ -14,6 +14,7 @@ import 'page/first_screen_ad.dart';
 import 'page/first_screen_ai.dart';
 import 'page/first_screen_dt.dart';
 import 'page/first_screen_md.dart';
+import 'page/first_screen_md2.dart';
 import 'page/first_screen_of.dart';
 import 'page/first_screen_wb.dart';
 import 'page/first_screen_wb1.dart';
@@ -97,7 +98,7 @@ class MainPage extends StatelessWidget {
           ),
         ],
         children: [
-          FirstScreenMd(),
+          FirstScreenMd2(),
           FirstScreenAd(),
           FirstScreenAi(),
           FirstScreenDt(),
