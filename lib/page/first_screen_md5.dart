@@ -19,16 +19,16 @@ import 'package:todaylang/widget/like_button.dart';
 
 import 'commentlist.dart';
 
-class FirstScreenMd4 extends StatefulWidget {
-  const FirstScreenMd4({Key? key}) : super(key: key);
+class FirstScreenMd5 extends StatefulWidget {
+  const FirstScreenMd5({Key? key}) : super(key: key);
 
   // const FirstScreenMd({Key? key}) : super(key: key);
 
   @override
-  State<FirstScreenMd4> createState() => _FirstScreenMd4State();
+  State<FirstScreenMd5> createState() => _FirstScreenMd5State();
 }
 
-class _FirstScreenMd4State extends State<FirstScreenMd4> {
+class _FirstScreenMd5State extends State<FirstScreenMd5> {
   List records = [];
 
   bool hasBackground = false;
@@ -37,8 +37,6 @@ class _FirstScreenMd4State extends State<FirstScreenMd4> {
 
   // final key1 = GlobalKey();
   // late GlobalKey<LikeButtonState> _globalkey;
-  final IconController controller = Get.put(IconController());
-
   final ValueNotifier<String> _iconColor =
       ValueNotifier<String>('_colors[0]'); // ValueNotifier 변수 선언
   // final ValueNotifier<int> _likeCount =
@@ -274,37 +272,40 @@ class _FirstScreenMd4State extends State<FirstScreenMd4> {
                                 Divider(
                                   indent: 30,
                                 ),
+                                //--------------------------------------------------------
+                                //--------------------------------------------------------
+                                //--------------------------------------------------------
+                                //--------------------------------------------------------
+                                ElevatedButton(
+                                  style: ButtonStyle(
+                                    foregroundColor:
+                                        getColor(Colors.red, Colors.white),
+                                    backgroundColor:
+                                        getColor(Colors.white, Colors.red),
+                                    // side:
+                                    //     getBorder(Colors.red, Colors.white),
+                                  ),
+                                  child: const Icon(
+                                    Icons.favorite,
+                                    color: Colors.grey,
+                                  ),
+                                  onPressed: () async {
+                                    int likeCount =
+                                        records[index]['fields']['likeCnt'];
 
-                                //--------------------------------------------------------
-                                //--------------------------------------------------------
-                                //--------------------------------------------------------
-                                //--------------------------------------------------------
+                                    likeCount += 1;
+                                    _iconColor.value = 'Colors.red';
+                                    _postRequest(
+                                        records[index]['id'], likeCount);
+                                  },
+                                ),
+                                // handleLikePost(records[index]['id']),
                                 Divider(
                                   indent: 10,
                                 ),
-
-                                // handleLikePost(records[index]['id']),
-
-                                GestureDetector(child: GetX<IconController>(
-                                  builder: (_) {
-                                    return Icon(
-                                      Icons.favorite,
-                                      color: controller.icongreyLoad(),
-                                      // color: controller.icongreyLoad(),
-                                      size: 28.0,
-                                    );
-                                  },
-                                ), onTap: () async {
-                                  print('passed');
-                                  int likeCount =
-                                      records[index]['fields']['likeCnt'];
-
-                                  likeCount += 1;
-                                  // _iconColor.value = 'Colors.red';
-                                  _postRequest(records[index]['id'], likeCount);
-                                }),
                                 Text(records[index]['fields']['likeCnt']
                                     .toString()),
+
                                 // Divider(
                                 //   indent: 10,
                                 // ),
@@ -324,6 +325,18 @@ class _FirstScreenMd4State extends State<FirstScreenMd4> {
             }
           }),
     );
+  }
+
+  MaterialStateProperty<Color> getColor(Color color, Color colorPressed) {
+    // ignore: prefer_function_declarations_over_variables
+    final getColor = (Set<MaterialState> states) {
+      if (states.contains(MaterialState.pressed)) {
+        return colorPressed;
+      } else {
+        return color;
+      }
+    };
+    return MaterialStateProperty.resolveWith(getColor);
   }
 
   // handleLikePost(String? currentIdSave) {
@@ -498,25 +511,5 @@ class _DetailPageState extends State<DetailPage> {
       default:
         return null;
     }
-  }
-}
-
-class IconController extends GetxController {
-// Private members
-
-  String colorGrey = 'Colors.grey';
-  String colorRed = 'Colors.red';
-
-  String get iconRedSet => icongreyLoad();
-  String get iconGreySet => iconRedLoad();
-
-  icongreyLoad() {
-    colorRed = 'Colors.grey';
-    update();
-  }
-
-  iconRedLoad() {
-    colorGrey = 'Colors.red';
-    update();
   }
 }

@@ -32,11 +32,12 @@ class TabBarWidget extends StatelessWidget {
                 title: Text(
                   title,
                   // style: TextStyle(fontSize: 25, color: Colors.white)),
-                  style: GoogleFonts.nanumGothic(
+                  style: GoogleFonts.hiMelody(
                       // backgroundColor: Colors.white70,
-                      fontStyle: FontStyle.italic,
+                      fontStyle: FontStyle.normal,
                       color: Colors.yellow,
-                      fontSize: 30),
+                      fontSize: 24,
+                      fontWeight: FontWeight.bold),
                 ),
                 gradient: LinearGradient(
                     colors: const [Colors.transparent, Colors.black54]),

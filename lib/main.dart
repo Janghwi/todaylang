@@ -1,33 +1,29 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
-import 'package:google_fonts/google_fonts.dart';
-// import 'package:staggered_gridview_example/widget/basic_grid_widget.dart';
-// import 'package:staggered_gridview_example/widget/custom_scroll_view_grid_widget.dart';
-// import 'package:staggered_gridview_example/widget/dynamic_size_grid_widget.dart';
-// import 'package:staggered_gridview_example/widget/tabbar_widget.dart';
+import 'package:todaylang/page/commentlist.dart';
+import 'package:todaylang/widget/homepage.dart';
 
-import 'page/barmenu.dart';
-import 'page/comments.dart';
-import 'page/first_screen.dart';
 import 'page/first_screen_ad.dart';
 import 'page/first_screen_ai.dart';
 import 'page/first_screen_dt.dart';
-import 'page/first_screen_md.dart';
-import 'page/first_screen_md2.dart';
-import 'page/first_screen_md3.dart';
-import 'page/first_screen_md4.dart';
+import 'page/first_screen_md1.dart';
 import 'page/first_screen_of.dart';
 import 'page/first_screen_wb.dart';
 import 'page/first_screen_wb1.dart';
 import 'page/first_screen_yt.dart';
-import 'page/first_screen_yt_nobutton.dart';
 import 'page/first_screen_ytLan.dart';
-import 'page/postpage.dart';
+import 'widget/google_signin_prov.dart';
+import 'widget/logged_in_widget.dart';
+import 'widget/sign_up_widget.dart';
 import 'widget/tabbar_widget.dart';
+import 'package:firebase_core/firebase_core.dart';
+import 'package:provider/provider.dart';
 
 Future main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp();
   await SystemChrome.setPreferredOrientations([
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
@@ -42,74 +38,61 @@ class MyApp extends StatelessWidget {
   const MyApp({Key? key}) : super(key: key);
 
   @override
-  Widget build(BuildContext context) => GetMaterialApp(
-        debugShowCheckedModeBanner: false,
-        title: title,
-        theme: ThemeData.light(),
-        home: const MainPage(title: title),
+  Widget build(BuildContext context) => ChangeNotifierProvider(
+        create: (context) => GoogleSignInProvider(),
+        child: GetMaterialApp(
+          debugShowCheckedModeBanner: false,
+          title: title,
+          theme: ThemeData(
+            primarySwatch: Colors.blue,
+            elevatedButtonTheme: ElevatedButtonThemeData(
+              style: ElevatedButton.styleFrom(
+                elevation: 3,
+                primary: Colors.white,
+                shape: CircleBorder(),
+                minimumSize: Size.square(30),
+              ),
+            ),
+          ),
+          home: LoginPage(),
+        ),
       );
 }
 
-class MainPage extends StatelessWidget {
-  final String title;
-
-  // ignore: use_key_in_widget_constructors
-  const MainPage({
-    required this.title,
-  });
-
+class LoginPage extends StatefulWidget {
   @override
-  Widget build(BuildContext context) => TabBarWidget(
-        title: title,
-        tabs: const [
-          Tab(
-            text: '좋은글',
-            // icon: Icon(Icons.feed_outlined),
-          ),
-          Tab(
-            text: '아코디언',
-            // icon: Icon(Icons.dynamic_feed),
-          ),
-          Tab(
-            text: 'Ai',
-            // icon: Icon(Icons.dynamic_form_sharp),
-          ),
-          Tab(
-            text: '디지털트윈',
-            // icon: Icon(Icons.dynamic_form_sharp),
-          ),
-          Tab(
-            text: '웹뷰',
-            // icon: Icon(Icons.dynamic_form_sharp),
-          ),
-          Tab(
-            text: '웹뷰1',
-            // icon: Icon(Icons.dynamic_form_sharp),
-          ),
-          Tab(
-            text: '유투브언어',
-            // icon: Icon(Icons.favorite_border),
-          ),
-          Tab(
-            text: '유투브',
-            // icon: Icon(Icons.favorite_border),
-          ),
-          Tab(
-            text: '오픈파일',
-            // icon: Icon(Icons.favorite_border),
-          ),
-        ],
-        children: [
-          FirstScreenMd4(),
-          FirstScreenAd(),
-          FirstScreenAi(),
-          FirstScreenDt(),
-          FirstScreenWb(),
-          FirstScreenWb1(),
-          // const BarMenu(),
-          FirstScreenYtLan(),
-          FirstScreenYt(),
-          OpenPage(),
-        ],
+  State<LoginPage> createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  @override
+  Widget build(BuildContext context) => Scaffold(
+        body: StreamBuilder(
+          stream: FirebaseAuth.instance.authStateChanges(),
+          builder: (context, snapshot) {
+            if (snapshot.connectionState == ConnectionState.waiting) {
+              return Center(child: CircularProgressIndicator());
+            } else if (snapshot.hasData) {
+              return LoggedInWidget();
+            } else if (snapshot.hasError) {
+              return Center(child: Text('Something Went Wrong!'));
+            } else {
+              // return HomePage();
+              return SignUpWidget();
+            }
+          },
+        ),
+        // bottomNavigationBar: BottomNavigationBar(
+        //   currentIndex: 0,
+        //   onTap: (index) {
+        //     print(index);
+        //   },
+        //   backgroundColor: Colors.white,
+        //   items: const <BottomNavigationBarItem>[
+        //     BottomNavigationBarItem(icon: Icon(Icons.home), label: "Home"),
+        //     BottomNavigationBarItem(icon: Icon(Icons.mail), label: "Messages"),
+        //     BottomNavigationBarItem(icon: Icon(Icons.person), label: "Profile"),
+        //   ],
+        // ),
       );
 }

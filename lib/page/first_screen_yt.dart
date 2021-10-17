@@ -36,7 +36,7 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
     try {
       Dio dio = Dio();
       var response = await dio.get(
-        "https://api.airtable.com/v0/app95nB2yi0WAYDyn/YtTbl?maxRecords=50&view=$view",
+        "https://api.airtable.com/v0/app95nB2yi0WAYDyn/YtTbl?maxRecords=500&view=$view",
         options: Options(contentType: 'Application/json', headers: {
           'Authorization': 'Bearer keyyG7I9nxyG5SmTq',
           'Accept': 'Application/json',
@@ -74,7 +74,7 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
                   ),
                   child: Text("전체", style: TextStyle(fontSize: 16)),
                   onPressed: () async {
-                    await _fetchMenus("Gridview");
+                    // await _fetchMenus("Gridview");
                     setState(() {
                       _fetchMenus("Gridview");
                       currentView = "Gridview";
@@ -87,7 +87,7 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
                   ),
                   child: Text("명언", style: TextStyle(fontSize: 16)),
                   onPressed: () async {
-                    await _fetchMenus("quoteview");
+                    // await _fetchMenus("quoteview");
                     setState(() {
                       _fetchMenus("quoteview");
                       currentView = "quoteview";
@@ -96,11 +96,12 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
                 ),
                 TextButton(
                   style: ElevatedButton.styleFrom(
+                    // shape: OutlinedBorder(),
                     padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                   ),
                   child: Text("IT지식", style: TextStyle(fontSize: 16)),
                   onPressed: () async {
-                    await _fetchMenus("itview");
+                    // await _fetchMenus("itview");
                     setState(() {
                       _fetchMenus("itview");
                       currentView = "itview";
@@ -113,7 +114,7 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
                   ),
                   child: Text("골프", style: TextStyle(fontSize: 16)),
                   onPressed: () async {
-                    await _fetchMenus("golfview");
+                    // await _fetchMenus("golfview");
                     setState(() {
                       _fetchMenus("golfview");
                       currentView = "golfview";
@@ -126,7 +127,7 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
                   ),
                   child: Text("도서", style: TextStyle(fontSize: 16)),
                   onPressed: () async {
-                    await _fetchMenus("bookview");
+                    // await _fetchMenus("bookview");
                     setState(() {
                       _fetchMenus("bookview");
                       currentView = "bookview";
@@ -139,7 +140,7 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
                   ),
                   child: Text("음악", style: TextStyle(fontSize: 16)),
                   onPressed: () async {
-                    await _fetchMenus("musicview");
+                    // await _fetchMenus("musicview");
                     setState(() {
                       _fetchMenus("musicview");
                       currentView = "musicview";

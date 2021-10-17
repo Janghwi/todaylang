@@ -1,7 +1,6 @@
 // ignore_for_file: sized_box_for_whitespace
 
 import 'dart:convert';
-import 'dart:ffi';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
@@ -19,16 +18,16 @@ import 'package:todaylang/widget/like_button.dart';
 
 import 'commentlist.dart';
 
-class FirstScreenMd4 extends StatefulWidget {
-  const FirstScreenMd4({Key? key}) : super(key: key);
+class FirstScreenMd1 extends StatefulWidget {
+  const FirstScreenMd1({Key? key}) : super(key: key);
 
   // const FirstScreenMd({Key? key}) : super(key: key);
 
   @override
-  State<FirstScreenMd4> createState() => _FirstScreenMd4State();
+  State<FirstScreenMd1> createState() => _FirstScreenMd1State();
 }
 
-class _FirstScreenMd4State extends State<FirstScreenMd4> {
+class _FirstScreenMd1State extends State<FirstScreenMd1> {
   List records = [];
 
   bool hasBackground = false;
@@ -36,28 +35,40 @@ class _FirstScreenMd4State extends State<FirstScreenMd4> {
   // String? currentId;
 
   // final key1 = GlobalKey();
-  // late GlobalKey<LikeButtonState> _globalkey;
-  final IconController controller = Get.put(IconController());
-
-  final ValueNotifier<String> _iconColor =
-      ValueNotifier<String>('_colors[0]'); // ValueNotifier 변수 선언
-  // final ValueNotifier<int> _likeCount =
-  //     ValueNotifier<int>(0); // ValueNotifier 변수 선언
+  late GlobalKey<LikeButtonState> _globalkey;
 
   @override
   void initState() {
     // Initialize the values here
     super.initState();
-    // _globalkey = GlobalKey<LikeButtonState>();
+    _globalkey = GlobalKey<LikeButtonState>();
   }
 
   @override
   void dispose() {
     // Remember that you have to dispose of the controllers once the widget is ready to be disposed of
-    // _globalkey;
+    _globalkey;
     super.dispose();
   }
 
+  // final TextEditingController likeController = TextEditingController();
+  // final gkey = GlobalKey<LikeButtonState>();
+
+  // Future _fetchMenus() async {
+  //   bool loadRemoteDatatSucceed = false;
+  //   final url = Uri.parse(
+  //     "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest?maxRecords=500&view=Gridview",
+  //   );
+  //   Map<String, String> header = {"Authorization": "Bearer keyyG7I9nxyG5SmTq"};
+  //   try {
+  //     final response = await http.get(url, headers: header);
+  //     Map<String, dynamic> result = json.decode(response.body);
+  //     records = result['records'];
+  //   } catch (e) {
+  //     if (loadRemoteDatatSucceed == false) retryFuture(_fetchMenus, 2000);
+  //   }
+  //   return records;
+  // }
   Future<List> _fetchMenus(
       //  String view,
       ) async {
@@ -140,8 +151,6 @@ class _FirstScreenMd4State extends State<FirstScreenMd4> {
     );
   }
 
-  // Color _iconColor = Colors.grey;
-  bool isLiked = false;
   @override
   Widget build(BuildContext context) {
     final animationDuration = Duration(milliseconds: 1500);
@@ -156,7 +165,8 @@ class _FirstScreenMd4State extends State<FirstScreenMd4> {
             // print('snapshot No.=>');
             // print(records.length);
             // print("get records:" "{$records}");
-
+            List<bool> isLiked = List.filled(records.length, false);
+            print(isLiked);
             if (!snapshot.hasData) {
               return Center(
                   child: CircularProgressIndicator(
@@ -164,7 +174,7 @@ class _FirstScreenMd4State extends State<FirstScreenMd4> {
               ));
             } else {
               return ListView.builder(
-                  // key: _globalkey,
+                  key: _globalkey,
                   physics: const BouncingScrollPhysics(),
                   itemCount: records.length,
                   itemBuilder: (BuildContext context, int index) {
@@ -274,37 +284,104 @@ class _FirstScreenMd4State extends State<FirstScreenMd4> {
                                 Divider(
                                   indent: 30,
                                 ),
+                                //--------------------------------------------------------
+                                GestureDetector(
+                                    child: IconButton(
+                                      icon: isLiked[index]
+                                          ? Icon(
+                                              Icons.favorite,
+                                              color: Colors.red,
+                                            )
+                                          : Icon(
+                                              Icons.favorite,
+                                              color: Colors.grey,
+                                            ),
+                                      // size: 28.0,
+                                      color: Colors.pink,
+                                      onPressed: () async {
+                                        int likeCount =
+                                            records[index]['fields']['likeCnt'];
+                                        int count = 0;
+                                        if (!isLiked[index] && count == 0) {
+                                          setState(() {
+                                            print("pressed 1setstate passed :");
+                                            likeCount += 1;
+                                            _postRequest(records[index]['id'],
+                                                likeCount);
+                                            count = 1;
+                                            isLiked[index] = !isLiked[index];
+                                          });
+                                        } else if (isLiked[index] &&
+                                            count == 1) {
+                                          setState(() {
+                                            print("1setstate passed");
 
-                                //--------------------------------------------------------
-                                //--------------------------------------------------------
-                                //--------------------------------------------------------
-                                //--------------------------------------------------------
+                                            likeCount -= 1;
+
+                                            _postRequest(records[index]['id'],
+                                                likeCount);
+                                            isLiked[index] = !isLiked[index];
+                                            count = 0;
+                                          });
+                                        } else if (isLiked[index] &&
+                                            count == 0) {
+                                          setState(() {
+                                            print("1setstate passed");
+
+                                            likeCount -= 1;
+
+                                            _postRequest(records[index]['id'],
+                                                likeCount);
+                                            isLiked[index] = !isLiked[index];
+                                            count = 1;
+                                          });
+                                        }
+                                      },
+                                    ),
+                                    onTap: () async {
+                                      int likeCount =
+                                          records[index]['fields']['likeCnt'];
+                                      int count = 0;
+                                      if (!isLiked[index] && count == 0) {
+                                        setState(() {
+                                          print("1setstate passed :");
+                                          likeCount += 1;
+                                          _postRequest(
+                                              records[index]['id'], likeCount);
+                                          count = 1;
+                                          isLiked[index] = !isLiked[index];
+                                        });
+                                      } else if (isLiked[index] && count == 1) {
+                                        setState(() {
+                                          print("1setstate passed");
+
+                                          likeCount -= 1;
+
+                                          _postRequest(
+                                              records[index]['id'], likeCount);
+                                          isLiked[index] = !isLiked[index];
+                                          count = 0;
+                                        });
+                                      } else if (isLiked[index] && count == 0) {
+                                        setState(() {
+                                          print("1setstate passed");
+
+                                          likeCount -= 1;
+
+                                          _postRequest(
+                                              records[index]['id'], likeCount);
+                                          isLiked[index] = !isLiked[index];
+                                          count = 1;
+                                        });
+                                      }
+                                    }),
+                                // handleLikePost(records[index]['id']),
                                 Divider(
                                   indent: 10,
                                 ),
-
-                                // handleLikePost(records[index]['id']),
-
-                                GestureDetector(child: GetX<IconController>(
-                                  builder: (_) {
-                                    return Icon(
-                                      Icons.favorite,
-                                      color: controller.icongreyLoad(),
-                                      // color: controller.icongreyLoad(),
-                                      size: 28.0,
-                                    );
-                                  },
-                                ), onTap: () async {
-                                  print('passed');
-                                  int likeCount =
-                                      records[index]['fields']['likeCnt'];
-
-                                  likeCount += 1;
-                                  // _iconColor.value = 'Colors.red';
-                                  _postRequest(records[index]['id'], likeCount);
-                                }),
                                 Text(records[index]['fields']['likeCnt']
                                     .toString()),
+
                                 // Divider(
                                 //   indent: 10,
                                 // ),
@@ -413,7 +490,7 @@ class _DetailPageState extends State<DetailPage> {
                   blockquote: const TextStyle(color: Colors.red))),
         ),
       ),
-      bottomNavigationBar: buildNavigationBar(),
+      // bottomNavigationBar: buildNavigationBar(),
     );
   }
 
@@ -469,8 +546,8 @@ class _DetailPageState extends State<DetailPage> {
           height: 54,
           child: FloatingActionButton.extended(
             shape: shape,
-            icon: Icon(Icons.edit_outlined),
-            label: Text('Compose'),
+            icon: Icon(Icons.share),
+            label: Text('Services'),
             onPressed: () {},
           ),
         );
@@ -498,25 +575,5 @@ class _DetailPageState extends State<DetailPage> {
       default:
         return null;
     }
-  }
-}
-
-class IconController extends GetxController {
-// Private members
-
-  String colorGrey = 'Colors.grey';
-  String colorRed = 'Colors.red';
-
-  String get iconRedSet => icongreyLoad();
-  String get iconGreySet => iconRedLoad();
-
-  icongreyLoad() {
-    colorRed = 'Colors.grey';
-    update();
-  }
-
-  iconRedLoad() {
-    colorGrey = 'Colors.red';
-    update();
   }
 }

@@ -151,7 +151,6 @@ class _FirstScreenMd2State extends State<FirstScreenMd2> {
     );
   }
 
-  bool isLiked = false;
   @override
   Widget build(BuildContext context) {
     final animationDuration = Duration(milliseconds: 1500);
@@ -166,7 +165,8 @@ class _FirstScreenMd2State extends State<FirstScreenMd2> {
             // print('snapshot No.=>');
             // print(records.length);
             // print("get records:" "{$records}");
-
+            List<bool> isLiked = List.filled(records.length, false);
+            print(isLiked);
             if (!snapshot.hasData) {
               return Center(
                   child: CircularProgressIndicator(
@@ -286,41 +286,91 @@ class _FirstScreenMd2State extends State<FirstScreenMd2> {
                                 ),
                                 //--------------------------------------------------------
                                 GestureDetector(
-                                    child: Icon(
-                                      isLiked
-                                          ? Icons.favorite
-                                          : Icons.favorite_border,
-                                      size: 28.0,
+                                    child: IconButton(
+                                      icon: isLiked[index]
+                                          ? Icon(
+                                              Icons.favorite,
+                                              color: Colors.red,
+                                            )
+                                          : Icon(
+                                              Icons.favorite,
+                                              color: Colors.grey,
+                                            ),
+                                      // size: 28.0,
                                       color: Colors.pink,
+                                      onPressed: () async {
+                                        int likeCount =
+                                            records[index]['fields']['likeCnt'];
+                                        int count = 0;
+                                        if (!isLiked[index] && count == 0) {
+                                          setState(() {
+                                            print("pressed 1setstate passed :");
+                                            likeCount += 1;
+                                            _postRequest(records[index]['id'],
+                                                likeCount);
+                                            count = 1;
+                                            isLiked[index] = !isLiked[index];
+                                          });
+                                        } else if (isLiked[index] &&
+                                            count == 1) {
+                                          setState(() {
+                                            print("1setstate passed");
+
+                                            likeCount -= 1;
+
+                                            _postRequest(records[index]['id'],
+                                                likeCount);
+                                            isLiked[index] = !isLiked[index];
+                                            count = 0;
+                                          });
+                                        } else if (isLiked[index] &&
+                                            count == 0) {
+                                          setState(() {
+                                            print("1setstate passed");
+
+                                            likeCount -= 1;
+
+                                            _postRequest(records[index]['id'],
+                                                likeCount);
+                                            isLiked[index] = !isLiked[index];
+                                            count = 1;
+                                          });
+                                        }
+                                      },
                                     ),
                                     onTap: () async {
                                       int likeCount =
                                           records[index]['fields']['likeCnt'];
                                       int count = 0;
-                                      if (!isLiked && count == 0) {
+                                      if (!isLiked[index] && count == 0) {
                                         setState(() {
+                                          print("1setstate passed :");
                                           likeCount += 1;
                                           _postRequest(
                                               records[index]['id'], likeCount);
                                           count = 1;
-                                          isLiked = !isLiked;
+                                          isLiked[index] = !isLiked[index];
                                         });
-                                      } else if (isLiked && count == 1) {
+                                      } else if (isLiked[index] && count == 1) {
                                         setState(() {
+                                          print("1setstate passed");
+
                                           likeCount -= 1;
 
                                           _postRequest(
                                               records[index]['id'], likeCount);
-                                          isLiked = !isLiked;
+                                          isLiked[index] = !isLiked[index];
                                           count = 0;
                                         });
-                                      } else if (isLiked && count == 0) {
+                                      } else if (isLiked[index] && count == 0) {
                                         setState(() {
+                                          print("1setstate passed");
+
                                           likeCount -= 1;
 
                                           _postRequest(
                                               records[index]['id'], likeCount);
-                                          isLiked = !isLiked;
+                                          isLiked[index] = !isLiked[index];
                                           count = 1;
                                         });
                                       }
