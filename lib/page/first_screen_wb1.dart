@@ -144,7 +144,9 @@ class _FirstScreenWb1State extends State<FirstScreenWb1> {
                                               maxLines: 2),
                                         ),
 
-                                        const Divider(),
+                                        const Divider(
+                                          thickness: 3.0,
+                                        ),
                                       ],
                                     ),
                                   ),
@@ -204,7 +206,7 @@ class _DetailPageState extends State<DetailPage> {
         ),
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(6.0),
+            padding: const EdgeInsets.all(3.0),
             child: WebView(
                 javascriptMode: JavascriptMode.unrestricted,
                 initialUrl: url, // https://facebook.com

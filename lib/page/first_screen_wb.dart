@@ -89,14 +89,18 @@ class _FirstScreenWbState extends State<FirstScreenWb> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Wrap(
-                  alignment: WrapAlignment.start,
+                  alignment: WrapAlignment.spaceBetween,
+                  spacing: 5.0,
                   children: [
                     TextButton(
                       style: ElevatedButton.styleFrom(
+                        shape: StadiumBorder(),
+                        primary: Colors.deepPurpleAccent,
                         padding:
                             EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                       ),
-                      child: Text("전체", style: TextStyle(fontSize: 16)),
+                      child: Text("전체",
+                          style: TextStyle(fontSize: 16, color: Colors.white)),
                       onPressed: () async {
                         // await _fetchMenus("Gridview");
                         setState(() {
@@ -107,10 +111,13 @@ class _FirstScreenWbState extends State<FirstScreenWb> {
                     ),
                     TextButton(
                       style: ElevatedButton.styleFrom(
+                        shape: StadiumBorder(),
+                        primary: Colors.deepPurpleAccent,
                         padding:
                             EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                       ),
-                      child: Text("IT", style: TextStyle(fontSize: 16)),
+                      child: Text("IT",
+                          style: TextStyle(fontSize: 16, color: Colors.white)),
                       onPressed: () async {
                         // await _fetchMenus("quoteview");
                         setState(() {
@@ -121,11 +128,14 @@ class _FirstScreenWbState extends State<FirstScreenWb> {
                     ),
                     TextButton(
                       style: ElevatedButton.styleFrom(
+                        shape: StadiumBorder(),
+                        primary: Colors.deepPurpleAccent,
                         // shape: OutlinedBorder(),
                         padding:
                             EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                       ),
-                      child: Text("언어", style: TextStyle(fontSize: 16)),
+                      child: Text("언어",
+                          style: TextStyle(fontSize: 16, color: Colors.white)),
                       onPressed: () async {
                         // await _fetchMenus("itview");
                         setState(() {
@@ -136,10 +146,13 @@ class _FirstScreenWbState extends State<FirstScreenWb> {
                     ),
                     TextButton(
                       style: ElevatedButton.styleFrom(
+                        shape: StadiumBorder(),
+                        primary: Colors.deepPurpleAccent,
                         padding:
                             EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                       ),
-                      child: Text("마음심리", style: TextStyle(fontSize: 16)),
+                      child: Text("마음심리",
+                          style: TextStyle(fontSize: 16, color: Colors.white)),
                       onPressed: () async {
                         // await _fetchMenus("golfview");
                         setState(() {
@@ -150,10 +163,13 @@ class _FirstScreenWbState extends State<FirstScreenWb> {
                     ),
                     TextButton(
                       style: ElevatedButton.styleFrom(
+                        shape: StadiumBorder(),
+                        primary: Colors.deepPurpleAccent,
                         padding:
                             EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                       ),
-                      child: Text("커뮤니티/맛집", style: TextStyle(fontSize: 16)),
+                      child: Text("커뮤니티/맛집",
+                          style: TextStyle(fontSize: 16, color: Colors.white)),
                       onPressed: () async {
                         // await _fetchMenus("bookview");
                         setState(() {
@@ -164,10 +180,13 @@ class _FirstScreenWbState extends State<FirstScreenWb> {
                     ),
                     TextButton(
                       style: ElevatedButton.styleFrom(
+                        shape: StadiumBorder(),
+                        primary: Colors.deepPurpleAccent,
                         padding:
                             EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                       ),
-                      child: Text("기타", style: TextStyle(fontSize: 16)),
+                      child: Text("기타",
+                          style: TextStyle(fontSize: 16, color: Colors.white)),
                       onPressed: () async {
                         // await _fetchMenus("musicview");
                         setState(() {
@@ -179,7 +198,8 @@ class _FirstScreenWbState extends State<FirstScreenWb> {
                   ],
                 ),
                 Divider(
-                  height: 2,
+                  thickness: 3.0,
+                  color: Colors.grey,
                 ),
                 Expanded(
                   child: FutureBuilder(
@@ -246,7 +266,9 @@ class _FirstScreenWbState extends State<FirstScreenWb> {
                                             maxLines: 2),
                                       ),
 
-                                      const Divider(),
+                                      const Divider(
+                                        thickness: 3.0,
+                                      ),
                                     ],
                                   ),
                                 ),
@@ -307,7 +329,7 @@ class _DetailPageState extends State<DetailPage> {
         ),
         body: SafeArea(
           child: Padding(
-            padding: const EdgeInsets.all(8.0),
+            padding: const EdgeInsets.all(2.0),
             child: WebView(
                 javascriptMode: JavascriptMode.unrestricted,
                 initialUrl: url, // https://facebook.com
