@@ -143,40 +143,48 @@ class _CommentWriteState extends State<CommentWrite> {
         title: Text("Comment Page"),
         backgroundColor: Colors.pink,
       ),
-      body: Container(
-        child: CommentBox(
-          userImage:
-              "https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400",
-          child: commentChild(filedata),
-          labelText: 'Write a comment...',
-          withBorder: false,
-          errorText: 'Comment cannot be blank',
-          sendButtonMethod: () {
-            if (formKey.currentState!.validate()) {
-              print(commentController.text);
-              setState(() {
-                var value = {
-                  'janghwi': '장휘',
-                  'pic':
-                      'https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400',
-                  'message': commentController.text
-                };
-                _postRequest();
-                _fetchComments();
-                filedata.insert(0, value);
-              });
-              commentController.clear();
-              FocusScope.of(context).unfocus();
-            } else {
-              print("Not validated");
-            }
-          },
-          formKey: formKey,
-          commentController: commentController,
-          backgroundColor: Colors.black,
-          textColor: Colors.white,
-          sendWidget: Icon(Icons.send_sharp, size: 30, color: Colors.white),
+      body: CommentBox(
+        header: Container(
+          height: 30,
+          child: Text(
+            "your name",
+            textScaleFactor: 1.3,
+          ),
         ),
+        userImage:
+            "https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400",
+        child: commentChild(filedata),
+        labelText: 'Write a comment...',
+        withBorder: false,
+        errorText: 'Comment cannot be blank',
+        sendButtonMethod: () {
+          if (formKey.currentState!.validate()) {
+            print(commentController.text);
+            setState(() {
+              var value = {
+                'janghwi': '장휘',
+                'pic':
+                    'https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400',
+                'message': commentController.text
+              };
+              _postRequest();
+              setState(() {
+                _fetchComments();
+              });
+
+              filedata.insert(0, value);
+            });
+            commentController.clear();
+            FocusScope.of(context).unfocus();
+          } else {
+            print("Not validated");
+          }
+        },
+        formKey: formKey,
+        commentController: commentController,
+        backgroundColor: Colors.black,
+        textColor: Colors.white,
+        sendWidget: Icon(Icons.send_sharp, size: 30, color: Colors.white),
       ),
     );
   }
