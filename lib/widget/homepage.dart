@@ -4,6 +4,7 @@ import 'package:todaylang/page/first_screen_ai.dart';
 import 'package:todaylang/page/first_screen_dt.dart';
 import 'package:todaylang/page/first_screen_md1.dart';
 import 'package:todaylang/page/first_screen_of.dart';
+import 'package:todaylang/page/first_screen_ph.dart';
 import 'package:todaylang/page/first_screen_wb.dart';
 import 'package:todaylang/page/first_screen_wb1.dart';
 import 'package:todaylang/page/first_screen_yt.dart';
@@ -33,6 +34,10 @@ class _HomePageState extends State<HomePage> {
         body: TabBarWidget(
           title: title,
           tabs: const [
+            Tab(
+              text: '문장',
+              // icon: Icon(Icons.feed_outlined),
+            ),
             Tab(
               text: '좋은글',
               // icon: Icon(Icons.feed_outlined),
@@ -71,6 +76,7 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
           children: [
+            FirstScreenPh(),
             FirstScreenMd1(),
             FirstScreenAd(),
             FirstScreenAi(),

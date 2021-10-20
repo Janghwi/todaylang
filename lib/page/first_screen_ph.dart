@@ -19,16 +19,16 @@ import 'package:todaylang/widget/like_button.dart';
 
 import 'commentlist.dart';
 
-class FirstScreenMd1 extends StatefulWidget {
-  const FirstScreenMd1({Key? key}) : super(key: key);
+class FirstScreenPh extends StatefulWidget {
+  const FirstScreenPh({Key? key}) : super(key: key);
 
   // const FirstScreenMd({Key? key}) : super(key: key);
 
   @override
-  State<FirstScreenMd1> createState() => _FirstScreenMd1State();
+  State<FirstScreenPh> createState() => _FirstScreenPhState();
 }
 
-class _FirstScreenMd1State extends State<FirstScreenMd1> {
+class _FirstScreenPhState extends State<FirstScreenPh> {
   List records = [];
 
   bool hasBackground = false;
@@ -76,7 +76,7 @@ class _FirstScreenMd1State extends State<FirstScreenMd1> {
     try {
       Dio dio = Dio();
       var response = await dio.get(
-        "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest?maxRecords=500&view=Gridview",
+        "https://api.airtable.com/v0/app95nB2yi0WAYDyn/phraseTbl?maxRecords=500&view=Gridview",
         // "https://api.airtable.com/v0/app95nB2yi0WAYDyn/comments?maxRecords=200&view=Gridview",
         options: Options(contentType: 'Application/json', headers: {
           'Authorization': 'Bearer keyyG7I9nxyG5SmTq',
@@ -190,15 +190,15 @@ class _FirstScreenMd1State extends State<FirstScreenMd1> {
                           GestureDetector(
                             onTap: () => Get.to(const DetailPage(),
                                 arguments: [
-                                  records[index]['fields']['title'],
-                                  records[index]['fields']['content'],
+                                  records[index]['fields']['eng'],
+                                  records[index]['fields']['kor'],
                                   //this.records[index]['fields']['cat1'],
                                 ],
                                 transition: Transition.zoom),
                             child: Column(
                               children: [
                                 Text(
-                                  records[index]['fields']['title'].toString(),
+                                  records[index]['fields']['eng'].toString(),
                                   style: GoogleFonts.amiko(
                                       // backgroundColor: Colors.white70,
                                       fontStyle: FontStyle.normal,
@@ -212,7 +212,7 @@ class _FirstScreenMd1State extends State<FirstScreenMd1> {
                                   padding:
                                       const EdgeInsets.fromLTRB(0, 4, 0, 0),
                                   child: Text(
-                                      records[index]['fields']['content']
+                                      records[index]['fields']['kor']
                                           .toString(),
                                       // style: GoogleFonts.acme(
                                       style: GoogleFonts.nanumGothic(
@@ -268,7 +268,7 @@ class _FirstScreenMd1State extends State<FirstScreenMd1> {
                                           // fit: BoxFit.cover,
                                         ),
                                         Text(
-                                          records[index]['fields']['title']
+                                          records[index]['fields']['jap']
                                               .toString(),
                                           // style: GoogleFonts.aBeeZee(
                                           // style: GoogleFonts.hiMelody(

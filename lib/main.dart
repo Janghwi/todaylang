@@ -54,7 +54,7 @@ class MyApp extends StatelessWidget {
               ),
             ),
           ),
-          home: LoginPage(),
+          home: HomePage(),
           // home: HomePage(),
         ),
       );

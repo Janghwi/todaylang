@@ -55,15 +55,10 @@ class _CommentWriteState extends State<CommentWrite> {
       Map<String, dynamic> result = (response.data);
       final String _offsetId = result['offset'];
       final List _value = result['records'];
-      if (offsetId == _offsetId) {
-        return records;
-      }
-
-      offsetId = _offsetId;
-      for (var element in _value) {
-        records.add(element);
-      }
-      print(records);
+      this.offsetId = _offsetId;
+      _value.forEach((element) {
+        this.records.add(element);
+      });
 
       records = result['records'];
     } on DioError catch (e) {
@@ -158,38 +153,51 @@ class _CommentWriteState extends State<CommentWrite> {
   }
 
   Widget commentChild(data) {
-    return ListView.builder(
-        physics: const BouncingScrollPhysics(),
-        itemCount: records.length,
-        itemBuilder: (BuildContext context, int index) {
-          return
-              // for (var i = 0; i < data.length; i++)
-              Padding(
-            padding: const EdgeInsets.fromLTRB(2.0, 8.0, 2.0, 0.0),
-            child: ListTile(
-              leading: GestureDetector(
-                onTap: () async {
-                  // Display the image in large form.
-                  print("Comment Clicked");
-                },
-                child: Container(
-                  height: 50.0,
-                  width: 50.0,
-                  decoration: BoxDecoration(
-                      color: Colors.blue,
-                      borderRadius: BorderRadius.all(Radius.circular(50))),
-                  child: CircleAvatar(
-                      radius: 50,
-                      backgroundImage: NetworkImage(data[0]['pic'])),
-                ),
-              ),
-              title: Text(
-                records[index]['fields']['name'].toString(),
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              subtitle: Text(records[index]['fields']['comment'].toString()),
-            ),
-          );
+    return FutureBuilder(
+        future: _fetchComments(),
+        builder: (context, snapshot) {
+          if (!snapshot.hasData) {
+            return Center(
+                child: CircularProgressIndicator(
+              valueColor: const AlwaysStoppedAnimation(Colors.amber),
+            ));
+          } else {
+            return ListView.builder(
+                physics: const BouncingScrollPhysics(),
+                itemCount: records.length,
+                itemBuilder: (BuildContext context, int index) {
+                  return
+                      // for (var i = 0; i < data.length; i++)
+                      Padding(
+                    padding: const EdgeInsets.fromLTRB(2.0, 8.0, 2.0, 0.0),
+                    child: ListTile(
+                      leading: GestureDetector(
+                        onTap: () async {
+                          // Display the image in large form.
+                          print("Comment Clicked");
+                        },
+                        child: Container(
+                          height: 50.0,
+                          width: 50.0,
+                          decoration: BoxDecoration(
+                              color: Colors.blue,
+                              borderRadius:
+                                  BorderRadius.all(Radius.circular(50))),
+                          child: CircleAvatar(
+                              radius: 50,
+                              backgroundImage: NetworkImage(data[0]['pic'])),
+                        ),
+                      ),
+                      title: Text(
+                        records[index]['fields']['name'].toString(),
+                        style: TextStyle(fontWeight: FontWeight.bold),
+                      ),
+                      subtitle:
+                          Text(records[index]['fields']['comment'].toString()),
+                    ),
+                  );
+                });
+          }
         });
   }
 
