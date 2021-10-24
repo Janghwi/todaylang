@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
 import 'package:todaylang/page/commentlist.dart';
+import 'package:todaylang/page/translation/langtranslate.dart';
 import 'package:todaylang/widget/homepage.dart';
 
 import 'page/first_screen_ad.dart';
@@ -33,7 +34,7 @@ Future main() async {
 }
 
 class MyApp extends StatelessWidget {
-  static const String title = '좋은생각';
+  static const String title = '플러터테스트';
 
   const MyApp({Key? key}) : super(key: key);
 
@@ -42,14 +43,16 @@ class MyApp extends StatelessWidget {
         create: (context) => GoogleSignInProvider(),
         child: GetMaterialApp(
           debugShowCheckedModeBanner: false,
+          translations: LangTranslations(),
+          locale: Locale('ko', 'KR'),
           title: title,
           theme: ThemeData(
             primarySwatch: Colors.blue,
             elevatedButtonTheme: ElevatedButtonThemeData(
               style: ElevatedButton.styleFrom(
-                elevation: 3,
+                elevation: 8,
                 primary: Colors.white,
-                shape: CircleBorder(),
+                shape: StadiumBorder(),
                 minimumSize: Size.square(30),
               ),
             ),

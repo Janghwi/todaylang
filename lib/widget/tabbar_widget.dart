@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 
@@ -7,12 +8,53 @@ class TabBarWidget extends StatelessWidget {
   final List<Tab> tabs;
   final List<Widget> children;
 
-  const TabBarWidget({
+  TabBarWidget({
     Key? key,
     required this.title,
     required this.tabs,
     required this.children,
   }) : super(key: key);
+
+  final List<Map<String, dynamic>> locales = [
+    {'name': 'English', 'locale': (Locale('en', 'US'))},
+    {'name': 'Korean', 'locale': (Locale('ko', 'KR'))},
+    {'name': 'Japanese', 'locale': (Locale('ja', 'JP'))},
+    {'name': 'Chinese', 'locale': (Locale('zh', 'CN'))},
+  ];
+
+  showLocalDialog(BuildContext context) {
+    showDialog(
+        context: context,
+        builder: (_) => AlertDialog(
+              title: Text("Choose your language"),
+              content: Container(
+                // color: Colors.black26,
+                width: double.maxFinite,
+                child: ListView.separated(
+                  shrinkWrap: true,
+                  itemBuilder: (context, index) => InkWell(
+                    child: Padding(
+                      padding: const EdgeInsets.all(8.0),
+                      child: Text(locales[index]['name'].toString()),
+                    ),
+                    onTap: () => updateLocale(
+                      locales[index]['locale'],
+                      context,
+                    ),
+                  ),
+                  separatorBuilder: (context, index) => Divider(
+                    color: Colors.black,
+                  ),
+                  itemCount: 4,
+                ),
+              ),
+            ));
+  }
+
+  updateLocale(Locale locale, BuildContext context) {
+    Navigator.of(context).pop();
+    Get.updateLocale(locale);
+  }
 
   @override
   Widget build(BuildContext context) => DefaultTabController(
@@ -29,9 +71,16 @@ class TabBarWidget extends StatelessWidget {
                 )
               ]),
               child: NewGradientAppBar(
+                actions: <Widget>[
+                  IconButton(
+                    icon: Icon(Icons.language),
+                    onPressed: () => showLocalDialog(context),
+                  ),
+                ],
                 title: Text(
                   title,
-                  // style: TextStyle(fontSize: 25, color: Colors.white)),
+                  // 'appbar_title1'.tr,
+                  // 제목 들어가는 부분 style: TextStyle(fontSize: 25, color: Colors.white)),
                   style: GoogleFonts.hiMelody(
                       // backgroundColor: Colors.white70,
                       fontStyle: FontStyle.normal,
@@ -77,12 +126,12 @@ class BubbleTabIndicator extends Decoration {
   final TabBarIndicatorSize tabBarIndicatorSize;
 
   const BubbleTabIndicator({
-    this.indicatorHeight: 20.0,
-    this.indicatorColor: Colors.greenAccent,
-    this.indicatorRadius: 100.0,
+    this.indicatorHeight = 20.0,
+    this.indicatorColor = Colors.greenAccent,
+    this.indicatorRadius = 100.0,
     this.tabBarIndicatorSize = TabBarIndicatorSize.label,
-    this.padding: const EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0),
-    this.insets: const EdgeInsets.symmetric(horizontal: 5.0),
+    this.padding = const EdgeInsets.symmetric(vertical: 2.0, horizontal: 8.0),
+    this.insets = const EdgeInsets.symmetric(horizontal: 5.0),
   });
 
   @override

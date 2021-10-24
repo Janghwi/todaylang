@@ -234,38 +234,43 @@ class _FirstScreenPhState extends State<FirstScreenPh> {
                                   child: Stack(
                                       alignment: Alignment.center,
                                       children: [
-                                        CachedNetworkImage(
-                                          imageUrl: records[index]['fields']
-                                                  ['Attachments'][0]
-                                              ['thumbnails']['large']['url'],
-                                          // imageUrl: records[index]['fields']
-                                          // ['Attachments'][0]['url'],
-                                          // "https://dl.airtable.com/.attachmentThumbnails/1a21f5107f12e695ea42fa2e79f43d0a/9d11f011",
-                                          fit: BoxFit.cover,
-                                          width: MediaQuery.maybeOf(context)!
-                                                  .size
-                                                  .width *
-                                              0.97,
-                                          height: MediaQuery.maybeOf(context)!
-                                                  .size
-                                                  .height *
-                                              0.2,
-                                          // Image.network(
-                                          //   'https://github.com/flutter/plugins/raw/master/packages/video_player/video_player/doc/demo_ipod.gif?raw=true',
+                                        ColorFiltered(
+                                          colorFilter: ColorFilter.mode(
+                                              Colors.grey, BlendMode.color),
+                                          child: CachedNetworkImage(
+                                            imageUrl: records[index]['fields']
+                                                    ['Attachments'][0]
+                                                ['thumbnails']['large']['url'],
+                                            // imageUrl: records[index]['fields']
+                                            // ['Attachments'][0]['url'],
+                                            // "https://dl.airtable.com/.attachmentThumbnails/1a21f5107f12e695ea42fa2e79f43d0a/9d11f011",
+                                            fit: BoxFit.cover,
+                                            filterQuality: FilterQuality.high,
+                                            width: MediaQuery.maybeOf(context)!
+                                                    .size
+                                                    .width *
+                                                0.99,
+                                            height: MediaQuery.maybeOf(context)!
+                                                    .size
+                                                    .height *
+                                                0.2,
+                                            // Image.network(
+                                            //   'https://github.com/flutter/plugins/raw/master/packages/video_player/video_player/doc/demo_ipod.gif?raw=true',
 
-                                          // Ink.image(
-                                          //   image: NetworkImage(records[index]
-                                          //           ['fields']['Attachments'][0]
-                                          //       ['url']),
-                                          //   fit: BoxFit.cover,
-                                          // image: const AssetImage(
-                                          //     'assets/images/012.png'),
-                                          // colorFilter: ColorFilters.greyscale,
-                                          // colorFilter: ColorFilter.mode(
-                                          //     Colors.black.withOpacity(0.8),
-                                          //     BlendMode.dstATop),
-                                          // height: 180,
-                                          // fit: BoxFit.cover,
+                                            // Ink.image(
+                                            //   image: NetworkImage(records[index]
+                                            //           ['fields']['Attachments'][0]
+                                            //       ['url']),
+                                            //   fit: BoxFit.cover,
+                                            // image: const AssetImage(
+                                            //     'assets/images/012.png'),
+                                            // colorFilter: ColorFilters.greyscale,
+                                            // colorFilter: ColorFilter.mode(
+                                            //     Colors.black.withOpacity(0.8),
+                                            //     BlendMode.dstATop),
+                                            // height: 180,
+                                            // fit: BoxFit.cover,
+                                          ),
                                         ),
                                         Text(
                                           records[index]['fields']['jap']
@@ -297,7 +302,15 @@ class _FirstScreenPhState extends State<FirstScreenPh> {
                                   icon: Icon(Icons.speaker_notes,
                                       color: Colors.amber),
                                   onPressed: () {
-                                    Get.to(CommentWrite());
+                                    Get.to(
+                                      CommentWrite(),
+                                      arguments: [
+                                        records[index]['fields']['eng'],
+                                        records[index]['fields']['kor'],
+                                        records[index]['fields']['jap'],
+                                        //this.records[index]['fields']['cat1'],
+                                      ],
+                                    );
                                   },
                                 ),
                                 // Divider(
@@ -594,7 +607,9 @@ class _DetailPageState extends State<DetailPage> {
           shape: shape,
           icon: Icon(Icons.add),
           label: Text('View Comment'),
-          onPressed: () => Get.to(CommentsList()),
+          onPressed: () => Get.to(
+            CommentsList(),
+          ),
         );
       default:
         return null;

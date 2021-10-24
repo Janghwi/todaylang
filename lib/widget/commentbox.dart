@@ -1,6 +1,7 @@
 import 'package:comment_box/comment/comment.dart';
 import 'package:flutter/material.dart';
 import 'package:dio/dio.dart';
+import 'package:get/get.dart';
 
 class CommentWrite extends StatefulWidget {
   @override
@@ -8,8 +9,13 @@ class CommentWrite extends StatefulWidget {
 }
 
 class _CommentWriteState extends State<CommentWrite> {
+  var eng = Get.arguments[0];
+  var kor = Get.arguments[1];
+  var jap = Get.arguments[2];
+
   final formKey = GlobalKey<FormState>();
   final TextEditingController commentController = TextEditingController();
+
   List records = [];
   String offsetId = "";
 
@@ -17,30 +23,32 @@ class _CommentWriteState extends State<CommentWrite> {
     {
       'name': 'Adeleye Ayodeji',
       'pic': 'https://picsum.photos/300/30',
-      'message': 'I love to code'
+      'message': 'I love to code',
+      'src': '10 sentense',
     },
     {
       'name': 'Biggi Man',
       'pic': 'https://picsum.photos/300/30',
-      'message': 'Very cool'
+      'message': 'Very cool',
+      'src': '10 sentense',
     },
     {
       'name': 'Biggi Man',
       'pic': 'https://picsum.photos/300/30',
-      'message': 'Very cool'
+      'message': 'Very cool',
+      'src': '10 sentense',
     },
     {
       'name': 'Biggi Man',
       'pic': 'https://picsum.photos/300/30',
-      'message': 'Very cool'
+      'message': 'Very cool',
+      'src': '10 sentense',
     },
   ];
 
   Future<List> _fetchComments(
       // String view,
       ) async {
-    // bool loadRemoteDatatSucceed = false;
-    // Response response;
     try {
       Dio dio = Dio();
       var response = await dio.get(
@@ -55,15 +63,12 @@ class _CommentWriteState extends State<CommentWrite> {
       Map<String, dynamic> result = (response.data);
       final String _offsetId = result['offset'];
       final List _value = result['records'];
-      if (offsetId == _offsetId) {
-        return records;
-      }
 
       offsetId = _offsetId;
       for (var element in _value) {
         records.add(element);
       }
-      print(records);
+      print("fetch passed:" "{$records}");
 
       records = result['records'];
     } on DioError catch (e) {
@@ -93,14 +98,14 @@ class _CommentWriteState extends State<CommentWrite> {
       );
 
       Map<String, dynamic> result = (response.data);
-      final String _offsetId = result['offset'];
+      final String? _offsetId = result['offset'];
       final List _value = result['records'];
       if (this.offsetId == _offsetId) {
         print(records);
 
         return records;
       }
-      this.offsetId = _offsetId;
+      this.offsetId = _offsetId!;
       for (var element in _value) {
         records.add(element);
       }
@@ -117,7 +122,7 @@ class _CommentWriteState extends State<CommentWrite> {
     return records;
   }
 
-  late ScrollController controller;
+  late final ScrollController controller;
   @override
   void initState() {
     controller = ScrollController()
@@ -150,6 +155,7 @@ class _CommentWriteState extends State<CommentWrite> {
             'fields': {
               'name': 'name',
               'comment': commentController.text,
+              'src': Get.arguments[0],
             }
           },
         ],
@@ -160,6 +166,7 @@ class _CommentWriteState extends State<CommentWrite> {
   Widget commentChild(data) {
     return ListView.builder(
         physics: const BouncingScrollPhysics(),
+        controller: controller,
         itemCount: records.length,
         itemBuilder: (BuildContext context, int index) {
           return
@@ -167,10 +174,10 @@ class _CommentWriteState extends State<CommentWrite> {
               Padding(
             padding: const EdgeInsets.fromLTRB(2.0, 8.0, 2.0, 0.0),
             child: ListTile(
+              isThreeLine: true,
               leading: GestureDetector(
                 onTap: () async {
                   // Display the image in large form.
-                  print("Comment Clicked");
                 },
                 child: Container(
                   height: 50.0,
@@ -187,7 +194,12 @@ class _CommentWriteState extends State<CommentWrite> {
                 records[index]['fields']['name'].toString(),
                 style: TextStyle(fontWeight: FontWeight.bold),
               ),
-              subtitle: Text(records[index]['fields']['comment'].toString()),
+              subtitle: Text(records[index]['fields']['comment'].toString() +
+                  "   \n 👋" +
+                  Get.arguments[0]),
+              // subtitle: Text(records[index]['fields']['comment'].toString() +
+              // "      \n       👋" +
+              // Get.arguments[0]),
             ),
           );
         });
@@ -222,11 +234,12 @@ class _CommentWriteState extends State<CommentWrite> {
                 'janghwi': '장휘',
                 'pic':
                     'https://lh3.googleusercontent.com/a-/AOh14GjRHcaendrf6gU5fPIVd8GIl1OgblrMMvGUoCBj4g=s400',
-                'message': commentController.text
+                'message': commentController.text,
+                'src': Get.arguments[0],
               };
               _postRequest();
               setState(() {
-                _fetchComments();
+                // _fetchComments();
               });
 
               filedata.insert(0, value);

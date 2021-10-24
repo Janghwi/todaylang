@@ -1,6 +1,8 @@
-// ignore_for_file: sized_box_for_whitespace
+// ignore_for_file: sized_box_for_whitespace, avoid_print
+// ignore: duplicate_ignore
+// ignore: file_names
+// ignore_for_file: file_names
 
-import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:async';
@@ -9,25 +11,23 @@ import 'package:dio/dio.dart';
 import 'package:google_fonts/google_fonts.dart';
 //import '2menutwolevel_page2.dart';
 //import '2menutwolevel_page_p.dart';
-import 'package:http/http.dart' as http;
 import 'package:webview_flutter/webview_flutter.dart';
 
-class FirstScreenWb extends StatefulWidget {
+class FirstScreenYtCre extends StatefulWidget {
   @override
-  State<FirstScreenWb> createState() => _FirstScreenWbState();
+  State<FirstScreenYtCre> createState() => _FirstScreenYtCreState();
 }
 
-class _FirstScreenWbState extends State<FirstScreenWb> {
+class _FirstScreenYtCreState extends State<FirstScreenYtCre> {
   List records = [];
   Future<List> _fetchMenus(
     String view,
   ) async {
-    bool loadRemoteDatatSucceed = false;
     // Response response;
     try {
       Dio dio = Dio();
       var response = await dio.get(
-        "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/WbTbl?maxRecords=500&view=$view",
+        "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/CreTbl?maxRecords=500&view=$view",
         options: Options(contentType: 'Application/json', headers: {
           'Authorization': 'Bearer keyyG7I9nxyG5SmTq',
           'Accept': 'Application/json',
@@ -92,21 +92,15 @@ class _FirstScreenWbState extends State<FirstScreenWb> {
                   alignment: WrapAlignment.spaceBetween,
                   spacing: 5.0,
                   children: [
-                    ElevatedButton(
-                      // style: ElevatedButton.styleFrom(
-                      //   shape: StadiumBorder(),
-                      //   primary: Colors.deepPurpleAccent,
-                      //   padding:
-                      //       EdgeInsets.symmetric(horizontal: 17, vertical: 8),
-                      // ),
-                      style: ButtonStyle(
-                        overlayColor: getColor(Colors.red, Colors.teal),
-                        foregroundColor: getColor(Colors.red, Colors.white),
-                        backgroundColor: getColor(Colors.white, Colors.red),
-                        side: getBorder(Colors.blue, Colors.white),
+                    TextButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: StadiumBorder(),
+                        primary: Colors.deepPurpleAccent,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 6),
                       ),
                       child: Text("전체",
-                          style: TextStyle(fontSize: 16, color: Colors.black)),
+                          style: TextStyle(fontSize: 13, color: Colors.white)),
                       onPressed: () async {
                         // await _fetchMenus("Gridview");
                         setState(() {
@@ -115,15 +109,15 @@ class _FirstScreenWbState extends State<FirstScreenWb> {
                         });
                       },
                     ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        overlayColor: getColor(Colors.red, Colors.teal),
-                        foregroundColor: getColor(Colors.red, Colors.white),
-                        backgroundColor: getColor(Colors.white, Colors.red),
-                        side: getBorder(Colors.blue, Colors.white),
+                    TextButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: StadiumBorder(),
+                        primary: Colors.deepPurpleAccent,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 6),
                       ),
                       child: Text("IT",
-                          style: TextStyle(fontSize: 16, color: Colors.black)),
+                          style: TextStyle(fontSize: 13, color: Colors.white)),
                       onPressed: () async {
                         // await _fetchMenus("quoteview");
                         setState(() {
@@ -132,15 +126,16 @@ class _FirstScreenWbState extends State<FirstScreenWb> {
                         });
                       },
                     ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        overlayColor: getColor(Colors.red, Colors.teal),
-                        foregroundColor: getColor(Colors.red, Colors.white),
-                        backgroundColor: getColor(Colors.white, Colors.red),
-                        side: getBorder(Colors.blue, Colors.white),
+                    TextButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: StadiumBorder(),
+                        primary: Colors.deepPurpleAccent,
+                        // shape: OutlinedBorder(),
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 6),
                       ),
                       child: Text("언어",
-                          style: TextStyle(fontSize: 16, color: Colors.black)),
+                          style: TextStyle(fontSize: 13, color: Colors.white)),
                       onPressed: () async {
                         // await _fetchMenus("itview");
                         setState(() {
@@ -149,15 +144,15 @@ class _FirstScreenWbState extends State<FirstScreenWb> {
                         });
                       },
                     ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        overlayColor: getColor(Colors.red, Colors.teal),
-                        foregroundColor: getColor(Colors.red, Colors.white),
-                        backgroundColor: getColor(Colors.white, Colors.red),
-                        side: getBorder(Colors.blue, Colors.white),
+                    TextButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: StadiumBorder(),
+                        primary: Colors.deepPurpleAccent,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 6),
                       ),
                       child: Text("마음심리",
-                          style: TextStyle(fontSize: 16, color: Colors.black)),
+                          style: TextStyle(fontSize: 13, color: Colors.white)),
                       onPressed: () async {
                         // await _fetchMenus("golfview");
                         setState(() {
@@ -166,15 +161,15 @@ class _FirstScreenWbState extends State<FirstScreenWb> {
                         });
                       },
                     ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        overlayColor: getColor(Colors.red, Colors.teal),
-                        foregroundColor: getColor(Colors.red, Colors.white),
-                        backgroundColor: getColor(Colors.white, Colors.red),
-                        side: getBorder(Colors.blue, Colors.white),
+                    TextButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: StadiumBorder(),
+                        primary: Colors.deepPurpleAccent,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 6),
                       ),
                       child: Text("커뮤니티/맛집",
-                          style: TextStyle(fontSize: 16, color: Colors.black)),
+                          style: TextStyle(fontSize: 13, color: Colors.white)),
                       onPressed: () async {
                         // await _fetchMenus("bookview");
                         setState(() {
@@ -183,15 +178,32 @@ class _FirstScreenWbState extends State<FirstScreenWb> {
                         });
                       },
                     ),
-                    ElevatedButton(
-                      style: ButtonStyle(
-                        overlayColor: getColor(Colors.red, Colors.teal),
-                        foregroundColor: getColor(Colors.red, Colors.white),
-                        backgroundColor: getColor(Colors.white, Colors.red),
-                        side: getBorder(Colors.blue, Colors.white),
+                    TextButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: StadiumBorder(),
+                        primary: Colors.deepPurpleAccent,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+                      ),
+                      child: Text("경제",
+                          style: TextStyle(fontSize: 13, color: Colors.white)),
+                      onPressed: () async {
+                        // await _fetchMenus("bookview");
+                        setState(() {
+                          _fetchMenus("stockview");
+                          currentView = "stockview";
+                        });
+                      },
+                    ),
+                    TextButton(
+                      style: ElevatedButton.styleFrom(
+                        shape: StadiumBorder(),
+                        primary: Colors.deepPurpleAccent,
+                        padding:
+                            EdgeInsets.symmetric(horizontal: 15, vertical: 6),
                       ),
                       child: Text("기타",
-                          style: TextStyle(fontSize: 16, color: Colors.black)),
+                          style: TextStyle(fontSize: 13, color: Colors.white)),
                       onPressed: () async {
                         // await _fetchMenus("musicview");
                         setState(() {
@@ -229,15 +241,13 @@ class _FirstScreenWbState extends State<FirstScreenWb> {
                             itemCount: records.length,
                             itemBuilder: (BuildContext context, int index) {
                               return InkWell(
-                                onTap: () {
-                                  Get.to(const DetailPage(),
-                                      arguments: [
-                                        records[index]['fields']['title'],
-                                        records[index]['fields']['url'],
-                                        //this.records[index]['fields']['cat1'],
-                                      ],
-                                      transition: Transition.zoom);
-                                },
+                                onTap: () => Get.to(const DetailPage(),
+                                    arguments: [
+                                      records[index]['fields']['title'],
+                                      records[index]['fields']['url'],
+                                      //this.records[index]['fields']['cat1'],
+                                    ],
+                                    transition: Transition.zoom),
                                 child: Padding(
                                   padding: const EdgeInsets.all(8.0),
                                   child: Column(
@@ -339,7 +349,6 @@ class _DetailPageState extends State<DetailPage> {
             padding: const EdgeInsets.all(2.0),
             child: WebView(
                 javascriptMode: JavascriptMode.unrestricted,
-                gestureNavigationEnabled: true,
                 initialUrl: url, // https://facebook.com
                 onWebViewCreated: (controller) {
                   this.controller = controller;
@@ -362,44 +371,9 @@ class _DetailPageState extends State<DetailPage> {
                       controller.evaluateJavascript(
                           "document.getElementsByTagName('footer')[0].style.display='none'");
                     });
-                  } else if (url.contains('toyo')) {
-                    Future.delayed(const Duration(milliseconds: 300), () {
-                      controller.evaluateJavascript(
-                          "document.getElementsByTagName('header')[0].style.display='none'");
-                      controller.evaluateJavascript(
-                          "document.getElementsByTagName('center')[0].style.display='none'");
-                      controller.evaluateJavascript(
-                          "document.getElementsByTagName('footer')[0].style.display='none'");
-                    });
                   }
                 }),
           ),
         ));
   }
-}
-
-MaterialStateProperty<Color> getColor(Color color, Color colorPressed) {
-  // ignore: prefer_function_declarations_over_variables
-  final getColor = (Set<MaterialState> states) {
-    if (states.contains(MaterialState.pressed)) {
-      return colorPressed;
-    } else {
-      return color;
-    }
-  };
-
-  return MaterialStateProperty.resolveWith(getColor);
-}
-
-MaterialStateProperty<BorderSide> getBorder(Color color, Color colorPressed) {
-  // ignore: prefer_function_declarations_over_variables
-  final getBorder = (Set<MaterialState> states) {
-    if (states.contains(MaterialState.pressed)) {
-      return BorderSide(color: Colors.transparent);
-    } else {
-      return BorderSide(color: color, width: 0.1);
-    }
-  };
-
-  return MaterialStateProperty.resolveWith(getBorder);
 }
