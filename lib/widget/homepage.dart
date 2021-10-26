@@ -16,6 +16,7 @@ import 'package:todaylang/page/translation/langtranslate.dart';
 import 'package:todaylang/page/translation/langtext.dart';
 
 import 'tabbar_widget.dart';
+import 'todoapp.dart';
 
 class HomePage extends StatefulWidget {
   @override
@@ -74,7 +75,7 @@ class _HomePageState extends State<HomePage> {
   //   PostPage(),
   //   PostPage(),
   // ];
-
+  String apptitle = "appbar_title1";
   @override
   Widget build(BuildContext context) => Scaffold(
         // appBar: AppBar(
@@ -90,7 +91,8 @@ class _HomePageState extends State<HomePage> {
           // title: 'appbar_title1'.tr,
           tabs: [
             Tab(
-              text: 'appbar_title1'.tr,
+              text: apptitle.tr,
+              // text: 'appbar_title1'.tr,
               // text: LangText(text:'appbar_title1'),
               // icon: Icon(Icons.feed_outlined),
             ),
@@ -146,6 +148,10 @@ class _HomePageState extends State<HomePage> {
               text: '오픈파일',
               // icon: Icon(Icons.favorite_border),
             ),
+            Tab(
+              text: 'Todo',
+              // icon: Icon(Icons.favorite_border),
+            ),
           ],
           children: [
             FirstScreenPh(),
@@ -162,6 +168,7 @@ class _HomePageState extends State<HomePage> {
             FirstScreenYt(),
             FirstScreenYtCre(),
             OpenPage(),
+            Todo(),
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(

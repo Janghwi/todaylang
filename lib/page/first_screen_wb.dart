@@ -302,6 +302,8 @@ class _DetailPageState extends State<DetailPage> {
   var url = Get.arguments[1];
   late WebViewController controller;
 
+  double progress = 0;
+
   _goBack() async {
     if (await controller.canGoBack()) {
       await controller.goBack();
@@ -316,65 +318,98 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
-        appBar: AppBar(
-          title: Text(
-            Get.arguments[0],
-            style: const TextStyle(color: Colors.black, fontSize: 16),
-          ),
-          backgroundColor: Colors.white,
-          iconTheme: const IconThemeData(color: Colors.black),
-          actions: [
-            IconButton(onPressed: _goBack, icon: Icon(Icons.arrow_back)),
-            IconButton(onPressed: _goForward, icon: Icon(Icons.arrow_forward)),
-          ],
-        ),
-        floatingActionButton: FloatingActionButton(
-          onPressed: () => _goBack(),
-          tooltip: 'Back Page',
-          child: const Icon(Icons.arrow_back),
-        ),
-        body: SafeArea(
-          child: Padding(
-            padding: const EdgeInsets.all(2.0),
-            child: WebView(
-                javascriptMode: JavascriptMode.unrestricted,
-                gestureNavigationEnabled: true,
-                initialUrl: url, // https://facebook.com
-                onWebViewCreated: (controller) {
-                  this.controller = controller;
-                },
-                onPageStarted: (url) {
-                  print('New website: $url');
+    return WillPopScope(
+      onWillPop: () async {
+        if (await controller.canGoBack()) {
+          controller.goBack();
 
-                  /// Hide Header & Footer
-                  if (url.contains('translate.google.com')) {
-                    Future.delayed(const Duration(milliseconds: 300), () {
-                      controller.evaluateJavascript(
-                          "document.getElementsByTagName('header')[0].style.display='none'");
-                      controller.evaluateJavascript(
-                          "document.getElementsByTagName('footer')[0].style.display='none'");
-                    });
-                  } else if (url.contains('englishcube')) {
-                    Future.delayed(const Duration(milliseconds: 300), () {
-                      controller.evaluateJavascript(
-                          "document.getElementsByTagName('header')[0].style.display='none'");
-                      controller.evaluateJavascript(
-                          "document.getElementsByTagName('footer')[0].style.display='none'");
-                    });
-                  } else if (url.contains('toyo')) {
-                    Future.delayed(const Duration(milliseconds: 300), () {
-                      controller.evaluateJavascript(
-                          "document.getElementsByTagName('header')[0].style.display='none'");
-                      controller.evaluateJavascript(
-                          "document.getElementsByTagName('center')[0].style.display='none'");
-                      controller.evaluateJavascript(
-                          "document.getElementsByTagName('footer')[0].style.display='none'");
-                    });
-                  }
-                }),
+          /// Stay in app
+          return false;
+        } else {
+          /// Leave app
+          return true;
+        }
+      },
+      child: Scaffold(
+          appBar: AppBar(
+            leading: IconButton(
+              icon: Icon(Icons.clear),
+              onPressed: () {
+                controller.clearCache();
+                CookieManager().clearCookies();
+              },
+            ),
+            title: Text(
+              Get.arguments[0],
+              style: const TextStyle(color: Colors.black, fontSize: 16),
+            ),
+            backgroundColor: Colors.white,
+            iconTheme: const IconThemeData(color: Colors.black),
+            actions: [
+              IconButton(onPressed: _goBack, icon: Icon(Icons.arrow_back)),
+              IconButton(
+                  onPressed: _goForward, icon: Icon(Icons.arrow_forward)),
+              IconButton(
+                icon: Icon(Icons.refresh),
+                onPressed: () => controller.reload(),
+              ),
+            ],
           ),
-        ));
+          floatingActionButton: FloatingActionButton(
+            onPressed: () => _goBack(),
+            tooltip: 'Back Page',
+            child: const Icon(Icons.arrow_back),
+          ),
+          body: Column(
+            children: [
+              LinearProgressIndicator(
+                value: progress,
+                color: Colors.blue,
+                backgroundColor: Colors.black12,
+              ),
+              Expanded(
+                child: WebView(
+                    javascriptMode: JavascriptMode.unrestricted,
+                    gestureNavigationEnabled: true,
+                    initialUrl: url, // https://facebook.com
+                    onWebViewCreated: (controller) {
+                      this.controller = controller;
+                    },
+                    onProgress: (progress) =>
+                        setState(() => this.progress = progress / 100),
+                    onPageStarted: (url) {
+                      print('New website: $url');
+
+                      /// Hide Header & Footer
+                      if (url.contains('translate.google.com')) {
+                        Future.delayed(const Duration(milliseconds: 300), () {
+                          controller.evaluateJavascript(
+                              "document.getElementsByTagName('header')[0].style.display='none'");
+                          controller.evaluateJavascript(
+                              "document.getElementsByTagName('footer')[0].style.display='none'");
+                        });
+                      } else if (url.contains('englishcube')) {
+                        Future.delayed(const Duration(milliseconds: 300), () {
+                          controller.evaluateJavascript(
+                              "document.getElementsByTagName('header')[0].style.display='none'");
+                          controller.evaluateJavascript(
+                              "document.getElementsByTagName('footer')[0].style.display='none'");
+                        });
+                      } else if (url.contains('toyo')) {
+                        Future.delayed(const Duration(milliseconds: 300), () {
+                          controller.evaluateJavascript(
+                              "document.getElementsByTagName('header')[0].style.display='none'");
+                          controller.evaluateJavascript(
+                              "document.getElementsByTagName('center')[0].style.display='none'");
+                          controller.evaluateJavascript(
+                              "document.getElementsByTagName('footer')[0].style.display='none'");
+                        });
+                      }
+                    }),
+              ),
+            ],
+          )),
+    );
   }
 }
 

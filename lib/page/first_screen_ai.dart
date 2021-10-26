@@ -81,7 +81,6 @@ class _FirstScreenAiState extends State<FirstScreenAi> {
           future: _fetchMenus(),
           builder: (context, snapshot) {
             print('snapshot No.=>');
-            print(records.length);
 
             if (!snapshot.hasData) {
               return Center(
@@ -93,6 +92,7 @@ class _FirstScreenAiState extends State<FirstScreenAi> {
                 physics: const BouncingScrollPhysics(),
                 itemCount: records.length,
                 itemBuilder: (BuildContext context, int index) {
+                  // print(records[index]['fields']['test']);
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: InkWell(
