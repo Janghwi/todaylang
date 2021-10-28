@@ -28,7 +28,8 @@ Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
 const AndroidNotificationChannel channel = AndroidNotificationChannel(
     'high_importance_channel', // id
     'High Importance Notifications', // title
-    // 'This channel is used for important notifications.', // description
+    description:
+        'This channel is used for important notifications.', // description
     importance: Importance.high,
     playSound: true);
 
@@ -115,7 +116,7 @@ class _MyAppState extends State<MyApp> {
               android: AndroidNotificationDetails(
                 channel.id,
                 channel.name,
-                // channel.description,
+                channelDescription: "todaylang",
                 // TODO add a proper drawable resource to android, for now using
                 //      one that already exists in example app.
                 icon: 'launch_background',
@@ -169,7 +170,7 @@ class _MyAppState extends State<MyApp> {
             ),
           ),
           home: HomePage(),
-          // home: HomePage(),
+          // home: LoginPage(),
         ),
       );
 }

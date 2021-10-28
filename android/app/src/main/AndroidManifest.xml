@@ -3,7 +3,7 @@
     package="com.example.todaylang">
     <uses-permission android:name="android.permission.INTERNET" />
    <application
-        android:label="todaylang"
+        android:label="EnKorJap"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
         <activity
