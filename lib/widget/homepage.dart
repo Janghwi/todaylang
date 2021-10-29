@@ -152,6 +152,10 @@ class _HomePageState extends State<HomePage> {
               text: 'Todo',
               // icon: Icon(Icons.favorite_border),
             ),
+            Tab(
+              text: 'grid',
+              // icon: Icon(Icons.favorite_border),
+            ),
           ],
           children: [
             FirstScreenPh(),
