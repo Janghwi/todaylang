@@ -8,6 +8,7 @@ import 'dart:async';
 import 'package:todaylang/page/translation/langtranslate.dart';
 import 'package:todaylang/widget/homepage.dart';
 
+import 'controllers/phrase_loader.dart';
 import 'widget/google_signin_prov.dart';
 import 'widget/logged_in_widget.dart';
 import 'widget/sign_up_widget.dart';
@@ -78,6 +79,9 @@ Future main() async {
     DeviceOrientation.portraitUp,
     DeviceOrientation.portraitDown,
   ]);
+
+  //----------------------------------------------------get put------------------
+  Get.put(PhrasesLoader());
 
   runApp(const MyApp());
 }
@@ -169,8 +173,8 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
           ),
-          home: HomePage(),
-          // home: LoginPage(),
+          // home: HomePage(),
+          home: LoginPage(),
         ),
       );
 }

@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+import 'package:google_sign_in/google_sign_in.dart';
 
 class TabBarWidget extends StatelessWidget {
   final String title;
@@ -56,6 +58,7 @@ class TabBarWidget extends StatelessWidget {
     Get.updateLocale(locale);
   }
 
+  final user = FirebaseAuth.instance.currentUser!;
   @override
   Widget build(BuildContext context) => DefaultTabController(
         length: tabs.length,
@@ -76,6 +79,13 @@ class TabBarWidget extends StatelessWidget {
                     icon: Icon(Icons.language),
                     onPressed: () => showLocalDialog(context),
                   ),
+                  SizedBox(
+                    width: 7,
+                  ),
+                  CircleAvatar(
+                    radius: 17,
+                    backgroundImage: NetworkImage(user.photoURL!),
+                  )
                 ],
                 title: Text(
                   title,

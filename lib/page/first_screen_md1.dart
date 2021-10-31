@@ -327,14 +327,13 @@ class _FirstScreenMd1State extends State<FirstScreenMd1> {
                                             records[index]['fields']['likeCnt'];
                                         int count = 0;
                                         if (!isLiked[index] && count == 0) {
-                                          setState(() {
-                                            print("pressed 1setstate passed :");
-                                            likeCount += 1;
-                                            _postRequest(records[index]['id'],
-                                                likeCount);
-                                            count = 1;
-                                            isLiked[index] = !isLiked[index];
-                                          });
+                                          print("pressed 1setstate passed :");
+                                          likeCount += 1;
+                                          _postRequest(
+                                              records[index]['id'], likeCount);
+                                          count = 1;
+                                          isLiked[index] = !isLiked[index];
+                                          setState(() {});
                                         } else if (isLiked[index] &&
                                             count == 1) {
                                           setState(() {
@@ -377,7 +376,7 @@ class _FirstScreenMd1State extends State<FirstScreenMd1> {
                                         });
                                       } else if (isLiked[index] && count == 1) {
                                         setState(() {
-                                          print("1setstate passed");
+                                          print("2setstate passed");
 
                                           likeCount -= 1;
 

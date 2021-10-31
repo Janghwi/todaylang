@@ -1,10 +1,11 @@
+import 'package:comment_box/comment/comment.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:todaylang/page/first_screen_ad.dart';
 import 'package:todaylang/page/first_screen_ai.dart';
 import 'package:todaylang/page/first_screen_dt.dart';
-import 'package:todaylang/page/first_screen_md1.dart';
+import 'package:todaylang/page/first_screen_md6.dart';
 import 'package:todaylang/page/first_screen_of.dart';
 import 'package:todaylang/page/first_screen_ph.dart';
 import 'package:todaylang/page/first_screen_wb.dart';
@@ -70,11 +71,18 @@ class _HomePageState extends State<HomePage> {
 
   // ignore: use_key_in_widget_constructors
   int currentIndex = 0;
-  // final screens = [
+  // List<Widget> _widgetOptions = [
   //   HomePage(),
-  //   PostPage(),
-  //   PostPage(),
+  //   CommentBox(),
+  //   CommentBox(),
   // ];
+
+  void _onItemTapped(int index) {
+    setState(() {
+      currentIndex = index;
+    });
+  }
+
   String apptitle = "appbar_title1";
   @override
   Widget build(BuildContext context) => Scaffold(
@@ -157,7 +165,7 @@ class _HomePageState extends State<HomePage> {
             FirstScreenPh(),
             FirstScreenPh(),
             FirstScreenPh(),
-            FirstScreenMd1(),
+            FirstScreenMd6(),
             FirstScreenAd(),
             FirstScreenAi(),
             FirstScreenDt(),
