@@ -58,7 +58,9 @@ class TabBarWidget extends StatelessWidget {
     Get.updateLocale(locale);
   }
 
-  final user = FirebaseAuth.instance.currentUser!;
+  final user = FirebaseAuth.instance.currentUser ?? "";
+  // final user = FirebaseAuth.instance.currentUser!;
+
   @override
   Widget build(BuildContext context) => DefaultTabController(
         length: tabs.length,
@@ -84,7 +86,7 @@ class TabBarWidget extends StatelessWidget {
                   ),
                   CircleAvatar(
                     radius: 17,
-                    backgroundImage: NetworkImage(user.photoURL!),
+                    // backgroundImage: NetworkImage(user.photoURL!),
                   )
                 ],
                 title: Text(

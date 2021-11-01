@@ -6,14 +6,22 @@ import 'package:dio/dio.dart';
 class PhrasesLoader extends GetxController {
   static PhrasesLoader get to => Get.find();
   RxList records = [].obs;
+  int get count => records.length;
+
+  var favList = [].obs;
+  var list = [].obs;
+  RxBool isClicked = true.obs;
+
+  // RxList<dynamic> records = [].obs;
   // RxList records = <Map<String, dynamic>>[].obs;
   @override
   void onInit() async {
     super.onInit();
-    _loadPhrasesFile();
+    // fetchList();
+    loadPhrasesFile();
   }
 
-  Future<List> _loadPhrasesFile() async {
+  Future<RxList> loadPhrasesFile() async {
     if (Get.context != null) {
       Dio dio = Dio();
       var response = await dio.get(
@@ -25,12 +33,15 @@ class PhrasesLoader extends GetxController {
         }),
       );
       // print(response.data);
+      // Map<String, dynamic> result = (response.data);
 
-      var result = (response.data);
-      print('this passed');
-      print(result);
+      RxMap<String, dynamic> result =
+          RxMap<String, dynamic>.from(response.data);
+      // RxMap<String, dynamic> result = (response.data);
+      // print('this passed');
+      // print(result);
 
-      records = result['records'];
+      records = RxList.from(result['records']);
 
       return records;
 
@@ -38,8 +49,26 @@ class PhrasesLoader extends GetxController {
       //     .loadString("assets/json/post.json");
       // records(json.decode(data).cast<Map<String, dynamic>>().torecords());
     } else {
-      Future.delayed(Duration(milliseconds: 200), _loadPhrasesFile);
+      Future.delayed(Duration(milliseconds: 200), loadPhrasesFile);
     }
     return records;
+  }
+  //화면갱신
+  // void updateFavoriteData() {
+  //   favList.clear();
+  //   favList.addAll(list
+  //     .where((element) => element.parentGroup == Get.arguments['id'])
+  //     .list(e) {
+  //     e.setFavorite(PhFavController.to.favList.contains(e));
+  //     return e;
+  //   }).toList());
+  // }
+
+  // void updateFavorite() {
+  //   PhFavController.to.updateFavorite(uidInfo)  ;
+  //   updateFavoriteData();
+  // }
+  void clickfav() {
+    isClicked = true as RxBool;
   }
 }

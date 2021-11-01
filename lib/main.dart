@@ -173,8 +173,8 @@ class _MyAppState extends State<MyApp> {
               ),
             ),
           ),
-          // home: HomePage(),
-          home: LoginPage(),
+          home: HomePage(),
+          // home: LoginPage(),
         ),
       );
 }
