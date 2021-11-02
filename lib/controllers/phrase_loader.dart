@@ -5,7 +5,9 @@ import 'package:dio/dio.dart';
 
 class PhrasesLoader extends GetxController {
   static PhrasesLoader get to => Get.find();
+
   RxList records = [].obs;
+  var currentIdSave = ''.obs;
   int get count => records.length;
 
   var favList = [].obs;
@@ -26,7 +28,6 @@ class PhrasesLoader extends GetxController {
       Dio dio = Dio();
       var response = await dio.get(
         "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest?maxRecords=500&view=Gridview",
-        // "https://api.airtable.com/v0/app95nB2yi0WAYDyn/comments?maxRecords=200&view=Gridview",
         options: Options(contentType: 'Application/json', headers: {
           'Authorization': 'Bearer keyyG7I9nxyG5SmTq',
           'Accept': 'Application/json',
@@ -68,7 +69,31 @@ class PhrasesLoader extends GetxController {
   //   PhFavController.to.updateFavorite(uidInfo)  ;
   //   updateFavoriteData();
   // }
-  void clickfav() {
-    isClicked = true as RxBool;
+
+  RxBool isLiked = false.obs;
+  Future updatePhrasesFile(bool isLikedRx) async {
+    // Future updatePhrasesFile(String? currentId, int likeCount) async {
+    var response = Dio().patch(
+      'https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest',
+      options: Options(
+        contentType: 'Application/json',
+        headers: {
+          'Authorization': 'Bearer keyyG7I9nxyG5SmTq',
+          'Accept': 'Application/json',
+        },
+      ),
+      data: {
+        'records': [
+          {
+            "id": "rech3HAyhyRoVnsOC",
+            'fields': {
+              'likeCnt': 671,
+              // 'likeCnt': likeController.text,
+            }
+          },
+        ],
+      },
+    );
+    return !isLikedRx;
   }
 }

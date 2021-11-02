@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:get/get_utils/src/extensions/internacionalization.dart';
 import 'package:todaylang/page/first_screen_ad.dart';
 import 'package:todaylang/page/first_screen_ai.dart';
+import 'package:todaylang/page/first_screen_cm.dart';
 import 'package:todaylang/page/first_screen_dt.dart';
 import 'package:todaylang/page/first_screen_md6.dart';
 import 'package:todaylang/page/first_screen_of.dart';
@@ -157,7 +158,7 @@ class _HomePageState extends State<HomePage> {
               // icon: Icon(Icons.favorite_border),
             ),
             Tab(
-              text: 'Todo',
+              text: 'Comic',
               // icon: Icon(Icons.favorite_border),
             ),
           ],
@@ -176,7 +177,7 @@ class _HomePageState extends State<HomePage> {
             FirstScreenYt(),
             FirstScreenYtCre(),
             OpenPage(),
-            Todo(),
+            FirstScreenCm(),
           ],
         ),
         bottomNavigationBar: BottomNavigationBar(

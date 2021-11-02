@@ -90,14 +90,15 @@ class _FirstScreenYtCreState extends State<FirstScreenYtCre> {
               children: [
                 Wrap(
                   alignment: WrapAlignment.spaceBetween,
-                  spacing: 5.0,
+                  spacing: 4.0,
+                  clipBehavior: Clip.hardEdge,
                   children: [
                     TextButton(
                       style: ElevatedButton.styleFrom(
                         shape: StadiumBorder(),
                         primary: Colors.deepPurpleAccent,
-                        padding:
-                            EdgeInsets.symmetric(horizontal: 15, vertical: 6),
+                        // padding:
+                        // EdgeInsets.symmetric(horizontal: 8, vertical: 2),
                       ),
                       child: Text("전체",
                           style: TextStyle(fontSize: 13, color: Colors.white)),

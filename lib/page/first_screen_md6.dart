@@ -125,8 +125,12 @@ class FirstScreenMd6 extends StatelessWidget {
     });
   }
 
-  Future<bool> onLikeButtonTapped(bool isLiked) async {
-    _postRequest(String? currentId, int likeCount) {
+  Future<bool> onLikeButtonTapped(
+    bool isLiked,
+  ) async {
+    {
+      print("like button pressed");
+
       final response = Dio().patch(
         'https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest',
         options: Options(
@@ -139,9 +143,10 @@ class FirstScreenMd6 extends StatelessWidget {
         data: {
           'records': [
             {
-              "id": currentId,
+              "id": controller.currentIdSave,
               'fields': {
-                'likeCnt': likeCount + 1,
+                'likeCnt': 100,
+                // 'likeCnt': likeCount + 1,
                 // 'likeCnt': likeController.text,
               }
             },
@@ -217,7 +222,8 @@ class FirstScreenMd6 extends StatelessWidget {
                         // print(records[index]['fields']['likeCnt']);
                         int likeCount =
                             controller.records[index]['fields']['likeCnt'];
-                        String? currentIdSave = controller.records[index]['id'];
+                        controller.currentIdSave =
+                            controller.records[index]['id'];
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -347,6 +353,7 @@ class FirstScreenMd6 extends StatelessWidget {
                                     GestureDetector(
                                         child: LikeButton(
                                             onTap: onLikeButtonTapped,
+                                            // onTap: onLikeButtonTapped,
                                             likeCount: controller.records[index]
                                                 ['fields']['likeCnt'])),
                                     // onPressed: () async {
