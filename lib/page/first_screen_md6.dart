@@ -143,9 +143,9 @@ class FirstScreenMd6 extends StatelessWidget {
         data: {
           'records': [
             {
-              "id": controller.currentIdSave,
+              "id": ctr.currentIdSave.value,
               'fields': {
-                'likeCnt': 100,
+                'likeCnt': 101,
                 // 'likeCnt': likeCount + 1,
                 // 'likeCnt': likeController.text,
               }
@@ -171,7 +171,7 @@ class FirstScreenMd6 extends StatelessWidget {
       data: {
         'records': [
           {
-            "id": currentId,
+            "id": ctr.currentIdSave.value,
             'fields': {
               'likeCnt': likeCount,
               // 'likeCnt': likeController.text,
@@ -182,7 +182,7 @@ class FirstScreenMd6 extends StatelessWidget {
     );
   }
 
-  final controller = Get.put(PhrasesLoader());
+  final ctr = Get.put(PhrasesLoader());
 
   bool isLiked = false;
   @override
@@ -194,9 +194,9 @@ class FirstScreenMd6 extends StatelessWidget {
         body: GetBuilder<PhrasesLoader>(
             // init: PhrasesLoader(),
             // initState: (_) {},
-            builder: (controller) {
+            builder: (ctr) {
           return FutureBuilder<List<dynamic>>(
-              future: controller.loadPhrasesFile(),
+              future: ctr.loadPhrasesFile(),
               builder: (context, snapshot) {
                 // print('snapshot No.=>');
                 // print(records.length);
@@ -220,10 +220,9 @@ class FirstScreenMd6 extends StatelessWidget {
                         // print(snapshot);
                         print(PhrasesLoader.to.records.length);
                         // print(records[index]['fields']['likeCnt']);
-                        int likeCount =
-                            controller.records[index]['fields']['likeCnt'];
-                        controller.currentIdSave =
-                            controller.records[index]['id'];
+                        int likeCount = ctr.records[index]['fields']['likeCnt'];
+                        ctr.currentIdSave.value = ctr.records[index]['id'];
+
                         return Padding(
                           padding: const EdgeInsets.all(8.0),
                           child: Column(
@@ -232,10 +231,8 @@ class FirstScreenMd6 extends StatelessWidget {
                                 onTap: () {
                                   Get.to(() => DetailPage(),
                                       arguments: [
-                                        controller.records[index]['fields']
-                                            ['title'],
-                                        controller.records[index]['fields']
-                                            ['content'],
+                                        ctr.records[index]['fields']['title'],
+                                        ctr.records[index]['fields']['content'],
                                         //this.records[index]['fields']['cat1'],
                                       ],
                                       transition: Transition.zoom,
@@ -244,8 +241,7 @@ class FirstScreenMd6 extends StatelessWidget {
                                 child: Column(
                                   children: [
                                     Text(
-                                      controller.records[index]['fields']
-                                              ['title']
+                                      ctr.records[index]['fields']['title']
                                           .toString(),
                                       // PhrasesLoader
                                       // .to.records[index]['fields']['title']
@@ -263,7 +259,7 @@ class FirstScreenMd6 extends StatelessWidget {
                                       padding:
                                           const EdgeInsets.fromLTRB(0, 4, 0, 0),
                                       child: Text(
-                                          controller.records[index]['fields']
+                                          ctr.records[index]['fields']
                                                   ['content']
                                               .toString(),
                                           // style: GoogleFonts.acme(
@@ -288,12 +284,11 @@ class FirstScreenMd6 extends StatelessWidget {
                                           alignment: Alignment.center,
                                           children: [
                                             CachedNetworkImage(
-                                              imageUrl:
-                                                  controller.records[index]
-                                                                  ['fields']
-                                                              ['Attachments'][0]
-                                                          ['thumbnails']
-                                                      ['large']['url'],
+                                              imageUrl: ctr.records[index]
+                                                              ['fields']
+                                                          ['Attachments'][0]
+                                                      ['thumbnails']['large']
+                                                  ['url'],
                                               fit: BoxFit.cover,
                                               width:
                                                   MediaQuery.maybeOf(context)!
@@ -307,8 +302,8 @@ class FirstScreenMd6 extends StatelessWidget {
                                                       0.2,
                                             ),
                                             Text(
-                                              controller.records[index]
-                                                      ['fields']['title']
+                                              ctr.records[index]['fields']
+                                                      ['title']
                                                   .toString(),
                                               // style: GoogleFonts.aBeeZee(
                                               // style: GoogleFonts.hiMelody(
@@ -343,8 +338,7 @@ class FirstScreenMd6 extends StatelessWidget {
                                     // Divider(
                                     //   indent: 10,
                                     // ),
-                                    Text(controller.records[index]['fields']
-                                            ['cmtCnt']
+                                    Text(ctr.records[index]['fields']['cmtCnt']
                                         .toString()),
                                     Divider(
                                       indent: 30,
@@ -354,7 +348,7 @@ class FirstScreenMd6 extends StatelessWidget {
                                         child: LikeButton(
                                             onTap: onLikeButtonTapped,
                                             // onTap: onLikeButtonTapped,
-                                            likeCount: controller.records[index]
+                                            likeCount: ctr.records[index]
                                                 ['fields']['likeCnt'])),
                                     // onPressed: () async {
                                     //   int likeCount = records[index]

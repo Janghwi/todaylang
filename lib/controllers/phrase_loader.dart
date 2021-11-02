@@ -13,6 +13,7 @@ class PhrasesLoader extends GetxController {
   var favList = [].obs;
   var list = [].obs;
   RxBool isClicked = true.obs;
+  RxBool isTest = false.obs;
 
   // RxList<dynamic> records = [].obs;
   // RxList records = <Map<String, dynamic>>[].obs;
@@ -43,6 +44,7 @@ class PhrasesLoader extends GetxController {
       // print(result);
 
       records = RxList.from(result['records']);
+      isTest.value = true;
 
       return records;
 
