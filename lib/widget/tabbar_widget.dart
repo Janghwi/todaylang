@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:todaylang/widget/mydrawer.dart';
 
 class TabBarWidget extends StatelessWidget {
   final String title;
@@ -76,6 +77,12 @@ class TabBarWidget extends StatelessWidget {
                 )
               ]),
               child: NewGradientAppBar(
+                leading: IconButton(
+                  icon: Icon(Icons.menu),
+                  onPressed: () {
+                    Scaffold.of(context).openDrawer();
+                  },
+                ),
                 actions: <Widget>[
                   IconButton(
                     icon: Icon(Icons.language),

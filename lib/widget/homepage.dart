@@ -87,11 +87,36 @@ class _HomePageState extends State<HomePage> {
   String apptitle = "appbar_title1";
   @override
   Widget build(BuildContext context) => Scaffold(
+        drawer: Drawer(
+          child: ListView(
+            padding: EdgeInsets.zero,
+            children: [
+              DrawerHeader(
+                child: Text('Drawer Header'),
+                decoration: BoxDecoration(
+                  color: Colors.amber,
+                ),
+              ),
+              ListTile(
+                title: Text('회원정보 보기'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+              ListTile(
+                title: Text('로그아웃'),
+                onTap: () {
+                  Navigator.pop(context);
+                },
+              ),
+            ],
+          ),
+        ),
         // appBar: AppBar(
         //   actions: <Widget>[
         //     IconButton(
         //       icon: Icon(Icons.language),
-        //       onPressed: () => showLocalDialog(context),
+        //       onPressed: () {},
         //     ),
         //   ],
         // ),
@@ -180,30 +205,30 @@ class _HomePageState extends State<HomePage> {
             FirstScreenCm(),
           ],
         ),
-        bottomNavigationBar: BottomNavigationBar(
-          type: BottomNavigationBarType.fixed,
-          backgroundColor: Colors.blue,
-          selectedItemColor: Colors.white,
-          unselectedItemColor: Colors.white70,
-          iconSize: 20,
-          selectedFontSize: 16,
-          unselectedFontSize: 14,
-          currentIndex: currentIndex,
-          onTap: (index) => setState(() => currentIndex = index),
-          items: const <BottomNavigationBarItem>[
-            BottomNavigationBarItem(
-                icon: Icon(Icons.home),
-                label: "Home",
-                backgroundColor: Colors.blue),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.mail),
-                label: "Translate",
-                backgroundColor: Colors.red),
-            BottomNavigationBarItem(
-                icon: Icon(Icons.person),
-                label: "Comments",
-                backgroundColor: Colors.blue),
-          ],
-        ),
+        // bottomNavigationBar: BottomNavigationBar(
+        //   type: BottomNavigationBarType.fixed,
+        //   backgroundColor: Colors.blue,
+        //   selectedItemColor: Colors.white,
+        //   unselectedItemColor: Colors.white70,
+        //   iconSize: 20,
+        //   selectedFontSize: 16,
+        //   unselectedFontSize: 14,
+        //   currentIndex: currentIndex,
+        //   onTap: (index) => setState(() => currentIndex = index),
+        //   items: const <BottomNavigationBarItem>[
+        //     BottomNavigationBarItem(
+        //         icon: Icon(Icons.home),
+        //         label: "Home",
+        //         backgroundColor: Colors.blue),
+        //     BottomNavigationBarItem(
+        //         icon: Icon(Icons.mail),
+        //         label: "Translate",
+        //         backgroundColor: Colors.red),
+        //     BottomNavigationBarItem(
+        //         icon: Icon(Icons.person),
+        //         label: "Comments",
+        //         backgroundColor: Colors.blue),
+        //   ],
+        // ),
       );
 }

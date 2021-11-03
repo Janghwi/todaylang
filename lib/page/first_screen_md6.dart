@@ -33,65 +33,7 @@ class FirstScreenMd6 extends StatelessWidget {
   // String? currentId;
 
   // final key1 = GlobalKey();
-  late GlobalKey<LikeButtonState> _globalkey;
-
-  // @override
-  // void initState() {
-  //   // Initialize the values here
-  //   super.initState();
-  //   _globalkey = GlobalKey<LikeButtonState>();
-  // }
-
-  // @override
-  // void dispose() {
-  //   // Remember that you have to dispose of the controllers once the widget is ready to be disposed of
-  //   _globalkey;
-  //   super.dispose();
-  // }
-
-  // final TextEditingController likeController = TextEditingController();
-  // final gkey = GlobalKey<LikeButtonState>();
-
-  // Future _fetchMenus() async {
-  //   bool loadRemoteDatatSucceed = false;
-  //   final url = Uri.parse(
-  //     "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest?maxRecords=500&view=Gridview",
-  //   );
-  //   Map<String, String> header = {"Authorization": "Bearer keyyG7I9nxyG5SmTq"};
-  //   try {
-  //     final response = await http.get(url, headers: header);
-  //     Map<String, dynamic> result = json.decode(response.body);
-  //     records = result['records'];
-  //   } catch (e) {
-  //     if (loadRemoteDatatSucceed == false) retryFuture(_fetchMenus, 2000);
-  //   }
-  //   return records;
-  // }
-  // Future<List> _fetchMenus(
-  //     //  String view,
-  //     ) async {
-  //   try {
-  //     Dio dio = Dio();
-  //     var response = await dio.get(
-  //       "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest?maxRecords=500&view=Gridview",
-  //       // "https://api.airtable.com/v0/app95nB2yi0WAYDyn/comments?maxRecords=200&view=Gridview",
-  //       options: Options(contentType: 'Application/json', headers: {
-  //         'Authorization': 'Bearer keyyG7I9nxyG5SmTq',
-  //         'Accept': 'Application/json',
-  //       }),
-  //     );
-
-  //     Map<String, dynamic> result = (response.data);
-
-  //     records = result['records'];
-  //   } on DioError catch (e) {
-  //     if (e.response != null) {
-  //     } else {
-  //       // if (loadRemoteDatatSucceed == false) retryFuture(_fetchMenus, 200);
-  //     }
-  //   }
-  //   return records;
-  // }
+  var refreshKey = GlobalKey<RefreshIndicatorState>();
 
   Future<List> _fetchComments(
       //  String view,
@@ -195,200 +137,209 @@ class FirstScreenMd6 extends StatelessWidget {
             // init: PhrasesLoader(),
             // initState: (_) {},
             builder: (ctr) {
-          return FutureBuilder<List<dynamic>>(
-              future: ctr.loadPhrasesFile(),
-              builder: (context, snapshot) {
-                // print('snapshot No.=>');
-                // print(records.length);
-                // print("get records:" "{}");
-                List<bool> isLiked = List.filled(records.length, false);
-                // print('22 builder passed');
-                if (!snapshot.hasData) {
-                  return Center(
-                      child: CircularProgressIndicator(
-                    valueColor: const AlwaysStoppedAnimation(Colors.amber),
-                  ));
-                } else {
-                  return ListView.builder(
-                      physics: const BouncingScrollPhysics(),
-                      itemCount: snapshot.data?.length,
-                      // itemCount: PhrasesLoader.to.records.length,
-                      // itemCount: PhrasesLoader.to.records.length,
-                      itemBuilder: (BuildContext context, int index) {
-                        // List<bool> isLiked = List.filled(records.length, false);
-                        // print('PhrasesLoader.to.records.length');
-                        // print(snapshot);
-                        print(PhrasesLoader.to.records.length);
-                        // print(records[index]['fields']['likeCnt']);
-                        int likeCount = ctr.records[index]['fields']['likeCnt'];
-                        ctr.currentIdSave.value = ctr.records[index]['id'];
+          return RefreshIndicator(
+            key: refreshKey,
+            onRefresh: () async {
+              await ctr.loadPhrasesFile();
+            },
+            child: FutureBuilder<List<dynamic>>(
+                future: ctr.loadPhrasesFile(),
+                builder: (context, snapshot) {
+                  // print('snapshot No.=>');
+                  // print(records.length);
+                  // print("get records:" "{}");
+                  List<bool> isLiked = List.filled(records.length, false);
+                  // print('22 builder passed');
+                  if (!snapshot.hasData) {
+                    return Center(
+                        child: CircularProgressIndicator(
+                      valueColor: const AlwaysStoppedAnimation(Colors.amber),
+                    ));
+                  } else {
+                    return ListView.builder(
+                        physics: const BouncingScrollPhysics(),
+                        itemCount: snapshot.data?.length,
+                        // itemCount: PhrasesLoader.to.records.length,
+                        // itemCount: PhrasesLoader.to.records.length,
+                        itemBuilder: (BuildContext context, int index) {
+                          // List<bool> isLiked = List.filled(records.length, false);
+                          // print('PhrasesLoader.to.records.length');
+                          // print(snapshot);
+                          print(PhrasesLoader.to.records.length);
+                          // print(records[index]['fields']['likeCnt']);
+                          int likeCount =
+                              ctr.records[index]['fields']['likeCnt'];
+                          ctr.currentIdSave.value = ctr.records[index]['id'];
 
-                        return Padding(
-                          padding: const EdgeInsets.all(8.0),
-                          child: Column(
-                            children: [
-                              GestureDetector(
-                                onTap: () {
-                                  Get.to(() => DetailPage(),
-                                      arguments: [
-                                        ctr.records[index]['fields']['title'],
-                                        ctr.records[index]['fields']['content'],
-                                        //this.records[index]['fields']['cat1'],
-                                      ],
-                                      transition: Transition.zoom,
-                                      preventDuplicates: false);
-                                },
-                                child: Column(
-                                  children: [
-                                    Text(
-                                      ctr.records[index]['fields']['title']
-                                          .toString(),
-                                      // PhrasesLoader
-                                      // .to.records[index]['fields']['title']
-                                      // .toString(),
-                                      style: GoogleFonts.amiko(
-                                          // backgroundColor: Colors.white70,
-                                          fontStyle: FontStyle.normal,
-                                          color: Colors.black,
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20),
-                                      textAlign: TextAlign.justify,
-                                    ),
-                                    //const Divider(),
-                                    Padding(
-                                      padding:
-                                          const EdgeInsets.fromLTRB(0, 4, 0, 0),
-                                      child: Text(
+                          return Padding(
+                            padding: const EdgeInsets.all(8.0),
+                            child: Column(
+                              children: [
+                                GestureDetector(
+                                  onTap: () {
+                                    Get.to(() => DetailPage(),
+                                        arguments: [
+                                          ctr.records[index]['fields']['title'],
                                           ctr.records[index]['fields']
-                                                  ['content']
-                                              .toString(),
-                                          // style: GoogleFonts.acme(
-                                          style: GoogleFonts.nanumGothic(
+                                              ['content'],
+                                          //this.records[index]['fields']['cat1'],
+                                        ],
+                                        transition: Transition.zoom,
+                                        preventDuplicates: false);
+                                  },
+                                  child: Column(
+                                    children: [
+                                      Text(
+                                        ctr.records[index]['fields']['title']
+                                            .toString(),
+                                        // PhrasesLoader
+                                        // .to.records[index]['fields']['title']
+                                        // .toString(),
+                                        style: GoogleFonts.amiko(
                                             // backgroundColor: Colors.white70,
-                                            // fontStyle: FontStyle.italic,
+                                            fontStyle: FontStyle.normal,
                                             color: Colors.black,
-                                            fontSize: 15,
-                                          ),
-                                          overflow: TextOverflow.ellipsis,
-                                          maxLines: 2),
-                                    ),
-                                    Card(
-                                      color: Colors.black54,
-                                      shadowColor: Colors.grey,
-                                      elevation: 8,
-                                      clipBehavior: Clip.antiAlias,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(14)),
-                                      child: Stack(
-                                          alignment: Alignment.center,
-                                          children: [
-                                            CachedNetworkImage(
-                                              imageUrl: ctr.records[index]
-                                                              ['fields']
-                                                          ['Attachments'][0]
-                                                      ['thumbnails']['large']
-                                                  ['url'],
-                                              fit: BoxFit.cover,
-                                              width:
-                                                  MediaQuery.maybeOf(context)!
-                                                          .size
-                                                          .width *
-                                                      0.97,
-                                              height:
-                                                  MediaQuery.maybeOf(context)!
-                                                          .size
-                                                          .height *
-                                                      0.2,
+                                            fontWeight: FontWeight.bold,
+                                            fontSize: 20),
+                                        textAlign: TextAlign.justify,
+                                      ),
+                                      //const Divider(),
+                                      Padding(
+                                        padding: const EdgeInsets.fromLTRB(
+                                            0, 4, 0, 0),
+                                        child: Text(
+                                            ctr.records[index]['fields']
+                                                    ['content']
+                                                .toString(),
+                                            // style: GoogleFonts.acme(
+                                            style: GoogleFonts.nanumGothic(
+                                              // backgroundColor: Colors.white70,
+                                              // fontStyle: FontStyle.italic,
+                                              color: Colors.black,
+                                              fontSize: 15,
                                             ),
-                                            Text(
-                                              ctr.records[index]['fields']
-                                                      ['title']
-                                                  .toString(),
-                                              // style: GoogleFonts.aBeeZee(
-                                              // style: GoogleFonts.hiMelody(
-                                              // style: GoogleFonts.blackHanSans(
-                                              style: GoogleFonts.stylish(
-                                                  // backgroundColor: Colors.white70,
-                                                  fontStyle: FontStyle.italic,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.yellow,
-                                                  fontSize: 24),
-                                            ),
-                                          ]),
-                                    ),
-                                  ],
+                                            overflow: TextOverflow.ellipsis,
+                                            maxLines: 2),
+                                      ),
+                                      Card(
+                                        color: Colors.black54,
+                                        shadowColor: Colors.grey,
+                                        elevation: 8,
+                                        clipBehavior: Clip.antiAlias,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(14)),
+                                        child: Stack(
+                                            alignment: Alignment.center,
+                                            children: [
+                                              CachedNetworkImage(
+                                                imageUrl: ctr.records[index]
+                                                                ['fields']
+                                                            ['Attachments'][0]
+                                                        ['thumbnails']['large']
+                                                    ['url'],
+                                                fit: BoxFit.cover,
+                                                width:
+                                                    MediaQuery.maybeOf(context)!
+                                                            .size
+                                                            .width *
+                                                        0.97,
+                                                height:
+                                                    MediaQuery.maybeOf(context)!
+                                                            .size
+                                                            .height *
+                                                        0.2,
+                                              ),
+                                              Text(
+                                                ctr.records[index]['fields']
+                                                        ['title']
+                                                    .toString(),
+                                                // style: GoogleFonts.aBeeZee(
+                                                // style: GoogleFonts.hiMelody(
+                                                // style: GoogleFonts.blackHanSans(
+                                                style: GoogleFonts.stylish(
+                                                    // backgroundColor: Colors.white70,
+                                                    fontStyle: FontStyle.italic,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.yellow,
+                                                    fontSize: 24),
+                                              ),
+                                            ]),
+                                      ),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Row(
-                                  mainAxisAlignment: MainAxisAlignment.start,
-                                  children: <Widget>[
-                                    // Divider(
-                                    //   indent: 30,
-                                    // ),
-                                    IconButton(
-                                      icon: Icon(Icons.speaker_notes,
-                                          color: Colors.amber),
-                                      onPressed: () {
-                                        Get.to(CommentWrite());
-                                      },
-                                    ),
-                                    // Divider(
-                                    //   indent: 10,
-                                    // ),
-                                    Text(ctr.records[index]['fields']['cmtCnt']
-                                        .toString()),
-                                    Divider(
-                                      indent: 30,
-                                    ),
-                                    //--------------------------------------------------------
-                                    GestureDetector(
-                                        child: LikeButton(
-                                            onTap: onLikeButtonTapped,
-                                            // onTap: onLikeButtonTapped,
-                                            likeCount: ctr.records[index]
-                                                ['fields']['likeCnt'])),
-                                    // onPressed: () async {
-                                    //   int likeCount = records[index]
-                                    //       ['fields']['likeCnt'];
-                                    //   int count = 0;
-                                    //   if (!isLiked[index] && count == 0) {
-                                    //     print("pressed 1setstate passed :");
-                                    //     likeCount += 1;
-                                    //     _postRequest(records[index]['id'],
-                                    //         likeCount);
-                                    //     count = 1;
-                                    //     isLiked[index] = !isLiked[index];
-                                    //     setState(() {});
-                                    //   }
-                                    // },
+                                Padding(
+                                  padding: const EdgeInsets.all(8.0),
+                                  child: Row(
+                                    mainAxisAlignment: MainAxisAlignment.start,
+                                    children: <Widget>[
+                                      // Divider(
+                                      //   indent: 30,
+                                      // ),
+                                      IconButton(
+                                        icon: Icon(Icons.speaker_notes,
+                                            color: Colors.amber),
+                                        onPressed: () {
+                                          Get.to(CommentWrite());
+                                        },
+                                      ),
+                                      // Divider(
+                                      //   indent: 10,
+                                      // ),
+                                      Text(ctr.records[index]['fields']
+                                              ['cmtCnt']
+                                          .toString()),
+                                      Divider(
+                                        indent: 30,
+                                      ),
+                                      //--------------------------------------------------------
+                                      GestureDetector(
+                                          child: LikeButton(
+                                              onTap: onLikeButtonTapped,
+                                              // onTap: onLikeButtonTapped,
+                                              likeCount: ctr.records[index]
+                                                  ['fields']['likeCnt'])),
+                                      // onPressed: () async {
+                                      //   int likeCount = records[index]
+                                      //       ['fields']['likeCnt'];
+                                      //   int count = 0;
+                                      //   if (!isLiked[index] && count == 0) {
+                                      //     print("pressed 1setstate passed :");
+                                      //     likeCount += 1;
+                                      //     _postRequest(records[index]['id'],
+                                      //         likeCount);
+                                      //     count = 1;
+                                      //     isLiked[index] = !isLiked[index];
+                                      //     setState(() {});
+                                      //   }
+                                      // },
 
-                                    Divider(
-                                      indent: 10,
-                                    ),
-                                    // Text(records[index]['fields']['likeCnt']
-                                    //     .toString()),
+                                      Divider(
+                                        indent: 10,
+                                      ),
+                                      // Text(records[index]['fields']['likeCnt']
+                                      //     .toString()),
 
-                                    // Divider(
-                                    //   indent: 10,
-                                    // ),
-                                    // Icon(Icons.share),
-                                    // Text('Share!'),
-                                  ],
+                                      // Divider(
+                                      //   indent: 10,
+                                      // ),
+                                      // Icon(Icons.share),
+                                      // Text('Share!'),
+                                    ],
+                                  ),
                                 ),
-                              ),
-                              // Divider(
-                              //   color: Colors.black12,
-                              //   thickness: 8.0,
-                              // ),
-                            ],
-                          ),
-                        );
-                      });
-                }
-              });
+                                // Divider(
+                                //   color: Colors.black12,
+                                //   thickness: 8.0,
+                                // ),
+                              ],
+                            ),
+                          );
+                        });
+                  }
+                }),
+          );
         }));
   }
 }

@@ -216,3 +216,69 @@ class _LoginPageState extends State<LoginPage> {
         // ),
       );
 }
+//
+//print("유저네임은 : ${      }");
+/*
+기본조건문
+bool isRun =true;
+if (isRun){
+  참입니다.
+} else {
+  거짓입니다.
+}
+
+삼항연산자(조건 ? 데이터1 :데이터 2)
+String s = isRun ? '참' : '거짓'
+
+엘비스(Elvis)연산자: null값확인 
+String data = name ?? '홍길동';      >>>name이 null이면  홍길동을 넣고 null이 아니면 nme값을 넣어라
+accout = input ?? 0;       >>> 0를 넣어아라
+
+메소드 
+- 다트는 리턴타입 정이 안해도 됨 
+- 메소드가 1급 객체이기때문에 변수에 저장할 수 없음 
+Function hihi = () {};
+var hihihi = () {};   >>> 한번 정해지면 type전환이 안됨
+dynamic hihihi = () {};  >>>type전환됨
+- return이 한줄이면 =>을 사용하여 표현할 수 있다 ... 리턴문을 생략
+
+
+반복문 
+void main() {
+  var list = [1,2,3,4];
+  for (var i =0; i < list.lenght; i++ ){
+    print(list[i]);
+  }
+
+for (var e in list){
+    print(e);                    >>>좋음
+  }
+
+list.forEach((e)=> print(e)); >>>좋지않음
+
+list.forEach((e){
+  print(e);
+});
+
+}
+배열의 복사 에서 기본 반복은 for in문이 좋고, 빈복후 리턴은 map이 좋고, 필터링을 할때는 spread가 좋다.
+얉은복사 sms 주소복사이다.
+var newList = list;
+
+깊은복사 
+var mapList = list.map((e)=>e +1);  >>>리스트를 각각 읽어서 값을 1로 더해서 return한다.장점은 연산하여 리턴한다.
+print(mapList)
+
+var spreadList = [...list]; // [1,2,3,4]와 똑같다.깊은 복사로 흩뿌린다는 개념.단점은 연산을 못한다.
+                   장점은 [10, ...list, 100] = [10,1,2,3,4,100]이 된다.
+
+배열에서 어떤 값을 필터링한뒤 깊은 복사 하는 법 
+var filterList = list.where((e)=> e == 2); 값을 리스트네에서 읽다가 2의 값을 만나면 true가 리턴된다
+그리고 true의 값만 filterlist에 넣어라.
+          where는 bool type의 
+var filterList = list.where((e)=> e != 2); [1,2,3,4]가 있으면 2가 아닌 숫자만 리턴한다.
+
+
+
+
+*/
