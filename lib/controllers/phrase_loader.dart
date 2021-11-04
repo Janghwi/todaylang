@@ -6,7 +6,10 @@ import 'package:dio/dio.dart';
 class PhrasesLoader extends GetxController {
   static PhrasesLoader get to => Get.find();
 
-  RxList records = [].obs;
+  var records = [].obs;
+  final record = ''.obs;
+  final uniqueId = ''.obs;
+
   var currentIdSave = ''.obs;
   int get count => records.length;
 
@@ -23,6 +26,8 @@ class PhrasesLoader extends GetxController {
     // fetchList();
     loadPhrasesFile();
   }
+
+  void idSave() async {}
 
   Future<RxList> loadPhrasesFile() async {
     if (Get.context != null) {
@@ -56,6 +61,7 @@ class PhrasesLoader extends GetxController {
     }
     return records;
   }
+
   //화면갱신
   // void updateFavoriteData() {
   //   favList.clear();
@@ -72,30 +78,57 @@ class PhrasesLoader extends GetxController {
   //   updateFavoriteData();
   // }
 
-  RxBool isLiked = false.obs;
-  Future updatePhrasesFile(bool isLikedRx) async {
-    // Future updatePhrasesFile(String? currentId, int likeCount) async {
-    var response = Dio().patch(
-      'https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest',
-      options: Options(
-        contentType: 'Application/json',
-        headers: {
-          'Authorization': 'Bearer keyyG7I9nxyG5SmTq',
-          'Accept': 'Application/json',
-        },
-      ),
-      data: {
-        'records': [
-          {
-            "id": "rech3HAyhyRoVnsOC",
-            'fields': {
-              'likeCnt': 671,
-              // 'likeCnt': likeController.text,
-            }
-          },
-        ],
-      },
-    );
-    return !isLikedRx;
-  }
+  // RxBool isLiked = false.obs;
+  // Future updatePhrasesFile(String id, String likeCount) async {
+  //   // Future updatePhrasesFile(String? currentId, int likeCount) async {
+  //   var response = Dio().patch(
+  //     'https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest',
+  //     options: Options(
+  //       contentType: 'Application/json',
+  //       headers: {
+  //         'Authorization': 'Bearer keyyG7I9nxyG5SmTq',
+  //         'Accept': 'Application/json',
+  //       },
+  //     ),
+  //     data: {
+  //       'records': [
+  //         {
+  //           "id": "rech3HAyhyRoVnsOC",
+  //           'fields': {
+  //             'likeCnt': $likeCount,
+  //             // 'likeCnt': likeController.text,
+  //           }
+  //         },
+  //       ],
+  //     },
+  //   );
+  //   return !isLikedRx;
+  // }
+
+  // RxBool isLiked = false.obs;
+  // Future updatePhrasesFile(bool isLikedRx) async {
+  //   // Future updatePhrasesFile(String? currentId, int likeCount) async {
+  //   var response = Dio().patch(
+  //     'https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest',
+  //     options: Options(
+  //       contentType: 'Application/json',
+  //       headers: {
+  //         'Authorization': 'Bearer keyyG7I9nxyG5SmTq',
+  //         'Accept': 'Application/json',
+  //       },
+  //     ),
+  //     data: {
+  //       'records': [
+  //         {
+  //           "id": "rech3HAyhyRoVnsOC",
+  //           'fields': {
+  //             'likeCnt': 671,
+  //             // 'likeCnt': likeController.text,
+  //           }
+  //         },
+  //       ],
+  //     },
+  //   );
+  //   return !isLikedRx;
+  // }
 }
