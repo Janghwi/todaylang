@@ -13,14 +13,14 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:todaylang/widget/youtube_widget.dart';
 
-class FirstScreenYt extends StatefulWidget {
-  const FirstScreenYt({Key? key}) : super(key: key);
+class FirstScreenYt1 extends StatefulWidget {
+  const FirstScreenYt1({Key? key}) : super(key: key);
 
   @override
-  State<FirstScreenYt> createState() => _FirstScreenYtState();
+  State<FirstScreenYt1> createState() => _FirstScreenYt1State();
 }
 
-class _FirstScreenYtState extends State<FirstScreenYt> {
+class _FirstScreenYt1State extends State<FirstScreenYt1> {
   List records = [];
 
   // final style = const TextStyle(fontSize: 32, fontWeight: FontWeight.bold);
@@ -68,55 +68,31 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
             Wrap(
               alignment: WrapAlignment.start,
               children: [
-                SizedBox.fromSize(
-                  size: Size(52, 52), // button width and height
-                  child: ClipOval(
-                    child: Material(
-                      color: Colors.orange, // button color
-                      child: InkWell(
-                        splashColor: Colors.green, // splash color
-                        onTap: () async {
-                          // await _fetchMenus("quoteview");
-                          setState(() {
-                            _fetchMenus("Gridview");
-                            currentView = "Gridview";
-                          });
-                        }, // button pressed
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const <Widget>[
-                            Icon(Icons.call), // icon
-                            Text("전체"), // text
-                          ],
-                        ),
-                      ),
-                    ),
+                TextButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                   ),
+                  child: Text("전체", style: TextStyle(fontSize: 16)),
+                  onPressed: () async {
+                    // await _fetchMenus("Gridview");
+                    setState(() {
+                      _fetchMenus("Gridview");
+                      currentView = "Gridview";
+                    });
+                  },
                 ),
-                SizedBox.fromSize(
-                  size: Size(52, 52), // button width and height
-                  child: ClipOval(
-                    child: Material(
-                      color: Colors.orange, // button color
-                      child: InkWell(
-                        splashColor: Colors.green, // splash color
-                        onTap: () async {
-                          // await _fetchMenus("quoteview");
-                          setState(() {
-                            _fetchMenus("quoteview");
-                            currentView = "quoteview";
-                          });
-                        }, // button pressed
-                        child: Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          children: const <Widget>[
-                            Icon(Icons.call), // icon
-                            Text("명언"), // text
-                          ],
-                        ),
-                      ),
-                    ),
+                TextButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
                   ),
+                  child: Text("명언", style: TextStyle(fontSize: 16)),
+                  onPressed: () async {
+                    // await _fetchMenus("quoteview");
+                    setState(() {
+                      _fetchMenus("quoteview");
+                      currentView = "quoteview";
+                    });
+                  },
                 ),
                 TextButton(
                   style: ElevatedButton.styleFrom(

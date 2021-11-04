@@ -133,19 +133,15 @@ class FirstScreenMd6 extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      extendBodyBehindAppBar: true,
+        extendBodyBehindAppBar: true,
 
-      // ignore: unnecessary_null_comparison
-      body: GetBuilder<PhrasesLoader>(
-          // init: PhrasesLoader(),
-          // initState: (_) {},
-          builder: (ctr) {
-        return RefreshIndicator(
+        // ignore: unnecessary_null_comparison
+        body: RefreshIndicator(
             key: refreshKey,
             onRefresh: () async {
               await ctr.loadPhrasesFile();
             },
-            child: ListView.builder(
+            child: Obx(() => ListView.builder(
                 physics: const BouncingScrollPhysics(),
                 itemCount: ctr.records.length,
                 // itemCount: PhrasesLoader.to.records.length,
@@ -282,6 +278,9 @@ class FirstScreenMd6 extends StatelessWidget {
                               ),
                               //--------------------------------------------------------
                               GestureDetector(
+                                  onTap: () {
+                                    print('ontap !!!');
+                                  },
                                   child: LikeButton(
                                       onTap: onLikeButtonTapped,
                                       // onTap: onLikeButtonTapped,
@@ -323,9 +322,7 @@ class FirstScreenMd6 extends StatelessWidget {
                       ],
                     ),
                   );
-                }));
-      }),
-    );
+                }))));
   }
 }
 
@@ -359,36 +356,46 @@ class _DetailPageState extends State<DetailPage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Markdown(
-              data: Get.arguments[1],
-              styleSheetTheme: MarkdownStyleSheetBaseTheme.cupertino,
-              physics: const BouncingScrollPhysics(),
-              styleSheet: MarkdownStyleSheet(
-                  h1: const TextStyle(color: Colors.blue),
-                  h2: const TextStyle(color: Colors.blue),
-                  h3: const TextStyle(color: Colors.blue),
-                  h4: const TextStyle(
-                      color: Colors.indigo, fontWeight: FontWeight.w100),
-                  h5: const TextStyle(
-                    color: Colors.black87,
-                  ),
-                  h6: const TextStyle(
-                      color: Colors.indigo, fontWeight: FontWeight.w600),
-                  p: const TextStyle(
-                    color: Colors.black26,
-                  ),
-                  strong: const TextStyle(color: Colors.lightBlueAccent),
-                  blockSpacing: 10.0,
-                  listIndent: 24.0,
-                  horizontalRuleDecoration: BoxDecoration(
-                    border: Border(
-                      top: BorderSide(
-                        width: 3.0,
-                        color: Colors.grey,
-                      ),
-                    ),
-                  ),
-                  blockquote: const TextStyle(color: Colors.red))),
+          child: Column(
+            children: [
+              Expanded(
+                child: Markdown(
+                    data: Get.arguments[1],
+                    styleSheetTheme: MarkdownStyleSheetBaseTheme.cupertino,
+                    physics: const BouncingScrollPhysics(),
+                    styleSheet: MarkdownStyleSheet(
+                        h1: const TextStyle(color: Colors.blue),
+                        h2: const TextStyle(color: Colors.blue),
+                        h3: const TextStyle(color: Colors.blue),
+                        h4: const TextStyle(
+                            color: Colors.indigo, fontWeight: FontWeight.w100),
+                        h5: const TextStyle(
+                          color: Colors.black87,
+                        ),
+                        h6: const TextStyle(
+                            color: Colors.indigo, fontWeight: FontWeight.w600),
+                        p: const TextStyle(
+                          color: Colors.black26,
+                        ),
+                        strong: const TextStyle(color: Colors.lightBlueAccent),
+                        blockSpacing: 10.0,
+                        listIndent: 24.0,
+                        horizontalRuleDecoration: BoxDecoration(
+                          border: Border(
+                            top: BorderSide(
+                              width: 3.0,
+                              color: Colors.grey,
+                            ),
+                          ),
+                        ),
+                        blockquote: const TextStyle(color: Colors.red))),
+              ),
+              Container(
+                color: Colors.amber,
+                height: 300,
+              )
+            ],
+          ),
         ),
       ),
       // bottomNavigationBar: buildNavigationBar(),

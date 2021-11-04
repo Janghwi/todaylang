@@ -78,8 +78,7 @@ class PhrasesLoader extends GetxController {
   //   updateFavoriteData();
   // }
 
-  // RxBool isLiked = false.obs;
-  // Future updatePhrasesFile(String id, String likeCount) async {
+  // Future updatePhraseFile() async {
   //   // Future updatePhrasesFile(String? currentId, int likeCount) async {
   //   var response = Dio().patch(
   //     'https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest',
@@ -93,9 +92,9 @@ class PhrasesLoader extends GetxController {
   //     data: {
   //       'records': [
   //         {
-  //           "id": "rech3HAyhyRoVnsOC",
+  //           "id": id,
   //           'fields': {
-  //             'likeCnt': $likeCount,
+  //             'likeCnt': likeCount,
   //             // 'likeCnt': likeController.text,
   //           }
   //         },
