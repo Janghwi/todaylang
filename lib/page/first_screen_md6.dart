@@ -145,6 +145,7 @@ class FirstScreenMd6 extends StatelessWidget {
             child: FutureBuilder<List<dynamic>>(
                 future: ctr.loadPhrasesFile(),
                 builder: (context, snapshot) {
+
                   // print('snapshot No.=>');
                   // print(records.length);
                   // print("get records:" "{}");
