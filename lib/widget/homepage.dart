@@ -7,6 +7,8 @@ import 'package:todaylang/page/first_screen_ai.dart';
 import 'package:todaylang/page/first_screen_cm.dart';
 import 'package:todaylang/page/first_screen_dt.dart';
 import 'package:todaylang/page/first_screen_md6.dart';
+import 'package:todaylang/page/first_screen_md7.dart';
+import 'package:todaylang/page/first_screen_md8.dart';
 import 'package:todaylang/page/first_screen_of.dart';
 import 'package:todaylang/page/first_screen_ph.dart';
 import 'package:todaylang/page/first_screen_wb.dart';
@@ -87,6 +89,7 @@ class _HomePageState extends State<HomePage> {
   String apptitle = "appbar_title1";
   @override
   Widget build(BuildContext context) => Scaffold(
+        backgroundColor: Color(0xfff0e5d6),
         drawer: Drawer(
           child: ListView(
             padding: EdgeInsets.zero,
@@ -191,7 +194,7 @@ class _HomePageState extends State<HomePage> {
             FirstScreenPh(),
             FirstScreenPh(),
             FirstScreenPh(),
-            FirstScreenMd6(),
+            FirstScreenMd8(),
             FirstScreenAd(),
             FirstScreenAi(),
             FirstScreenDt(),

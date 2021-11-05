@@ -7,6 +7,8 @@ class PhrasesLoader extends GetxController {
   static PhrasesLoader get to => Get.find();
 
   var records = [].obs;
+  var isFavorite = 'false'.obs;
+  // var temprecords = [...,isFavorite].obs;
   final record = ''.obs;
   final uniqueId = ''.obs;
 

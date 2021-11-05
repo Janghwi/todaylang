@@ -69,40 +69,6 @@ class FirstScreenMd6 extends StatelessWidget {
     });
   }
 
-  Future<bool> onLikeButtonTapped(
-    bool isLiked,
-  ) async {
-    {
-      print("like button pressed");
-      print("current ctr unique record : ${currentIdSave}");
-
-      final response = Dio().patch(
-        'https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest',
-        options: Options(
-          contentType: 'Application/json',
-          headers: {
-            'Authorization': 'Bearer keyyG7I9nxyG5SmTq',
-            'Accept': 'Application/json',
-          },
-        ),
-        data: {
-          'records': [
-            {
-              "id": ctr.currentIdSave.value,
-              'fields': {
-                'likeCnt': 101,
-                // 'likeCnt': likeCount + 1,
-                // 'likeCnt': likeController.text,
-              }
-            },
-          ],
-        },
-      );
-    }
-
-    return !isLiked;
-  }
-
   _postRequest(String? currentId, int likeCount) async {
     final response = await Dio().patch(
       'https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest',
@@ -276,16 +242,31 @@ class FirstScreenMd6 extends StatelessWidget {
                               Divider(
                                 indent: 30,
                               ),
+                              IconButton(
+                                icon: Icon(Icons.favorite_border,
+                                    color: Colors.amber),
+                                onPressed: () {
+                                  Get.to(() => DetailPage(),
+                                      arguments: [
+                                        ctr.records[index]['fields']['title'],
+                                        ctr.records[index]['fields']['content'],
+                                        ctr.records[index]['id'],
+                                        ctr.records[index]['fields']['likeCnt'],
+                                        //this.records[index]['fields']['cat1'],
+                                      ],
+                                      transition: Transition.zoom,
+                                      preventDuplicates: false);
+                                },
+                              ),
+                              Text(ctr.records[index]['fields']['likeCnt']
+                                  .toString()),
                               //--------------------------------------------------------
-                              GestureDetector(
-                                  onTap: () {
-                                    print('ontap !!!');
-                                  },
-                                  child: LikeButton(
-                                      onTap: onLikeButtonTapped,
-                                      // onTap: onLikeButtonTapped,
-                                      likeCount: ctr.records[index]['fields']
-                                          ['likeCnt'])),
+                              // LikeButton(
+                              //     key: key,
+                              //     onTap: onLikeButtonTapped,
+                              //     // onTap: onLikeButtonTapped,
+                              //     likeCount: ctr.records[index]['fields']
+                              //         ['likeCnt']),
                               // onPressed: () async {
                               //   int likeCount = records[index]
                               //       ['fields']['likeCnt'];
@@ -338,8 +319,48 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   var title = Get.arguments[0];
   var content = Get.arguments[1];
+  var id = Get.arguments[2];
+  int count = Get.arguments[3];
 
   int index = 0;
+  final ctr = Get.put(PhrasesLoader());
+
+  String? currentIdSave;
+  // int? likeCount = count ;
+  Future<bool> onLikeButtonTapped(
+    bool isLiked,
+  ) async {
+    {
+      currentIdSave = id;
+      print("like button pressed");
+      print("current ctr unique record : ${currentIdSave}");
+
+      final response = Dio().patch(
+        'https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest',
+        options: Options(
+          contentType: 'Application/json',
+          headers: {
+            'Authorization': 'Bearer keyyG7I9nxyG5SmTq',
+            'Accept': 'Application/json',
+          },
+        ),
+        data: {
+          'records': [
+            {
+              "id": ctr.records[index]['fields'],
+              'fields': {
+                'likeCnt': count,
+                // 'likeCnt': likeCount + 1,
+                // 'likeCnt': likeController.text,
+              }
+            },
+          ],
+        },
+      );
+    }
+
+    return !isLiked;
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -351,6 +372,11 @@ class _DetailPageState extends State<DetailPage> {
         ),
         backgroundColor: Colors.white,
         iconTheme: const IconThemeData(color: Colors.black),
+        actions: <Widget>[
+          LikeButton(
+              onTap: onLikeButtonTapped,
+              likeCount: ctr.records[index]['fields']['likeCnt']),
+        ],
       ),
       floatingActionButton: buildFAB(),
       body: SafeArea(

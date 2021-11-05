@@ -17,6 +17,9 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:provider/provider.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
+import 'package:flex_color_scheme/flex_color_scheme.dart';
+
+// global RouteObserver
 
 // this is the name given to the background fetch
 Future<void> _firebaseMessagingBackgroundHandler(RemoteMessage message) async {
@@ -108,6 +111,9 @@ class _MyAppState extends State<MyApp> {
     //   // }
     // });
 
+    ThemeMode themeMode = ThemeMode.dark;
+    // ThemeMode themeMode = ThemeMode.light;
+
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {
       RemoteNotification? notification = message.notification;
       AndroidNotification? android = message.notification?.android;
@@ -155,28 +161,50 @@ class _MyAppState extends State<MyApp> {
   }
 
   @override
-  Widget build(BuildContext context) => ChangeNotifierProvider(
-        create: (context) => GoogleSignInProvider(),
-        child: GetMaterialApp(
-          debugShowCheckedModeBanner: false,
-          translations: LangTranslations(),
-          locale: Locale('ko', 'KR'),
-          title: MyApp.title,
-          theme: ThemeData(
-            primarySwatch: Colors.blue,
-            elevatedButtonTheme: ElevatedButtonThemeData(
-              style: ElevatedButton.styleFrom(
-                elevation: 8,
-                primary: Colors.white,
-                shape: StadiumBorder(),
-                minimumSize: Size.square(30),
-              ),
-            ),
-          ),
-          home: HomePage(),
-          // home: LoginPage(),
-        ),
-      );
+  Widget build(BuildContext context) {
+    const FlexScheme usedFlexScheme = FlexScheme.mandyRed;
+
+    return ChangeNotifierProvider(
+      create: (context) {
+        return GoogleSignInProvider();
+      },
+      child: GetMaterialApp(
+        debugShowCheckedModeBanner: false,
+        translations: LangTranslations(),
+        locale: Locale('ko', 'KR'),
+        title: MyApp.title,
+        theme: FlexColorScheme.light(
+          scheme: usedFlexScheme,
+          // Use comfortable on desktops instead of compact, devices use default.
+          visualDensity: FlexColorScheme.comfortablePlatformDensity,
+          //  fontFamily: AppFonts.mainFont,
+        ).toTheme,
+        // We do the exact same definition for the dark theme, but using
+        // FlexColorScheme.dark factory and the dark FlexSchemeColor in
+        // FlexColor.schemes.
+        darkTheme: FlexColorScheme.dark(
+          scheme: usedFlexScheme,
+          visualDensity: FlexColorScheme.comfortablePlatformDensity,
+          // fontFamily: AppFonts.mainFont,
+        ).toTheme,
+        // Use the above dark or light theme based on active themeMode.
+        home: HomePage(),
+      ),
+      // theme: ThemeData(
+      //   primarySwatch: Colors.blue,
+      //   elevatedButtonTheme: ElevatedButtonThemeData(
+      //     style: ElevatedButton.styleFrom(
+      //       elevation: 8,
+      //       primary: Colors.white,
+      //       shape: StadiumBorder(),
+      //       minimumSize: Size.square(30),
+      //     ),
+      //   ),
+      // ),
+
+      // home: LoginPage(),
+    );
+  }
 }
 
 class LoginPage extends StatefulWidget {
