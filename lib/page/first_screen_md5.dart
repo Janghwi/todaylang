@@ -1,21 +1,16 @@
 // ignore_for_file: sized_box_for_whitespace
 
-import 'dart:convert';
-import 'dart:ffi';
-import 'dart:io';
+// speechwithbubble
+
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 
 import 'package:google_fonts/google_fonts.dart';
-//import '2menutwolevel_page2.dart';
-//import '2menutwolevel_page_p.dart';
-import 'package:http/http.dart' as http;
 import 'package:flutter_markdown/flutter_markdown.dart';
-import 'package:like_button/like_button.dart';
 import 'package:todaylang/widget/commentbox.dart';
-import 'package:todaylang/widget/like_button.dart';
+import 'package:todaylang/widget/speechbubble.dart';
 
 import 'commentlist.dart';
 
@@ -219,30 +214,34 @@ class _FirstScreenMd5State extends State<FirstScreenMd5> {
                                   shape: RoundedRectangleBorder(
                                       borderRadius: BorderRadius.circular(14)),
                                   child: Stack(
-                                      alignment: Alignment.center,
+                                      alignment: Alignment.topLeft,
                                       children: [
                                         Ink.image(
                                           // image: NetworkImage(
                                           //   this.records[index]['fields']['image_url'].toString(),
                                           // ),
                                           image: const AssetImage(
-                                              'assets/images/012.png'),
+                                              'assets/images/cat1.jpg'),
                                           // colorFilter: ColorFilters.greyscale,
                                           colorFilter: ColorFilter.mode(
                                               Colors.black.withOpacity(0.8),
                                               BlendMode.dstATop),
-                                          height: 180,
-                                          fit: BoxFit.cover,
+                                          height: 150,
+                                          fit: BoxFit.fill,
                                         ),
-                                        Text(
-                                          records[index]['fields']['title']
-                                              .toString(),
-                                          // style: GoogleFonts.aBeeZee(
-                                          style: GoogleFonts.nanumGothic(
-                                              // backgroundColor: Colors.white70,
-                                              fontStyle: FontStyle.italic,
-                                              color: Colors.white,
-                                              fontSize: 18),
+                                        SpeechBubbleWidget(
+                                          key: ValueKey(1),
+                                          child: Text(
+                                            records[index]['fields']['title']
+                                                .toString(),
+
+                                            // style: GoogleFonts.aBeeZee(
+                                            style: GoogleFonts.nanumGothic(
+                                                // backgroundColor: Colors.white70,
+                                                fontStyle: FontStyle.italic,
+                                                color: Colors.blue,
+                                                fontSize: 18),
+                                          ),
                                         ),
                                       ]),
                                 ),

@@ -6,6 +6,7 @@ import 'package:todaylang/page/first_screen_ad.dart';
 import 'package:todaylang/page/first_screen_ai.dart';
 import 'package:todaylang/page/first_screen_cm.dart';
 import 'package:todaylang/page/first_screen_dt.dart';
+import 'package:todaylang/page/first_screen_md5.dart';
 import 'package:todaylang/page/first_screen_md6.dart';
 import 'package:todaylang/page/first_screen_md7.dart';
 import 'package:todaylang/page/first_screen_md8.dart';
@@ -18,6 +19,7 @@ import 'package:todaylang/page/first_screen_ytCre.dart';
 import 'package:todaylang/page/first_screen_ytLan.dart';
 import 'package:todaylang/page/translation/langtranslate.dart';
 import 'package:todaylang/page/translation/langtext.dart';
+import 'package:todaylang/widget/sortable.dart';
 
 import 'tabbar_widget.dart';
 import 'todoapp.dart';
@@ -189,12 +191,16 @@ class _HomePageState extends State<HomePage> {
               text: 'Comic',
               // icon: Icon(Icons.favorite_border),
             ),
+            Tab(
+              text: 'Sort',
+              // icon: Icon(Icons.favorite_border),
+            ),
           ],
           children: [
             FirstScreenPh(),
             FirstScreenPh(),
             FirstScreenPh(),
-            FirstScreenMd8(),
+            FirstScreenMd5(),
             FirstScreenAd(),
             FirstScreenAi(),
             FirstScreenDt(),
@@ -206,6 +212,7 @@ class _HomePageState extends State<HomePage> {
             FirstScreenYtCre(),
             OpenPage(),
             FirstScreenCm(),
+            SortablePage(),
           ],
         ),
         // bottomNavigationBar: BottomNavigationBar(
