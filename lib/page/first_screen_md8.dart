@@ -289,11 +289,14 @@ class _FirstScreenMd8State extends State<FirstScreenMd8> {
                                               records[index]['fields']
                                                   ['likeCnt'],
                                               // records[index]['fields']
+                                              //         ['Attachments'][0]
+                                              //     ['thumbnails']['large']['url']
+                                              // records[index]['fields']
                                               //     ['readCnt']
                                               //this.records[index]['fields']['cat1'],
                                             ],
                                             transition: Transition.zoom,
-                                            preventDuplicates: false);
+                                            preventDuplicates: true);
                                       },
                                     ),
                                     Text(records[index]['fields']['likeCnt']
@@ -355,6 +358,7 @@ class _DetailPageState extends State<DetailPage> {
   var content = Get.arguments[1];
   var id = Get.arguments[2];
   int likecount = Get.arguments[3];
+  // var imageUrl = Get.arguments[4];
 
   int index = 0;
   String? currentIdSave;
@@ -442,38 +446,42 @@ class _DetailPageState extends State<DetailPage> {
               Container(
                   child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
+                // child: Image.network(imageUrl),
+                // child: Image.network(Get.arguments[4]),
                 child: Image(image: AssetImage('assets/images/woman.png')),
               )),
-              Markdown(
-                  data: Get.arguments[1],
-                  styleSheetTheme: MarkdownStyleSheetBaseTheme.cupertino,
-                  physics: const BouncingScrollPhysics(),
-                  styleSheet: MarkdownStyleSheet(
-                      h1: const TextStyle(color: Colors.black),
-                      h2: const TextStyle(color: Colors.black),
-                      h3: const TextStyle(color: Colors.black),
-                      h4: const TextStyle(
-                          color: Colors.black, fontWeight: FontWeight.w100),
-                      h5: const TextStyle(
-                        color: Colors.black87,
-                      ),
-                      h6: const TextStyle(
-                          color: Colors.indigo, fontWeight: FontWeight.w600),
-                      p: const TextStyle(
-                        color: Colors.black54,
-                      ),
-                      strong: const TextStyle(color: Colors.black87),
-                      blockSpacing: 10.0,
-                      listIndent: 24.0,
-                      horizontalRuleDecoration: BoxDecoration(
-                        border: Border(
-                          top: BorderSide(
-                            width: 3.0,
-                            color: Colors.grey,
+              Expanded(
+                child: Markdown(
+                    data: Get.arguments[1],
+                    styleSheetTheme: MarkdownStyleSheetBaseTheme.cupertino,
+                    physics: const BouncingScrollPhysics(),
+                    styleSheet: MarkdownStyleSheet(
+                        h1: const TextStyle(color: Colors.black),
+                        h2: const TextStyle(color: Colors.black),
+                        h3: const TextStyle(color: Colors.black),
+                        h4: const TextStyle(
+                            color: Colors.black, fontWeight: FontWeight.w100),
+                        h5: const TextStyle(
+                          color: Colors.black87,
+                        ),
+                        h6: const TextStyle(
+                            color: Colors.indigo, fontWeight: FontWeight.w600),
+                        p: const TextStyle(
+                          color: Colors.black54,
+                        ),
+                        strong: const TextStyle(color: Colors.black87),
+                        blockSpacing: 10.0,
+                        listIndent: 24.0,
+                        horizontalRuleDecoration: BoxDecoration(
+                          border: Border(
+                            top: BorderSide(
+                              width: 3.0,
+                              color: Colors.grey,
+                            ),
                           ),
                         ),
-                      ),
-                      blockquote: const TextStyle(color: Colors.red))),
+                        blockquote: const TextStyle(color: Colors.red))),
+              ),
             ],
           ),
         ),
