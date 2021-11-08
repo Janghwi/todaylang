@@ -176,7 +176,8 @@ class _FirstScreenMd5State extends State<FirstScreenMd5> {
                                   records[index]['fields']['content'],
                                   //this.records[index]['fields']['cat1'],
                                 ],
-                                transition: Transition.zoom),
+                                duration: Duration(seconds: 1),
+                                transition: Transition.fadeIn),
                             child: Column(
                               children: [
                                 Text(

@@ -4,6 +4,7 @@ import 'dart:convert';
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 import 'package:like_button/like_button.dart';
@@ -155,7 +156,8 @@ class _FirstScreenMd8State extends State<FirstScreenMd8> {
                                         records[index]['fields']['likeCnt'],
                                         //this.records[index]['fields']['cat1'],
                                       ],
-                                      transition: Transition.zoom,
+                                      duration: Duration(seconds: 1),
+                                      transition: Transition.fadeIn,
                                       preventDuplicates: false);
                                 },
                                 child: Column(
@@ -164,7 +166,9 @@ class _FirstScreenMd8State extends State<FirstScreenMd8> {
                                       ColorizeAnimatedText(
                                         records[index]['fields']['title']
                                             .toString(),
-                                        textStyle: TextStyle(fontSize: 16.0),
+                                        textStyle: TextStyle(
+                                          fontSize: 20.0,
+                                        ),
                                         colors: [
                                           Colors.purple,
                                           Colors.blue,
@@ -193,48 +197,55 @@ class _FirstScreenMd8State extends State<FirstScreenMd8> {
                                     //       overflow: TextOverflow.ellipsis,
                                     //       maxLines: 2),
                                     // ),
-                                    Card(
-                                      color: Colors.black54,
-                                      shadowColor: Colors.grey,
-                                      elevation: 8,
-                                      clipBehavior: Clip.antiAlias,
-                                      shape: RoundedRectangleBorder(
-                                          borderRadius:
-                                              BorderRadius.circular(14)),
-                                      child: Stack(
-                                          alignment: Alignment.center,
-                                          children: [
-                                            CachedNetworkImage(
-                                              imageUrl: records[index]['fields']
-                                                          ['Attachments'][0]
-                                                      ['thumbnails']['large']
-                                                  ['url'],
-                                              fit: BoxFit.cover,
-                                              width:
-                                                  MediaQuery.maybeOf(context)!
-                                                          .size
-                                                          .width *
-                                                      0.97,
-                                              height:
-                                                  MediaQuery.maybeOf(context)!
-                                                          .size
-                                                          .height *
-                                                      0.2,
-                                            ),
-                                            Text(
-                                              records[index]['fields']['title']
-                                                  .toString(),
-                                              // style: GoogleFonts.aBeeZee(
-                                              // style: GoogleFonts.hiMelody(
-                                              // style: GoogleFonts.blackHanSans(
-                                              style: GoogleFonts.stylish(
-                                                  // backgroundColor: Colors.white70,
-                                                  fontStyle: FontStyle.italic,
-                                                  fontWeight: FontWeight.bold,
-                                                  color: Colors.yellow,
-                                                  fontSize: 24),
-                                            ),
-                                          ]),
+                                    ColorFiltered(
+                                      colorFilter:
+                                          ColorFilter.srgbToLinearGamma(),
+                                      // Colors.grey, BlendMode.saturation),
+                                      child: Card(
+                                        color: Colors.black54,
+                                        shadowColor: Colors.grey,
+                                        elevation: 0,
+                                        clipBehavior: Clip.antiAlias,
+                                        shape: RoundedRectangleBorder(
+                                            borderRadius:
+                                                BorderRadius.circular(14)),
+                                        child: Stack(
+                                            alignment: Alignment.center,
+                                            children: [
+                                              CachedNetworkImage(
+                                                imageUrl: records[index]
+                                                                ['fields']
+                                                            ['Attachments'][0]
+                                                        ['thumbnails']['large']
+                                                    ['url'],
+                                                fit: BoxFit.fill,
+                                                width:
+                                                    MediaQuery.maybeOf(context)!
+                                                            .size
+                                                            .width *
+                                                        0.97,
+                                                height:
+                                                    MediaQuery.maybeOf(context)!
+                                                            .size
+                                                            .height *
+                                                        0.2,
+                                              ),
+                                              Text(
+                                                records[index]['fields']
+                                                        ['title']
+                                                    .toString(),
+                                                // style: GoogleFonts.aBeeZee(
+                                                // style: GoogleFonts.hiMelody(
+                                                // style: GoogleFonts.blackHanSans(
+                                                style: GoogleFonts.notoSans(
+                                                    // backgroundColor: Colors.white70,
+                                                    fontStyle: FontStyle.italic,
+                                                    fontWeight: FontWeight.bold,
+                                                    color: Colors.white,
+                                                    fontSize: 20),
+                                              ),
+                                            ]),
+                                      ),
                                     ),
                                   ],
                                 ),
@@ -393,8 +404,31 @@ class _DetailPageState extends State<DetailPage> {
         actions: <Widget>[
           Padding(
             padding: const EdgeInsets.all(8.0),
-            child: LikeButton(
-              onTap: onLikeButtonTapped,
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                color: Colors.grey[200],
+                child: IconButton(
+                  icon: Icon(
+                    Icons.share_outlined,
+                    size: 20,
+                  ),
+                  color: Colors.grey,
+                  onPressed: () {},
+                ),
+              ),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: ClipRRect(
+              borderRadius: BorderRadius.circular(8),
+              child: Container(
+                color: Colors.grey[200],
+                child: LikeButton(
+                  onTap: onLikeButtonTapped,
+                ),
+              ),
             ),
           ),
         ],
@@ -403,36 +437,45 @@ class _DetailPageState extends State<DetailPage> {
       body: SafeArea(
         child: Padding(
           padding: const EdgeInsets.all(8.0),
-          child: Markdown(
-              data: Get.arguments[1],
-              styleSheetTheme: MarkdownStyleSheetBaseTheme.cupertino,
-              physics: const BouncingScrollPhysics(),
-              styleSheet: MarkdownStyleSheet(
-                  h1: const TextStyle(color: Colors.black),
-                  h2: const TextStyle(color: Colors.black),
-                  h3: const TextStyle(color: Colors.black),
-                  h4: const TextStyle(
-                      color: Colors.black, fontWeight: FontWeight.w100),
-                  h5: const TextStyle(
-                    color: Colors.black87,
-                  ),
-                  h6: const TextStyle(
-                      color: Colors.indigo, fontWeight: FontWeight.w600),
-                  p: const TextStyle(
-                    color: Colors.black54,
-                  ),
-                  strong: const TextStyle(color: Colors.black87),
-                  blockSpacing: 10.0,
-                  listIndent: 24.0,
-                  horizontalRuleDecoration: BoxDecoration(
-                    border: Border(
-                      top: BorderSide(
-                        width: 3.0,
-                        color: Colors.grey,
+          child: Column(
+            children: [
+              Container(
+                  child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Image(image: AssetImage('assets/images/woman.png')),
+              )),
+              Markdown(
+                  data: Get.arguments[1],
+                  styleSheetTheme: MarkdownStyleSheetBaseTheme.cupertino,
+                  physics: const BouncingScrollPhysics(),
+                  styleSheet: MarkdownStyleSheet(
+                      h1: const TextStyle(color: Colors.black),
+                      h2: const TextStyle(color: Colors.black),
+                      h3: const TextStyle(color: Colors.black),
+                      h4: const TextStyle(
+                          color: Colors.black, fontWeight: FontWeight.w100),
+                      h5: const TextStyle(
+                        color: Colors.black87,
                       ),
-                    ),
-                  ),
-                  blockquote: const TextStyle(color: Colors.red))),
+                      h6: const TextStyle(
+                          color: Colors.indigo, fontWeight: FontWeight.w600),
+                      p: const TextStyle(
+                        color: Colors.black54,
+                      ),
+                      strong: const TextStyle(color: Colors.black87),
+                      blockSpacing: 10.0,
+                      listIndent: 24.0,
+                      horizontalRuleDecoration: BoxDecoration(
+                        border: Border(
+                          top: BorderSide(
+                            width: 3.0,
+                            color: Colors.grey,
+                          ),
+                        ),
+                      ),
+                      blockquote: const TextStyle(color: Colors.red))),
+            ],
+          ),
         ),
       ),
       // bottomNavigationBar: buildNavigationBar(),

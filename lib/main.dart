@@ -3,6 +3,7 @@ import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:get/get.dart';
+import 'package:google_fonts/google_fonts.dart';
 import 'dart:async';
 
 import 'package:todaylang/page/translation/langtranslate.dart';
@@ -17,7 +18,6 @@ import 'package:firebase_messaging/firebase_messaging.dart';
 
 import 'package:provider/provider.dart';
 import 'package:flutter_local_notifications/flutter_local_notifications.dart';
-import 'package:flex_color_scheme/flex_color_scheme.dart';
 
 // global RouteObserver
 
@@ -162,8 +162,6 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
-    const FlexScheme usedFlexScheme = FlexScheme.mandyRed;
-
     return ChangeNotifierProvider(
       create: (context) {
         return GoogleSignInProvider();
@@ -173,20 +171,9 @@ class _MyAppState extends State<MyApp> {
         translations: LangTranslations(),
         locale: Locale('ko', 'KR'),
         title: MyApp.title,
-        theme: FlexColorScheme.light(
-          scheme: usedFlexScheme,
-          // Use comfortable on desktops instead of compact, devices use default.
-          visualDensity: FlexColorScheme.comfortablePlatformDensity,
-          //  fontFamily: AppFonts.mainFont,
-        ).toTheme,
-        // We do the exact same definition for the dark theme, but using
-        // FlexColorScheme.dark factory and the dark FlexSchemeColor in
-        // FlexColor.schemes.
-        darkTheme: FlexColorScheme.dark(
-          scheme: usedFlexScheme,
-          visualDensity: FlexColorScheme.comfortablePlatformDensity,
-          // fontFamily: AppFonts.mainFont,
-        ).toTheme,
+        theme: ThemeData(
+          fontFamily: GoogleFonts.notoSerif().fontFamily,
+        ),
         // Use the above dark or light theme based on active themeMode.
         home: HomePage(),
       ),

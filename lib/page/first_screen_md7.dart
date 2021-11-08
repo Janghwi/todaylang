@@ -165,10 +165,10 @@ class FirstScreenMd7 extends StatelessWidget {
                           // List<bool> isLiked = List.filled(records.length, false);
                           // print('PhrasesLoader.to.records.length');
                           // print(snapshot);
-                          print(PhrasesLoader.to.records.length);
+                          // print(PhrasesLoader.to.records.length);
                           // print(records[index]['fields']['likeCnt']);
-                          int likeCount =
-                              ctr.records[index]['fields']['likeCnt'];
+                          // int likeCount =
+                          //     ctr.records[index]['fields']['likeCnt'];
                           ctr.currentIdSave.value = ctr.records[index]['id'];
 
                           return Padding(

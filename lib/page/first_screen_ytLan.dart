@@ -100,11 +100,11 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
           mainAxisAlignment: MainAxisAlignment.spaceEvenly,
           children: [
             Wrap(
-              alignment: WrapAlignment.start,
+              alignment: WrapAlignment.center,
               children: [
                 OutlinedButton(
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                    padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
                   ),
                   child: Text("전체", style: TextStyle(fontSize: 16)),
                   onPressed: () {
@@ -120,9 +120,9 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
                 ),
                 OutlinedButton(
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                    padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
                   ),
-                  child: Text("영어", style: TextStyle(fontSize: 16)),
+                  child: Text("#영어", style: TextStyle(fontSize: 16)),
                   onPressed: () {
                     setState(() {
                       _fetchMenus("engview");
@@ -136,9 +136,9 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
                 ),
                 OutlinedButton(
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                    padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
                   ),
-                  child: Text("한국어", style: TextStyle(fontSize: 16)),
+                  child: Text("#한국어", style: TextStyle(fontSize: 16)),
                   onPressed: () {
                     setState(() {
                       _fetchMenus("korview");
@@ -152,9 +152,9 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
                 ),
                 OutlinedButton(
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                    padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
                   ),
-                  child: Text("일어", style: TextStyle(fontSize: 16)),
+                  child: Text("#일어", style: TextStyle(fontSize: 16)),
                   onPressed: () {
                     setState(() {
                       _fetchMenus("japview");
@@ -168,9 +168,25 @@ class _FirstScreenYtLanState extends State<FirstScreenYtLan> {
                 ),
                 OutlinedButton(
                   style: ElevatedButton.styleFrom(
-                    padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
+                    padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
                   ),
-                  child: Text("단어", style: TextStyle(fontSize: 16)),
+                  child: Text("#단어", style: TextStyle(fontSize: 16)),
+                  onPressed: () {
+                    setState(() {
+                      _fetchMenus("wordview");
+                    });
+                  },
+                  onLongPress: () {
+                    setState(() {
+                      _fetchMenus("wordview");
+                    });
+                  },
+                ),
+                OutlinedButton(
+                  style: ElevatedButton.styleFrom(
+                    padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
+                  ),
+                  child: Text("#단어", style: TextStyle(fontSize: 16)),
                   onPressed: () {
                     setState(() {
                       _fetchMenus("wordview");
