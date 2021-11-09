@@ -14,16 +14,20 @@ import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:todaylang/controllers/phrase_loader.dart';
 import 'package:todaylang/widget/commentbox1.dart';
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:animated_text_kit/animated_text_kit.dart';
+import 'dart:math' as math;
 
 import 'commentlist.dart';
 
-class FirstScreenMd8 extends StatefulWidget {
+class FirstScreenMd9 extends StatefulWidget {
+  late PageController pageController;
+  double pageOffset = 0;
+  double offset = 0;
+
   @override
-  State<FirstScreenMd8> createState() => _FirstScreenMd8State();
+  State<FirstScreenMd9> createState() => _FirstScreenMd9State();
 }
 
-class _FirstScreenMd8State extends State<FirstScreenMd8> {
+class _FirstScreenMd9State extends State<FirstScreenMd9> {
   // const FirstScreenMd({Key? key}) : super(key: key);
   @override
   List records = [];
@@ -101,6 +105,9 @@ class _FirstScreenMd8State extends State<FirstScreenMd8> {
 
   @override
   Widget build(BuildContext context) {
+    var offset = 0;
+    double gauss = math.exp(-(math.pow((offset.abs() - 0.5), 2) / 0.08));
+
     return Scaffold(
         extendBodyBehindAppBar: true,
 
@@ -148,8 +155,8 @@ class _FirstScreenMd8State extends State<FirstScreenMd8> {
                               // print(snapshot);
                               // print(PhrasesLoader.to.records.length);
                               // print(records[index]['fields']['likeCnt']);
-                              int likeCount =
-                                  records[index]['fields']['likeCnt'];
+                              // int likeCount =
+                              //     records[index]['fields']['likeCnt'];
                               // ctr.currentIdSave.value = ctr.records[index]['id'];
 
                               return Padding(
@@ -178,124 +185,67 @@ class _FirstScreenMd8State extends State<FirstScreenMd8> {
                                       },
                                       child: Column(
                                         children: [
+                                          Text(
+                                            records[index]['fields']['level']
+                                                .toString(),
+
+                                            // PhrasesLoader
+                                            // .to.records[index]['fields']['title']
+                                            // .toString(),
+                                          ),
                                           ColorFiltered(
                                             colorFilter:
                                                 ColorFilter.srgbToLinearGamma(),
                                             // Colors.grey, BlendMode.saturation),
-                                            child: Container(
-                                              height: 136,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(22),
-                                                color: index.isEven
-                                                    ? kBlueColor
-                                                    : kSecondaryColor,
-                                                boxShadow: [kDefaultShadow],
-                                              ),
-                                              // color: Colors.amber,
-                                              margin: EdgeInsets.symmetric(
-                                                horizontal: 20,
-                                                vertical: 20 / 2,
-                                              ),
-                                              child: Stack(
-                                                  alignment:
-                                                      Alignment.bottomCenter,
-                                                  children: [
-                                                    Container(
-                                                      height: 136,
-                                                      decoration: BoxDecoration(
-                                                        borderRadius:
-                                                            BorderRadius
-                                                                .circular(22),
-                                                        color: index.isEven
-                                                            ? kBlueColor
-                                                            : kSecondaryColor,
-                                                        // ignore: prefer_const_literals_to_create_immutables
-                                                        boxShadow: [
-                                                          kDefaultShadow
-                                                        ],
-                                                      ),
-                                                      child: Container(
-                                                        margin: EdgeInsets.only(
-                                                            right: 10),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: Colors.white,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(22),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Positioned(
-                                                      top: 0,
-                                                      right: 0,
-                                                      child: Hero(
-                                                        tag: 'text',
-                                                        child: Container(
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  horizontal:
-                                                                      20),
-                                                          height: 160,
-                                                          width: 200,
-                                                          child:
-                                                              CachedNetworkImage(
-                                                            imageUrl: records[index]
-                                                                            [
-                                                                            'fields']
-                                                                        [
-                                                                        'Attachments'][0]
-                                                                    [
-                                                                    'thumbnails']
-                                                                [
-                                                                'large']['url'],
-                                                            fit: BoxFit.cover,
-                                                            // width: MediaQuery
-                                                            //             .maybeOf(
-                                                            //                 context)!
-                                                            //         .size
-                                                            //         .width *
-                                                            //     0.97,
-                                                            // height: MediaQuery
-                                                            //             .maybeOf(
-                                                            //                 context)!
-                                                            //         .size
-                                                            //         .height *
-                                                            //     0.17,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Center(
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: Text(
-                                                          records[index]
-                                                                      ['fields']
-                                                                  ['title']
-                                                              .toString(),
-                                                          // style: GoogleFonts.aBeeZee(
-                                                          // style: GoogleFonts.hiMelody(
-                                                          // style: GoogleFonts.blackHanSans(
-                                                          style: GoogleFonts
-                                                              .notoSans(
-                                                                  // backgroundColor: Colors.white70,
-                                                                  fontStyle:
-                                                                      FontStyle
-                                                                          .italic,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 20),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ]),
+                                            child: Card(
+                                              color: Colors.black54,
+                                              shadowColor: Colors.amber,
+                                              elevation: 0,
+                                              clipBehavior: Clip.antiAlias,
+                                              shape: RoundedRectangleBorder(
+                                                  borderRadius:
+                                                      BorderRadius.circular(
+                                                          14)),
+                                              child: Column(children: [
+                                                ClipRRect(
+                                                  child: CachedNetworkImage(
+                                                    alignment:
+                                                        Alignment(-1, -1.0),
+                                                    fit: BoxFit.contain,
+                                                    imageUrl: records[index]
+                                                                    ['fields']
+                                                                ['Attachments']
+                                                            [0]['thumbnails']
+                                                        ['large']['url'],
+                                                    width: MediaQuery.maybeOf(
+                                                                context)!
+                                                            .size
+                                                            .width *
+                                                        0.97,
+                                                    height: MediaQuery.maybeOf(
+                                                                context)!
+                                                            .size
+                                                            .height *
+                                                        0.10,
+                                                  ),
+                                                ),
+                                                Text(
+                                                  records[index]['fields']
+                                                          ['title']
+                                                      .toString(),
+                                                  // style: GoogleFonts.aBeeZee(
+                                                  // style: GoogleFonts.hiMelody(
+                                                  // style: GoogleFonts.blackHanSans(
+                                                  style: GoogleFonts.notoSans(
+                                                      // backgroundColor: Colors.white70,
+                                                      fontStyle:
+                                                          FontStyle.italic,
+                                                      fontWeight:
+                                                          FontWeight.bold,
+                                                      color: Colors.white,
+                                                      fontSize: 20),
+                                                ),
+                                              ]),
                                             ),
                                           ),
                                         ],
@@ -684,20 +634,3 @@ class MyTab extends StatelessWidget {
     );
   }
 }
-
-// list of colors that we use in our app
-const kBackgroundColor = Color(0xFFF1EFF1);
-const kPrimaryColor = Color(0xFF035AA6);
-const kSecondaryColor = Color(0xFFFFA41B);
-const kTextColor = Color(0xFF000839);
-const kTextLightColor = Color(0xFF747474);
-const kBlueColor = Color(0xFF40BAD5);
-
-const kDefaultPadding = 20.0;
-
-// our default Shadow
-const kDefaultShadow = BoxShadow(
-  offset: Offset(0, 15),
-  blurRadius: 27,
-  color: Colors.black12, // Black color with 12% opacity
-);

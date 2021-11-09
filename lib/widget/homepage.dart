@@ -10,6 +10,7 @@ import 'package:todaylang/page/first_screen_md5.dart';
 import 'package:todaylang/page/first_screen_md6.dart';
 import 'package:todaylang/page/first_screen_md7.dart';
 import 'package:todaylang/page/first_screen_md8.dart';
+import 'package:todaylang/page/first_screen_md9.dart';
 import 'package:todaylang/page/first_screen_of.dart';
 import 'package:todaylang/page/first_screen_ph.dart';
 import 'package:todaylang/page/first_screen_wb.dart';
