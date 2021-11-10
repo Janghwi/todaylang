@@ -46,31 +46,6 @@ class _FirstScreenYtCreState extends State<FirstScreenYtCre> {
     }
     return records;
   }
-  // final style = const TextStyle(fontSize: 32, fontWeight: FontWeight.bold);
-  // final style1 = const TextStyle(
-  //   fontSize: 15,
-  // );
-
-  // Future _fetchMenus() async {
-  //   bool loadRemoteDatatSucceed = false;
-  //   final url = Uri.parse(
-  //     //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Gridview",
-  //     //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&cat2=2",
-  //     "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/WbTbl?maxRecords=500&view=Gridview",
-  //     //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?%3D1&maxRecords=500&filterByFormula=({cat1}='2')&fields[]=id",
-  //     //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?fields%5B%5D=&filterByFormula=%7Bcat1%7D+%3D+%222%22',
-  //   );
-  //   Map<String, String> header = {"Authorization": "Bearer keyyG7I9nxyG5SmTq"};
-  //   try {
-  //     final response = await http.get(url, headers: header);
-  //     Map<String, dynamic> result = json.decode(response.body);
-  //     records = result['records'];
-  //   } catch (e) {
-  //     if (loadRemoteDatatSucceed == false) retryFuture(_fetchMenus, 2000);
-  //   }
-
-  //   return records;
-  // }
 
   retryFuture(future, delay) {
     Future.delayed(Duration(milliseconds: delay), () {

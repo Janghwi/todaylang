@@ -16,16 +16,17 @@ import 'package:todaylang/widget/commentbox1.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:math' as math;
 import 'package:auto_size_text/auto_size_text.dart';
+
 import 'package:animated_text_kit/animated_text_kit.dart';
 
 import 'commentlist.dart';
 
-class FirstScreenMd8 extends StatefulWidget {
+class FirstScreenMd81 extends StatefulWidget {
   @override
-  State<FirstScreenMd8> createState() => _FirstScreenMd8State();
+  State<FirstScreenMd81> createState() => _FirstScreenMd81State();
 }
 
-class _FirstScreenMd8State extends State<FirstScreenMd8> {
+class _FirstScreenMd81State extends State<FirstScreenMd81> {
   // const FirstScreenMd({Key? key}) : super(key: key);
   @override
   List records = [];
@@ -42,12 +43,12 @@ class _FirstScreenMd8State extends State<FirstScreenMd8> {
   var refreshKey = GlobalKey<RefreshIndicatorState>();
 
   Future<List> _fetchDatas(
-      //  String view,
-      ) async {
+    String view,
+  ) async {
     try {
       Dio dio = Dio();
       var response = await dio.get(
-        "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest?maxRecords=500&view=Gridview",
+        "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest?maxRecords=500&view=$view",
         // "https://api.airtable.com/v0/app95nB2yi0WAYDyn/comments?maxRecords=200&view=Gridview",
         options: Options(contentType: 'Application/json', headers: {
           'Authorization': 'Bearer keyyG7I9nxyG5SmTq',
@@ -64,12 +65,18 @@ class _FirstScreenMd8State extends State<FirstScreenMd8> {
         // if (loadRemoteDatatSucceed == false) retryFuture(_fetchDatas, 200);
       }
     }
-    if (mounted) {
-      setState(() {
-        // Your state change code goes here
-      });
-    }
+    // if (mounted) {
+    //   setState(() {
+    //     // Your state change code goes here
+    //   });
+    // }
     return records;
+  }
+
+  retryFuture(future, delay) {
+    Future.delayed(Duration(milliseconds: delay), () {
+      future();
+    });
   }
 
   _readRequest(String? currentId, int readCount) async {
@@ -97,9 +104,10 @@ class _FirstScreenMd8State extends State<FirstScreenMd8> {
     );
   }
 
-  final ctr = Get.put(PhrasesLoader());
+  // final ctr = Get.put(PhrasesLoader());
 
   bool isLiked = false;
+  late String currentView = "Gridview";
 
   @override
   Widget build(BuildContext context) {
@@ -112,35 +120,114 @@ class _FirstScreenMd8State extends State<FirstScreenMd8> {
           key: refreshKey,
           onRefresh: () async {
             setState(() {});
-            await _fetchDatas();
+            await _fetchDatas(currentView);
             // await ctr.loadPhrasesFile();
           },
-          child: FutureBuilder<List<dynamic>>(
-              future: _fetchDatas(),
-              builder: (context, snapshot) {
-                // print('snapshot No.=>');
-                // print(records.length);
-                // print("get records:" "{}");
-                // List<bool> isLiked = List.filled(records.length, false);
-                // print('22 builder passed');
-                if (!snapshot.hasData) {
-                  return Center(
-                      child: SizedBox(
-                    width: 50,
-                    height: 50,
-                    child: CircularProgressIndicator(
-                      value: 0.5,
-                      strokeWidth: 12,
-                      backgroundColor: Colors.grey,
-                      valueColor: const AlwaysStoppedAnimation(Colors.amber),
+          child: Column(
+            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+            children: [
+              Wrap(
+                alignment: WrapAlignment.start,
+                children: [
+                  TextButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 3, vertical: 3),
                     ),
-                  ));
-                } else {
-                  return Column(
-                    children: [
-                      Tabs(),
-                      Expanded(
-                        child: ListView.builder(
+                    child: Text("Recent", style: gooHi),
+                    // child: Text("Recent", style: TextStyle(fontSize: 14)),
+                    onPressed: () async {
+                      setState(() {
+                        _fetchDatas("Gridview");
+                        currentView = "Gridview";
+                      });
+                    },
+                  ),
+                  TextButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
+                    ),
+                    child: Text("Like#", style: gooHi),
+                    onPressed: () async {
+                      setState(() {
+                        _fetchDatas("likeview");
+                        currentView = "likeview";
+                      });
+                    },
+                  ),
+                  TextButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
+                    ),
+                    child: Text("Share#", style: gooHi),
+                    onPressed: () async {
+                      setState(() {
+                        _fetchDatas("shareview");
+                        currentView = "shareview";
+                      });
+                    },
+                  ),
+                  TextButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
+                    ),
+                    child: Text("Read#", style: gooHi),
+                    onPressed: () async {
+                      setState(() {
+                        _fetchDatas("readview");
+                        currentView = "readview";
+                      });
+                    },
+                  ),
+                  TextButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
+                    ),
+                    child: Text("Basic", style: gooHi),
+                    onPressed: () async {
+                      setState(() {
+                        _fetchDatas("basicview");
+                        currentView = "basicview";
+                      });
+                    },
+                  ),
+                  TextButton(
+                    style: ElevatedButton.styleFrom(
+                      padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
+                    ),
+                    child: Text("Advanced", style: gooHi),
+                    onPressed: () async {
+                      setState(() {
+                        _fetchDatas("advancedview");
+                        currentView = "advancedview";
+                      });
+                    },
+                  ),
+                ],
+              ),
+              Expanded(
+                child: FutureBuilder(
+                    future: _fetchDatas(currentView),
+                    builder: (context, snapshot) {
+                      // print('snapshot No.=>');
+                      // print(records.length);
+                      // print("get records:" "{}");
+                      // List<bool> isLiked = List.filled(records.length, false);
+                      // print('22 builder passed');
+                      if (!snapshot.hasData) {
+                        return Center(
+                            child: SizedBox(
+                          width: 50,
+                          height: 50,
+                          child: CircularProgressIndicator(
+                            value: 0.5,
+                            strokeWidth: 12,
+                            backgroundColor: Colors.grey,
+                            valueColor:
+                                const AlwaysStoppedAnimation(Colors.amber),
+                          ),
+                        ));
+                      } else {
+                        return ListView.builder(
                             physics: const BouncingScrollPhysics(),
                             itemCount: records.length,
                             // itemCount: PhrasesLoader.to.records.length,
@@ -151,8 +238,6 @@ class _FirstScreenMd8State extends State<FirstScreenMd8> {
                               // print(snapshot);
                               // print(PhrasesLoader.to.records.length);
                               // print(records[index]['fields']['likeCnt']);
-                              int likeCount =
-                                  records[index]['fields']['likeCnt'];
                               // ctr.currentIdSave.value = ctr.records[index]['id'];
 
                               return Column(
@@ -180,7 +265,7 @@ class _FirstScreenMd8State extends State<FirstScreenMd8> {
                                               ColorFilter.srgbToLinearGamma(),
                                           // Colors.grey, BlendMode.saturation),
                                           child: Container(
-                                            height: 170,
+                                            height: 160,
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(22),
@@ -231,8 +316,8 @@ class _FirstScreenMd8State extends State<FirstScreenMd8> {
                                                         padding: EdgeInsets
                                                             .symmetric(
                                                                 horizontal: 20),
-                                                        height: 80,
-                                                        width: 100,
+                                                        height: 90,
+                                                        width: 120,
                                                         child: Opacity(
                                                           opacity: 0.5,
                                                           child:
@@ -514,12 +599,12 @@ class _FirstScreenMd8State extends State<FirstScreenMd8> {
                                   // ),
                                 ],
                               );
-                            }),
-                      ),
-                    ],
-                  );
-                }
-              }),
+                            });
+                      }
+                    }),
+              ),
+            ],
+          ),
         ));
   }
 }
@@ -755,59 +840,59 @@ class _DetailPageState extends State<DetailPage> {
 }
 
 // ignore: use_key_in_widget_constructors
-class Tabs extends StatelessWidget {
-  @override
-  Widget build(BuildContext context) {
-    return Row(
-      crossAxisAlignment: CrossAxisAlignment.end,
-      // ignore: prefer_const_literals_to_create_immutables
-      children: <Widget>[
-        SizedBox(width: 10),
-        MyTab(text: 'Recent', isSelected: true),
-        MyTab(text: 'Like#', isSelected: false),
-        MyTab(text: 'Share#', isSelected: false),
-        MyTab(text: 'Basic', isSelected: false),
-        MyTab(text: 'Advanced', isSelected: false),
-      ],
-    );
-  }
-}
+// class Tabs extends StatelessWidget {
+//   @override
+//   Widget build(BuildContext context) {
+//     return Row(
+//       crossAxisAlignment: CrossAxisAlignment.end,
+//       // ignore: prefer_const_literals_to_create_immutables
+//       children: <Widget>[
+//         SizedBox(width: 10),
+//         MyTab(text: 'Recent', isSelected: true),
+//         MyTab(text: 'Like#', isSelected: false),
+//         MyTab(text: 'Share#', isSelected: false),
+//         MyTab(text: 'Basic', isSelected: false),
+//         MyTab(text: 'Advanced', isSelected: false),
+//       ],
+//     );
+//   }
+// }
 
-class MyTab extends StatelessWidget {
-  final String text;
-  final bool isSelected;
+// class MyTab extends StatelessWidget {
+//   final String text;
+//   final bool isSelected;
 
-  const MyTab({Key? key, required this.isSelected, required this.text})
-      : super(key: key);
+//   const MyTab({Key? key, required this.isSelected, required this.text})
+//       : super(key: key);
 
-  @override
-  Widget build(BuildContext context) {
-    return Padding(
-      padding: const EdgeInsets.all(8.0),
-      child: Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: <Widget>[
-          Text(
-            text,
-            style: TextStyle(
-              fontSize: isSelected ? 16 : 14,
-              color: isSelected ? Colors.black.withOpacity(0.6) : Colors.grey,
-              fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-            ),
-          ),
-          Container(
-            height: 6,
-            width: 20,
-            decoration: BoxDecoration(
-              borderRadius: BorderRadius.circular(4),
-              color: isSelected ? Color(0xFFFF5A1D) : Colors.white,
-            ),
-          )
-        ],
-      ),
-    );
-  }
-}
+//   @override
+//   Widget build(BuildContext context) {
+//     return Padding(
+//       padding: const EdgeInsets.all(8.0),
+//       child: Column(
+//         crossAxisAlignment: CrossAxisAlignment.start,
+//         children: <Widget>[
+//           Text(
+//             text,
+//             style: TextStyle(
+//               fontSize: isSelected ? 16 : 14,
+//               color: isSelected ? Colors.black.withOpacity(0.6) : Colors.grey,
+//               fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
+//             ),
+//           ),
+//           Container(
+//             height: 6,
+//             width: 20,
+//             decoration: BoxDecoration(
+//               borderRadius: BorderRadius.circular(4),
+//               color: isSelected ? Color(0xFFFF5A1D) : Colors.white,
+//             ),
+//           )
+//         ],
+//       ),
+//     );
+//   }
+// }
 
 // list of colors that we use in our app
 const kBackgroundColor = Color(0xFFF1EFF1);
@@ -820,6 +905,13 @@ const kBlueColor = Color(0xFF82D9EC);
 // const kBlueColor = Color(0xFF40BAD5);
 
 const kDefaultPadding = 20.0;
+
+var gooHi = GoogleFonts.hiMelody(
+    // backgroundColor: Colors.white70,
+    fontStyle: FontStyle.normal,
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+    fontSize: 20);
 
 // our default Shadow
 const kDefaultShadow = BoxShadow(

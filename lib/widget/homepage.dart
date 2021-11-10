@@ -10,6 +10,7 @@ import 'package:todaylang/page/first_screen_md5.dart';
 import 'package:todaylang/page/first_screen_md6.dart';
 import 'package:todaylang/page/first_screen_md7.dart';
 import 'package:todaylang/page/first_screen_md8.dart';
+import 'package:todaylang/page/first_screen_md81.dart';
 import 'package:todaylang/page/first_screen_md9.dart';
 import 'package:todaylang/page/first_screen_of.dart';
 import 'package:todaylang/page/first_screen_ph.dart';
@@ -201,7 +202,7 @@ class _HomePageState extends State<HomePage> {
             FirstScreenPh(),
             FirstScreenPh(),
             FirstScreenPh(),
-            FirstScreenMd8(),
+            FirstScreenMd81(),
             FirstScreenAd(),
             FirstScreenAi(),
             FirstScreenDt(),
