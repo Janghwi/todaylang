@@ -101,6 +101,7 @@ class _FirstScreenMd8State extends State<FirstScreenMd8> {
 
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
     return Scaffold(
         extendBodyBehindAppBar: true,
 
@@ -152,245 +153,287 @@ class _FirstScreenMd8State extends State<FirstScreenMd8> {
                                   records[index]['fields']['likeCnt'];
                               // ctr.currentIdSave.value = ctr.records[index]['id'];
 
-                              return Padding(
-                                padding: const EdgeInsets.all(8.0),
-                                child: Column(
-                                  children: [
-                                    GestureDetector(
-                                      onTap: () {
-                                        _readRequest(
+                              return Column(
+                                children: [
+                                  GestureDetector(
+                                    onTap: () {
+                                      _readRequest(records[index]['id'],
+                                          records[index]['fields']['readCnt']);
+                                      Get.to(() => DetailPage(),
+                                          arguments: [
+                                            records[index]['fields']['title'],
+                                            records[index]['fields']['content'],
                                             records[index]['id'],
-                                            records[index]['fields']
-                                                ['readCnt']);
-                                        Get.to(() => DetailPage(),
-                                            arguments: [
-                                              records[index]['fields']['title'],
-                                              records[index]['fields']
-                                                  ['content'],
-                                              records[index]['id'],
-                                              records[index]['fields']
-                                                  ['likeCnt'],
-                                              //this.records[index]['fields']['cat1'],
-                                            ],
-                                            duration: Duration(seconds: 2),
-                                            transition: Transition.fadeIn,
-                                            preventDuplicates: false);
-                                      },
-                                      child: Column(
-                                        children: [
-                                          ColorFiltered(
-                                            colorFilter:
-                                                ColorFilter.srgbToLinearGamma(),
-                                            // Colors.grey, BlendMode.saturation),
-                                            child: Container(
-                                              height: 136,
-                                              decoration: BoxDecoration(
-                                                borderRadius:
-                                                    BorderRadius.circular(22),
-                                                color: index.isEven
-                                                    ? kBlueColor
-                                                    : kSecondaryColor,
-                                                boxShadow: [kDefaultShadow],
-                                              ),
-                                              // color: Colors.amber,
-                                              margin: EdgeInsets.symmetric(
-                                                horizontal: 20,
-                                                vertical: 20 / 2,
-                                              ),
-                                              child: Stack(
-                                                  alignment:
-                                                      Alignment.bottomCenter,
-                                                  children: [
-                                                    Container(
-                                                      height: 136,
+                                            records[index]['fields']['likeCnt'],
+                                            //this.records[index]['fields']['cat1'],
+                                          ],
+                                          duration: Duration(seconds: 2),
+                                          transition: Transition.fadeIn,
+                                          preventDuplicates: false);
+                                    },
+                                    child: Column(
+                                      children: [
+                                        ColorFiltered(
+                                          colorFilter:
+                                              ColorFilter.srgbToLinearGamma(),
+                                          // Colors.grey, BlendMode.saturation),
+                                          child: Container(
+                                            height: 136,
+                                            decoration: BoxDecoration(
+                                              borderRadius:
+                                                  BorderRadius.circular(22),
+                                              color: index.isEven
+                                                  ? kBlueColor
+                                                  : kSecondaryColor,
+                                              boxShadow: const [kDefaultShadow],
+                                            ),
+                                            // color: Colors.amber,
+                                            margin: EdgeInsets.symmetric(
+                                              horizontal: 20,
+                                              vertical: 20 / 2,
+                                            ),
+                                            child: Stack(
+                                                alignment: Alignment.topLeft,
+                                                children: [
+                                                  Container(
+                                                    height: 136,
+                                                    decoration: BoxDecoration(
+                                                      borderRadius:
+                                                          BorderRadius.circular(
+                                                              12),
+                                                      color: index.isEven
+                                                          ? kBlueColor
+                                                          : kSecondaryColor,
+                                                      // ignore: prefer_const_literals_to_create_immutables
+                                                      boxShadow: [
+                                                        kDefaultShadow
+                                                      ],
+                                                    ),
+                                                    child: Container(
+                                                      margin: EdgeInsets.only(
+                                                          right: 10),
                                                       decoration: BoxDecoration(
+                                                        color: Colors.white,
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(22),
-                                                        color: index.isEven
-                                                            ? kBlueColor
-                                                            : kSecondaryColor,
-                                                        // ignore: prefer_const_literals_to_create_immutables
-                                                        boxShadow: [
-                                                          kDefaultShadow
+                                                                .circular(12),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Positioned(
+                                                    top: 0,
+                                                    right: 0,
+                                                    child: Hero(
+                                                      tag: records[index]['id'],
+                                                      child: Container(
+                                                        padding: EdgeInsets
+                                                            .symmetric(
+                                                                horizontal: 20),
+                                                        height: 110,
+                                                        width: 120,
+                                                        child:
+                                                            CachedNetworkImage(
+                                                          imageUrl: records[index]
+                                                                          [
+                                                                          'fields']
+                                                                      [
+                                                                      'Attachments']
+                                                                  [
+                                                                  0]['thumbnails']
+                                                              ['large']['url'],
+                                                          fit: BoxFit.cover,
+                                                          // width: MediaQuery
+                                                          //             .maybeOf(
+                                                          //                 context)!
+                                                          //         .size
+                                                          //         .width *
+                                                          //     0.97,
+                                                          // height: MediaQuery
+                                                          //             .maybeOf(
+                                                          //                 context)!
+                                                          //         .size
+                                                          //         .height *
+                                                          //     0.17,
+                                                        ),
+                                                      ),
+                                                    ),
+                                                  ),
+                                                  Padding(
+                                                    padding:
+                                                        const EdgeInsets.all(
+                                                            8.0),
+                                                    child: SizedBox(
+                                                      width: size.width - 200,
+                                                      child: Column(
+                                                        crossAxisAlignment:
+                                                            CrossAxisAlignment
+                                                                .start,
+                                                        children: [
+                                                          Spacer(),
+                                                          Text(
+                                                            records[index][
+                                                                        'fields']
+                                                                    ['title']
+                                                                .toString(),
+                                                            // style: GoogleFonts.aBeeZee(
+                                                            // style: GoogleFonts.hiMelody(
+                                                            // style: GoogleFonts.blackHanSans(
+                                                            style: GoogleFonts
+                                                                .notoSans(
+                                                                    // backgroundColor: Colors.white70,
+                                                                    fontStyle:
+                                                                        FontStyle
+                                                                            .italic,
+                                                                    fontWeight:
+                                                                        FontWeight
+                                                                            .bold,
+                                                                    color: Colors
+                                                                        .black,
+                                                                    fontSize:
+                                                                        18),
+                                                          ),
+                                                          Spacer(),
+                                                          Container(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                              horizontal:
+                                                                  kDefaultPadding *
+                                                                      1.5, // 30 padding
+                                                              vertical:
+                                                                  kDefaultPadding /
+                                                                      4, // 5 top and bottom
+                                                            ),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color:
+                                                                  Colors.grey,
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .only(
+                                                                bottomLeft: Radius
+                                                                    .circular(
+                                                                        22),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        22),
+                                                              ),
+                                                            ),
+                                                            child: Text(
+                                                              records[index]
+                                                                      ['fields']
+                                                                  ['level'],
+                                                              style: GoogleFonts
+                                                                  .notoSans(
+                                                                      // backgroundColor: Colors.white70,
+                                                                      fontStyle:
+                                                                          FontStyle
+                                                                              .italic,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          14),
+                                                            ),
+                                                          ),
                                                         ],
                                                       ),
-                                                      child: Container(
-                                                        margin: EdgeInsets.only(
-                                                            right: 10),
-                                                        decoration:
-                                                            BoxDecoration(
-                                                          color: Colors.white,
-                                                          borderRadius:
-                                                              BorderRadius
-                                                                  .circular(22),
-                                                        ),
-                                                      ),
                                                     ),
-                                                    Positioned(
-                                                      top: 0,
-                                                      right: 0,
-                                                      child: Hero(
-                                                        tag: 'text',
-                                                        child: Container(
-                                                          padding: EdgeInsets
-                                                              .symmetric(
-                                                                  horizontal:
-                                                                      20),
-                                                          height: 160,
-                                                          width: 200,
-                                                          child:
-                                                              CachedNetworkImage(
-                                                            imageUrl: records[index]
-                                                                            [
-                                                                            'fields']
-                                                                        [
-                                                                        'Attachments'][0]
-                                                                    [
-                                                                    'thumbnails']
-                                                                [
-                                                                'large']['url'],
-                                                            fit: BoxFit.cover,
-                                                            // width: MediaQuery
-                                                            //             .maybeOf(
-                                                            //                 context)!
-                                                            //         .size
-                                                            //         .width *
-                                                            //     0.97,
-                                                            // height: MediaQuery
-                                                            //             .maybeOf(
-                                                            //                 context)!
-                                                            //         .size
-                                                            //         .height *
-                                                            //     0.17,
-                                                          ),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                    Center(
-                                                      child: Padding(
-                                                        padding:
-                                                            const EdgeInsets
-                                                                .all(8.0),
-                                                        child: Text(
-                                                          records[index]
-                                                                      ['fields']
-                                                                  ['title']
-                                                              .toString(),
-                                                          // style: GoogleFonts.aBeeZee(
-                                                          // style: GoogleFonts.hiMelody(
-                                                          // style: GoogleFonts.blackHanSans(
-                                                          style: GoogleFonts
-                                                              .notoSans(
-                                                                  // backgroundColor: Colors.white70,
-                                                                  fontStyle:
-                                                                      FontStyle
-                                                                          .italic,
-                                                                  fontWeight:
-                                                                      FontWeight
-                                                                          .bold,
-                                                                  color: Colors
-                                                                      .white,
-                                                                  fontSize: 20),
-                                                        ),
-                                                      ),
-                                                    ),
-                                                  ]),
-                                            ),
+                                                  ),
+                                                ]),
                                           ),
-                                        ],
-                                      ),
+                                        ),
+                                      ],
                                     ),
-                                    Padding(
-                                      padding: const EdgeInsets.all(8.0),
-                                      child: Row(
-                                        mainAxisAlignment:
-                                            MainAxisAlignment.start,
-                                        children: <Widget>[
-                                          // Divider(
-                                          //   indent: 30,
-                                          // ),
-                                          IconButton(
-                                            icon: Icon(Icons.speaker_notes,
-                                                color: Colors.amber),
-                                            onPressed: () {
-                                              Get.to(() => CommentWrite());
+                                  ),
+                                  Padding(
+                                    padding: const EdgeInsets.all(2.0),
+                                    child: Row(
+                                      mainAxisAlignment:
+                                          MainAxisAlignment.start,
+                                      children: <Widget>[
+                                        // Divider(
+                                        //   indent: 30,
+                                        // ),
+                                        IconButton(
+                                          icon: Icon(Icons.speaker_notes,
+                                              color: Colors.amber),
+                                          onPressed: () {
+                                            Get.to(() => CommentWrite());
+                                          },
+                                        ),
+                                        // Divider(
+                                        //   indent: 10,
+                                        // ),
+                                        Text(records[index]['fields']['cmtCnt']
+                                            .toString()),
+                                        Divider(
+                                          indent: 30,
+                                        ),
+                                        //--------------------------------------------------------
+                                        IconButton(
+                                          icon: Icon(Icons.favorite_border,
+                                              color: Colors.amber),
+                                          onPressed: () {
+                                            Get.to(() {
+                                              return DetailPage();
                                             },
-                                          ),
-                                          // Divider(
-                                          //   indent: 10,
-                                          // ),
-                                          Text(records[index]['fields']
-                                                  ['cmtCnt']
-                                              .toString()),
-                                          Divider(
-                                            indent: 30,
-                                          ),
-                                          //--------------------------------------------------------
-                                          IconButton(
-                                            icon: Icon(Icons.favorite_border,
-                                                color: Colors.amber),
-                                            onPressed: () {
-                                              Get.to(() {
-                                                return DetailPage();
-                                              },
-                                                  arguments: [
-                                                    records[index]['fields']
-                                                        ['title'],
-                                                    records[index]['fields']
-                                                        ['content'],
-                                                    records[index]['id'],
-                                                    records[index]['fields']
-                                                        ['likeCnt'],
-                                                    // records[index]['fields']
-                                                    //         ['Attachments'][0]
-                                                    //     ['thumbnails']['large']['url']
-                                                    // records[index]['fields']
-                                                    //     ['readCnt']
-                                                    //this.records[index]['fields']['cat1'],
-                                                  ],
-                                                  transition: Transition.zoom,
-                                                  preventDuplicates: true);
-                                            },
-                                          ),
-                                          Text(records[index]['fields']
-                                                  ['likeCnt']
-                                              .toString()),
-                                          // onPressed: () async {
-                                          //   int likeCount = records[index]
-                                          //       ['fields']['likeCnt'];
-                                          //   int count = 0;
-                                          //   if (!isLiked[index] && count == 0) {
-                                          //     print("pressed 1setstate passed :");
-                                          //     likeCount += 1;
-                                          //     _postRequest(records[index]['id'],
-                                          //         likeCount);
-                                          //     count = 1;
-                                          //     isLiked[index] = !isLiked[index];
-                                          //     setState(() {});
-                                          //   }
-                                          // },
+                                                arguments: [
+                                                  records[index]['fields']
+                                                      ['title'],
+                                                  records[index]['fields']
+                                                      ['content'],
+                                                  records[index]['id'],
+                                                  records[index]['fields']
+                                                      ['likeCnt'],
+                                                  // records[index]['fields']
+                                                  //         ['Attachments'][0]
+                                                  //     ['thumbnails']['large']['url']
+                                                  // records[index]['fields']
+                                                  //     ['readCnt']
+                                                  //this.records[index]['fields']['cat1'],
+                                                ],
+                                                transition: Transition.zoom,
+                                                preventDuplicates: true);
+                                          },
+                                        ),
+                                        Text(records[index]['fields']['likeCnt']
+                                            .toString()),
+                                        // onPressed: () async {
+                                        //   int likeCount = records[index]
+                                        //       ['fields']['likeCnt'];
+                                        //   int count = 0;
+                                        //   if (!isLiked[index] && count == 0) {
+                                        //     print("pressed 1setstate passed :");
+                                        //     likeCount += 1;
+                                        //     _postRequest(records[index]['id'],
+                                        //         likeCount);
+                                        //     count = 1;
+                                        //     isLiked[index] = !isLiked[index];
+                                        //     setState(() {});
+                                        //   }
+                                        // },
 
-                                          Divider(
-                                            indent: 10,
-                                          ),
-                                          // Text(records[index]['fields']['likeCnt']
-                                          //     .toString()),
+                                        Divider(
+                                          indent: 10,
+                                        ),
+                                        // Text(records[index]['fields']['likeCnt']
+                                        //     .toString()),
 
-                                          // Divider(
-                                          //   indent: 10,
-                                          // ),
-                                          // Icon(Icons.share),
-                                          // Text('Share!'),
-                                        ],
-                                      ),
+                                        // Divider(
+                                        //   indent: 10,
+                                        // ),
+                                        // Icon(Icons.share),
+                                        // Text('Share!'),
+                                      ],
                                     ),
-                                    // Divider(
-                                    //   color: Colors.black12,
-                                    //   thickness: 8.0,
-                                    // ),
-                                  ],
-                                ),
+                                  ),
+                                  // Divider(
+                                  //   color: Colors.black12,
+                                  //   thickness: 8.0,
+                                  // ),
+                                ],
                               );
                             }),
                       ),
@@ -697,7 +740,7 @@ const kDefaultPadding = 20.0;
 
 // our default Shadow
 const kDefaultShadow = BoxShadow(
-  offset: Offset(0, 15),
+  offset: Offset(0, 10),
   blurRadius: 27,
   color: Colors.black12, // Black color with 12% opacity
 );
