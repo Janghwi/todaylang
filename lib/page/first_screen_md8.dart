@@ -15,7 +15,6 @@ import 'package:todaylang/controllers/phrase_loader.dart';
 import 'package:todaylang/widget/commentbox1.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:math' as math;
-import 'package:auto_size_text/auto_size_text.dart';
 import 'package:animated_text_kit/animated_text_kit.dart';
 
 import 'commentlist.dart';
@@ -285,13 +284,13 @@ class _FirstScreenMd8State extends State<FirstScreenMd8> {
                                                                       fontStyle: FontStyle.normal,
                                                                       fontWeight: FontWeight.w500,
                                                                       color: Colors.amber.shade200,
-                                                                      fontSize: 22),
+                                                                      fontSize: 17),
                                                                   // overflow:
                                                                   //     TextOverflow
                                                                   //         .ellipsis,
                                                                   maxLines: 1,
                                                                 ),
-                                                                AutoSizeText(
+                                                                Text(
                                                                   records[index]
                                                                               [
                                                                               'fields']

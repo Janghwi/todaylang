@@ -15,11 +15,38 @@ import 'package:todaylang/controllers/phrase_loader.dart';
 import 'package:todaylang/widget/commentbox1.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:math' as math;
-import 'package:auto_size_text/auto_size_text.dart';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 
 import 'commentlist.dart';
+
+enum MenuType { first, second, third }
+
+const kBackgroundColor = Color(0xFFF1EFF1);
+const kPrimaryColor = Color(0xFF035AA6);
+const kSecondaryColor = Color(0xFFE9D8C0);
+// const kSecondaryColor = Color(0xFFFFA41B);
+const kTextColor = Color(0xFF000839);
+const kTextLightColor = Color(0xFF747474);
+const kBlueColor = Color(0xFF82D9EC);
+// const kBlueColor = Color(0xFF40BAD5);
+
+const kDefaultPadding = 20.0;
+
+// var gooHi = GoogleFonts.hiMelody(
+var gooHi = GoogleFonts.doHyeon(
+    // backgroundColor: Colors.white70,
+    fontStyle: FontStyle.normal,
+    color: Colors.black,
+    fontWeight: FontWeight.bold,
+    fontSize: 16);
+
+// our default Shadow
+const kDefaultShadow = BoxShadow(
+  offset: Offset(0, 10),
+  blurRadius: 27,
+  color: Colors.black12, // Black color with 12% opacity
+);
 
 class FirstScreenMd81 extends StatefulWidget {
   @override
@@ -36,7 +63,7 @@ class _FirstScreenMd81State extends State<FirstScreenMd81> {
   // int likeCount = 0;
   // @override
   // void initState() {
-  //   _fetchDatas();
+  //   _fetchDatas("Gridview");
   //   super.initState();
   // }
 
@@ -65,11 +92,11 @@ class _FirstScreenMd81State extends State<FirstScreenMd81> {
         // if (loadRemoteDatatSucceed == false) retryFuture(_fetchDatas, 200);
       }
     }
-    // if (mounted) {
-    //   setState(() {
-    //     // Your state change code goes here
-    //   });
-    // }
+    if (mounted) {
+      setState(() {
+        // 화면 백 했을때 refresh가 된다. 좋아요 버튼의 숫자가 증가한것을 반영
+      });
+    }
     return records;
   }
 
@@ -108,6 +135,10 @@ class _FirstScreenMd81State extends State<FirstScreenMd81> {
 
   bool isLiked = false;
   late String currentView = "Gridview";
+  Color mColor = Color(0xFF6200EE),
+      mColor0 = Color(0xFF6200EE),
+      mColor1 = Color(0xFF6200EE);
+  final isSelected = <bool>[false, false, false, false, false, false];
 
   @override
   Widget build(BuildContext context) {
@@ -127,80 +158,181 @@ class _FirstScreenMd81State extends State<FirstScreenMd81> {
             mainAxisAlignment: MainAxisAlignment.spaceEvenly,
             children: [
               Wrap(
+                spacing: 0,
+                runSpacing: 0,
                 alignment: WrapAlignment.start,
                 children: [
-                  TextButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 3, vertical: 3),
-                    ),
-                    child: Text("Recent", style: gooHi),
-                    // child: Text("Recent", style: TextStyle(fontSize: 14)),
-                    onPressed: () async {
+                  // TextButton(
+                  //   style: ElevatedButton.styleFrom(
+                  //     padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                  //   ),
+                  //   child: Text("Recent", style: gooHi),
+                  //   // child: Text("Recent", style: TextStyle(fontSize: 14)),
+                  //   onPressed: () async {
+                  //     setState(() {
+                  //       _fetchDatas("Gridview");
+                  //       currentView = "Gridview";
+                  //     });
+                  //   },
+                  // ),
+                  // TextButton(
+                  //   style: ElevatedButton.styleFrom(
+                  //     padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                  //   ),
+                  //   child: Text("Like#", style: gooHi),
+                  //   onPressed: () async {
+                  //     setState(() {
+                  //       _fetchDatas("likeview");
+                  //       currentView = "likeview";
+                  //     });
+                  //   },
+                  // ),
+                  // TextButton(
+                  //   style: ElevatedButton.styleFrom(
+                  //     padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                  //   ),
+                  //   child: Text("Share#", style: gooHi),
+                  //   onPressed: () async {
+                  //     setState(() {
+                  //       _fetchDatas("shareview");
+                  //       currentView = "shareview";
+                  //     });
+                  //   },
+                  // ),
+                  // TextButton(
+                  //   style: ElevatedButton.styleFrom(
+                  //     padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                  //   ),
+                  //   child: Text("Read#", style: gooHi),
+                  //   onPressed: () async {
+                  //     setState(() {
+                  //       _fetchDatas("readview");
+                  //       currentView = "readview";
+                  //     });
+                  //   },
+                  // ),
+                  // TextButton(
+                  //   style: ElevatedButton.styleFrom(
+                  //     padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
+                  //   ),
+                  //   child: Text("Level", style: gooHi),
+                  //   onPressed: () async {
+                  //     setState(() {
+                  //       _fetchDatas("basicview");
+                  //       currentView = "basicview";
+                  //     });
+                  //   },
+                  // ),
+                  ToggleButtons(
+                    color: Colors.black.withOpacity(0.60),
+                    selectedColor: mColor,
+                    selectedBorderColor: mColor0,
+                    fillColor: mColor1.withOpacity(0.08),
+                    splashColor: Colors.grey.withOpacity(0.12),
+                    hoverColor: Color(0xFF6200EE).withOpacity(0.04),
+                    borderRadius: BorderRadius.circular(4.0),
+                    constraints: BoxConstraints(minHeight: 36.0),
+                    isSelected: isSelected,
+                    onPressed: (index) {
+                      // Respond to button selection
                       setState(() {
-                        _fetchDatas("Gridview");
-                        currentView = "Gridview";
+                        isSelected[0] = false;
+                        isSelected[1] = false;
+                        isSelected[2] = false;
+                        isSelected[3] = false;
+                        isSelected[4] = false;
+                        isSelected[5] = false;
+                        if (index == 0) {
+                          mColor = Colors.blue;
+                          mColor0 = Colors.blue;
+                          mColor1 = Colors.blue;
+                          _fetchDatas("Gridview");
+                          currentView = "Gridview";
+                        }
+                        if (index == 1) {
+                          mColor = Colors.green;
+                          mColor0 = Colors.green;
+                          mColor1 = Colors.green;
+                          _fetchDatas("likeview");
+                          currentView = "likeview";
+                        }
+                        if (index == 2) {
+                          mColor = Colors.red;
+                          mColor0 = Colors.red;
+                          mColor1 = Colors.red;
+                          _fetchDatas("shareview");
+                          currentView = "shareview";
+                        }
+                        if (index == 3) {
+                          mColor = Colors.amber;
+                          mColor0 = Colors.amber;
+                          mColor1 = Colors.amber;
+                          _fetchDatas("readview");
+                          currentView = "readview";
+                        }
+                        if (index == 4) {
+                          mColor = Colors.blue;
+                          mColor0 = Colors.blue;
+                          mColor1 = Colors.blue;
+                          _fetchDatas("basicview");
+                          currentView = "basicview";
+                        }
+                        if (index == 5) {
+                          mColor = Colors.blue;
+                          mColor0 = Colors.blue;
+                          mColor1 = Colors.blue;
+                          _fetchDatas("advancedview");
+                          currentView = "advancedview";
+                        }
+
+                        isSelected[index] = !isSelected[index];
                       });
                     },
-                  ),
-                  TextButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
-                    ),
-                    child: Text("Like#", style: gooHi),
-                    onPressed: () async {
-                      setState(() {
-                        _fetchDatas("likeview");
-                        currentView = "likeview";
-                      });
-                    },
-                  ),
-                  TextButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
-                    ),
-                    child: Text("Share#", style: gooHi),
-                    onPressed: () async {
-                      setState(() {
-                        _fetchDatas("shareview");
-                        currentView = "shareview";
-                      });
-                    },
-                  ),
-                  TextButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
-                    ),
-                    child: Text("Read#", style: gooHi),
-                    onPressed: () async {
-                      setState(() {
-                        _fetchDatas("readview");
-                        currentView = "readview";
-                      });
-                    },
-                  ),
-                  TextButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
-                    ),
-                    child: Text("Basic", style: gooHi),
-                    onPressed: () async {
-                      setState(() {
-                        _fetchDatas("basicview");
-                        currentView = "basicview";
-                      });
-                    },
-                  ),
-                  TextButton(
-                    style: ElevatedButton.styleFrom(
-                      padding: EdgeInsets.symmetric(horizontal: 1, vertical: 1),
-                    ),
-                    child: Text("Advanced", style: gooHi),
-                    onPressed: () async {
-                      setState(() {
-                        _fetchDatas("advancedview");
-                        currentView = "advancedview";
-                      });
-                    },
+                    // ignore: prefer_const_literals_to_create_immutables
+                    children: [
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                          'Recent',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                          'Like#',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                          'Share#',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                          'Read#',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                          'Basic',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ),
+                      Padding(
+                        padding: EdgeInsets.symmetric(horizontal: 8.0),
+                        child: Text(
+                          'Advanced',
+                          style: TextStyle(fontSize: 12),
+                        ),
+                      ),
+                    ],
                   ),
                 ],
               ),
@@ -239,6 +371,9 @@ class _FirstScreenMd81State extends State<FirstScreenMd81> {
                               // print(PhrasesLoader.to.records.length);
                               // print(records[index]['fields']['likeCnt']);
                               // ctr.currentIdSave.value = ctr.records[index]['id'];
+
+                              int likeCount =
+                                  records[index]['fields']['likeCnt'];
 
                               return Column(
                                 children: [
@@ -376,7 +511,7 @@ class _FirstScreenMd81State extends State<FirstScreenMd81> {
                                                                   //         .ellipsis,
                                                                   maxLines: 1,
                                                                 ),
-                                                                AutoSizeText(
+                                                                Text(
                                                                   records[index]
                                                                               [
                                                                               'fields']
@@ -656,7 +791,7 @@ class _DetailPageState extends State<DetailPage> {
         },
       );
     }
-
+    setState(() {});
     return !isLiked;
   }
 
@@ -895,27 +1030,4 @@ class _DetailPageState extends State<DetailPage> {
 // }
 
 // list of colors that we use in our app
-const kBackgroundColor = Color(0xFFF1EFF1);
-const kPrimaryColor = Color(0xFF035AA6);
-const kSecondaryColor = Color(0xFFE9D8C0);
-// const kSecondaryColor = Color(0xFFFFA41B);
-const kTextColor = Color(0xFF000839);
-const kTextLightColor = Color(0xFF747474);
-const kBlueColor = Color(0xFF82D9EC);
-// const kBlueColor = Color(0xFF40BAD5);
 
-const kDefaultPadding = 20.0;
-
-var gooHi = GoogleFonts.hiMelody(
-    // backgroundColor: Colors.white70,
-    fontStyle: FontStyle.normal,
-    color: Colors.black,
-    fontWeight: FontWeight.bold,
-    fontSize: 20);
-
-// our default Shadow
-const kDefaultShadow = BoxShadow(
-  offset: Offset(0, 10),
-  blurRadius: 27,
-  color: Colors.black12, // Black color with 12% opacity
-);
