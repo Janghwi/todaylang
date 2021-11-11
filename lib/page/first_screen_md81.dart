@@ -759,7 +759,6 @@ class _DetailPageState extends State<DetailPage> {
   var id = Get.arguments[2];
   int likecount = Get.arguments[3];
   // var imageUrl = Get.arguments[4];
-
   int index = 0;
   String? currentIdSave;
   // int? likeCount = likecount ;
@@ -797,6 +796,8 @@ class _DetailPageState extends State<DetailPage> {
 
   @override
   Widget build(BuildContext context) {
+    print(content);
+
     return Scaffold(
       appBar: AppBar(
         title: Text(
@@ -862,13 +863,27 @@ class _DetailPageState extends State<DetailPage> {
                         h4: const TextStyle(
                             color: Colors.black, fontWeight: FontWeight.w100),
                         h5: const TextStyle(
-                          color: Colors.black87,
+                          color: Colors.red,
                         ),
                         h6: const TextStyle(
                             color: Colors.indigo, fontWeight: FontWeight.w600),
                         p: const TextStyle(
-                          color: Colors.black54,
+                          color: Colors.red,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 8,
                         ),
+                        tableBody: const TextStyle(
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w600,
+                          fontSize: 12,
+                        ),
+                        tableHead: const TextStyle(
+                          color: Colors.black54,
+                          fontWeight: FontWeight.w900,
+                          fontSize: 13,
+                        ),
+                        tableCellsPadding:
+                            const EdgeInsets.fromLTRB(8, 8, 8, 8),
                         strong: const TextStyle(color: Colors.black87),
                         blockSpacing: 10.0,
                         listIndent: 24.0,
