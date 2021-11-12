@@ -2,6 +2,7 @@
 
 import 'dart:convert';
 import 'dart:io';
+import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
@@ -11,10 +12,15 @@ import 'package:like_button/like_button.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:todaylang/controllers/phrase_loader.dart';
 import 'package:todaylang/widget/commentbox1.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:math' as math;
+import 'package:screenshot/screenshot.dart';
+import 'package:image_gallery_saver/image_gallery_saver.dart';
+import 'package:permission_handler/permission_handler.dart';
+import 'package:share_plus/share_plus.dart';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
 
@@ -162,72 +168,11 @@ class _FirstScreenMd81State extends State<FirstScreenMd81> {
                 runSpacing: 0,
                 alignment: WrapAlignment.start,
                 children: [
-                  // TextButton(
-                  //   style: ElevatedButton.styleFrom(
-                  //     padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                  //   ),
-                  //   child: Text("Recent", style: gooHi),
-                  //   // child: Text("Recent", style: TextStyle(fontSize: 14)),
-                  //   onPressed: () async {
-                  //     setState(() {
-                  //       _fetchDatas("Gridview");
-                  //       currentView = "Gridview";
-                  //     });
-                  //   },
-                  // ),
-                  // TextButton(
-                  //   style: ElevatedButton.styleFrom(
-                  //     padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                  //   ),
-                  //   child: Text("Like#", style: gooHi),
-                  //   onPressed: () async {
-                  //     setState(() {
-                  //       _fetchDatas("likeview");
-                  //       currentView = "likeview";
-                  //     });
-                  //   },
-                  // ),
-                  // TextButton(
-                  //   style: ElevatedButton.styleFrom(
-                  //     padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                  //   ),
-                  //   child: Text("Share#", style: gooHi),
-                  //   onPressed: () async {
-                  //     setState(() {
-                  //       _fetchDatas("shareview");
-                  //       currentView = "shareview";
-                  //     });
-                  //   },
-                  // ),
-                  // TextButton(
-                  //   style: ElevatedButton.styleFrom(
-                  //     padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                  //   ),
-                  //   child: Text("Read#", style: gooHi),
-                  //   onPressed: () async {
-                  //     setState(() {
-                  //       _fetchDatas("readview");
-                  //       currentView = "readview";
-                  //     });
-                  //   },
-                  // ),
-                  // TextButton(
-                  //   style: ElevatedButton.styleFrom(
-                  //     padding: EdgeInsets.symmetric(horizontal: 0, vertical: 0),
-                  //   ),
-                  //   child: Text("Level", style: gooHi),
-                  //   onPressed: () async {
-                  //     setState(() {
-                  //       _fetchDatas("basicview");
-                  //       currentView = "basicview";
-                  //     });
-                  //   },
-                  // ),
                   ToggleButtons(
-                    color: Colors.black.withOpacity(0.60),
+                    color: Colors.black.withOpacity(0.9),
                     selectedColor: mColor,
                     selectedBorderColor: mColor0,
-                    fillColor: mColor1.withOpacity(0.08),
+                    fillColor: mColor1.withOpacity(0.2),
                     splashColor: Colors.grey.withOpacity(0.12),
                     hoverColor: Color(0xFF6200EE).withOpacity(0.04),
                     borderRadius: BorderRadius.circular(4.0),
@@ -250,23 +195,23 @@ class _FirstScreenMd81State extends State<FirstScreenMd81> {
                           currentView = "Gridview";
                         }
                         if (index == 1) {
-                          mColor = Colors.green;
-                          mColor0 = Colors.green;
-                          mColor1 = Colors.green;
+                          mColor = Colors.blue;
+                          mColor0 = Colors.blue;
+                          mColor1 = Colors.blue;
                           _fetchDatas("likeview");
                           currentView = "likeview";
                         }
                         if (index == 2) {
-                          mColor = Colors.red;
-                          mColor0 = Colors.red;
-                          mColor1 = Colors.red;
+                          mColor = Colors.blue;
+                          mColor0 = Colors.blue;
+                          mColor1 = Colors.blue;
                           _fetchDatas("shareview");
                           currentView = "shareview";
                         }
                         if (index == 3) {
-                          mColor = Colors.amber;
-                          mColor0 = Colors.amber;
-                          mColor1 = Colors.amber;
+                          mColor = Colors.blue;
+                          mColor0 = Colors.blue;
+                          mColor1 = Colors.blue;
                           _fetchDatas("readview");
                           currentView = "readview";
                         }
@@ -295,6 +240,8 @@ class _FirstScreenMd81State extends State<FirstScreenMd81> {
                         child: Text(
                           'Recent',
                           style: TextStyle(fontSize: 12),
+
+                          // isSelected ? 16 : 14
                         ),
                       ),
                       Padding(
@@ -387,6 +334,9 @@ class _FirstScreenMd81State extends State<FirstScreenMd81> {
                                             records[index]['fields']['content'],
                                             records[index]['id'],
                                             records[index]['fields']['likeCnt'],
+                                            records[index]['fields']
+                                                    ['Attachments'][0]
+                                                ['thumbnails']['large']['url']
                                             //this.records[index]['fields']['cat1'],
                                           ],
                                           duration: Duration(seconds: 1),
@@ -401,6 +351,7 @@ class _FirstScreenMd81State extends State<FirstScreenMd81> {
                                           // Colors.grey, BlendMode.saturation),
                                           child: Container(
                                             height: 160,
+                                            width: 500,
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(22),
@@ -646,92 +597,6 @@ class _FirstScreenMd81State extends State<FirstScreenMd81> {
                                       ],
                                     ),
                                   ),
-                                  // Padding(
-                                  //   padding: const EdgeInsets.all(2.0),
-                                  //   child: Row(
-                                  //     mainAxisAlignment:
-                                  //         MainAxisAlignment.start,
-                                  //     children: <Widget>[
-                                  //       // Divider(
-                                  //       //   indent: 30,
-                                  //       // ),
-                                  //       IconButton(
-                                  //         icon: Icon(Icons.speaker_notes,
-                                  //             color: Colors.amber),
-                                  //         onPressed: () {
-                                  //           Get.to(() => CommentWrite());
-                                  //         },
-                                  //       ),
-                                  //       // Divider(
-                                  //       //   indent: 10,
-                                  //       // ),
-                                  //       Text(records[index]['fields']['cmtCnt']
-                                  //           .toString()),
-                                  //       Divider(
-                                  //         indent: 30,
-                                  //       ),
-                                  //       //--------------------------------------------------------
-                                  //       IconButton(
-                                  //         icon: Icon(Icons.favorite_border,
-                                  //             color: Colors.amber),
-                                  //         onPressed: () {
-                                  //           Get.to(() {
-                                  //             return DetailPage();
-                                  //           },
-                                  //               arguments: [
-                                  //                 records[index]['fields']
-                                  //                     ['title'],
-                                  //                 records[index]['fields']
-                                  //                     ['content'],
-                                  //                 records[index]['id'],
-                                  //                 records[index]['fields']
-                                  //                     ['likeCnt'],
-                                  //                 // records[index]['fields']
-                                  //                 //         ['Attachments'][0]
-                                  //                 //     ['thumbnails']['large']['url']
-                                  //                 // records[index]['fields']
-                                  //                 //     ['readCnt']
-                                  //                 //this.records[index]['fields']['cat1'],
-                                  //               ],
-                                  //               transition: Transition.zoom,
-                                  //               preventDuplicates: true);
-                                  //         },
-                                  //       ),
-                                  //       Text(records[index]['fields']['likeCnt']
-                                  //           .toString()),
-                                  //       // onPressed: () async {
-                                  //       //   int likeCount = records[index]
-                                  //       //       ['fields']['likeCnt'];
-                                  //       //   int count = 0;
-                                  //       //   if (!isLiked[index] && count == 0) {
-                                  //       //     print("pressed 1setstate passed :");
-                                  //       //     likeCount += 1;
-                                  //       //     _postRequest(records[index]['id'],
-                                  //       //         likeCount);
-                                  //       //     count = 1;
-                                  //       //     isLiked[index] = !isLiked[index];
-                                  //       //     setState(() {});
-                                  //       //   }
-                                  //       // },
-
-                                  //       Divider(
-                                  //         indent: 10,
-                                  //       ),
-                                  //       // Text(records[index]['fields']['likeCnt']
-                                  //       //     .toString()),
-
-                                  //       // Divider(
-                                  //       //   indent: 10,
-                                  //       // ),
-                                  //       // Icon(Icons.share),
-                                  //       // Text('Share!'),
-                                  //     ],
-                                  //   ),
-                                  // ),
-                                  // Divider(
-                                  //   color: Colors.black12,
-                                  //   thickness: 8.0,
-                                  // ),
                                 ],
                               );
                             });
@@ -758,7 +623,7 @@ class _DetailPageState extends State<DetailPage> {
   var content = Get.arguments[1];
   var id = Get.arguments[2];
   int likecount = Get.arguments[3];
-  // var imageUrl = Get.arguments[4];
+  var imageUrl = Get.arguments[4];
   int index = 0;
   String? currentIdSave;
   // int? likeCount = likecount ;
@@ -794,114 +659,80 @@ class _DetailPageState extends State<DetailPage> {
     return !isLiked;
   }
 
+  final controller = ScreenshotController();
   @override
   Widget build(BuildContext context) {
+    Size size = MediaQuery.of(context).size;
+
     print(content);
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(
-          Get.arguments[0],
-          style: const TextStyle(color: Colors.black, fontSize: 16),
-        ),
-        backgroundColor: Colors.white,
-        iconTheme: const IconThemeData(color: Colors.black),
-        actions: <Widget>[
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Container(
-                color: Colors.grey[200],
-                child: IconButton(
-                  icon: Icon(
-                    Icons.share_outlined,
-                    size: 20,
-                  ),
-                  color: Colors.grey,
-                  onPressed: () {},
-                ),
-              ),
-            ),
+    return Screenshot(
+      controller: controller,
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(
+            Get.arguments[0],
+            style: const TextStyle(color: Colors.black, fontSize: 14),
           ),
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: ClipRRect(
-              borderRadius: BorderRadius.circular(8),
-              child: Container(
-                color: Colors.grey[200],
-                child: LikeButton(
-                  onTap: onLikeButtonTapped,
-                ),
-              ),
-            ),
-          ),
-        ],
-      ),
-      floatingActionButton: buildFAB(),
-      body: SafeArea(
-        child: Padding(
-          padding: const EdgeInsets.all(8.0),
-          child: Column(
-            children: [
-              Container(
-                  child: ClipRRect(
+          backgroundColor: Colors.white,
+          iconTheme: const IconThemeData(color: Colors.black),
+          actions: <Widget>[
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ClipRRect(
                 borderRadius: BorderRadius.circular(8),
-                // child: Image.network(imageUrl),
-                // child: Image.network(Get.arguments[4]),
-                child: Image(image: AssetImage('assets/images/woman.png')),
-              )),
-              Expanded(
-                child: Markdown(
-                    data: Get.arguments[1],
-                    styleSheetTheme: MarkdownStyleSheetBaseTheme.cupertino,
-                    physics: const BouncingScrollPhysics(),
-                    styleSheet: MarkdownStyleSheet(
-                        h1: const TextStyle(color: Colors.black),
-                        h2: const TextStyle(color: Colors.black),
-                        h3: const TextStyle(color: Colors.black),
-                        h4: const TextStyle(
-                            color: Colors.black, fontWeight: FontWeight.w100),
-                        h5: const TextStyle(
-                          color: Colors.red,
-                        ),
-                        h6: const TextStyle(
-                            color: Colors.indigo, fontWeight: FontWeight.w600),
-                        p: const TextStyle(
-                          color: Colors.red,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 8,
-                        ),
-                        tableBody: const TextStyle(
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w600,
-                          fontSize: 12,
-                        ),
-                        tableHead: const TextStyle(
-                          color: Colors.black54,
-                          fontWeight: FontWeight.w900,
-                          fontSize: 13,
-                        ),
-                        tableCellsPadding:
-                            const EdgeInsets.fromLTRB(8, 8, 8, 8),
-                        strong: const TextStyle(color: Colors.black87),
-                        blockSpacing: 10.0,
-                        listIndent: 24.0,
-                        horizontalRuleDecoration: BoxDecoration(
-                          border: Border(
-                            top: BorderSide(
-                              width: 3.0,
-                              color: Colors.grey,
-                            ),
-                          ),
-                        ),
-                        blockquote: const TextStyle(color: Colors.red))),
+                child: Container(
+                  color: Colors.grey[200],
+                  child: IconButton(
+                    icon: Icon(
+                      Icons.share_outlined,
+                      size: 20,
+                    ),
+                    color: Colors.grey,
+                    onPressed: () {},
+                  ),
+                ),
               ),
-            ],
+            ),
+            Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(8),
+                child: Container(
+                  color: Colors.grey[200],
+                  child: LikeButton(
+                    onTap: onLikeButtonTapped,
+                  ),
+                ),
+              ),
+            ),
+          ],
+        ),
+        floatingActionButton: buildFAB(),
+        body: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(8.0),
+            child: Column(
+              children: [
+                Container(
+                  height: 160,
+                  width: size.width * 0.85,
+                  child: ClipRRect(
+                    borderRadius: BorderRadius.circular(8),
+                    // child: Image.network(imageUrl),
+                    child: Image.network(Get.arguments[4]),
+                    // child: Image(image: AssetImage('assets/images/woman.png')),
+                  ),
+                ),
+                Expanded(
+                  child: MarkdownWidget(),
+                ),
+              ],
+            ),
           ),
         ),
+        bottomNavigationBar: buildNavigationBar(),
       ),
-      // bottomNavigationBar: buildNavigationBar(),
     );
   }
 
@@ -954,12 +785,28 @@ class _DetailPageState extends State<DetailPage> {
     switch (index) {
       case 0:
         return Container(
-          height: 54,
+          height: 30,
           child: FloatingActionButton.extended(
             shape: shape,
             icon: Icon(Icons.share),
-            label: Text('Services'),
-            onPressed: () {},
+            label: Text('Capture & Share'),
+            backgroundColor: Colors.yellow[400],
+            foregroundColor: Colors.black54,
+            onPressed: () async {
+              final image = await controller.capture();
+              // final image = await controller.captureFromWidget(MarkdownWidget());
+              // ignore: unnecessary_null_comparison
+              if (image == null) return;
+              saveAndShare(image);
+              ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+                content: Text(
+                  'Screenshot Completed...',
+                  style: TextStyle(fontSize: 16),
+                ),
+                backgroundColor: Colors.blueGrey,
+              ));
+            },
+            // final = image await controller.capture();
           ),
         );
       case 1:
@@ -989,60 +836,83 @@ class _DetailPageState extends State<DetailPage> {
   }
 }
 
-// ignore: use_key_in_widget_constructors
-// class Tabs extends StatelessWidget {
-//   @override
-//   Widget build(BuildContext context) {
-//     return Row(
-//       crossAxisAlignment: CrossAxisAlignment.end,
-//       // ignore: prefer_const_literals_to_create_immutables
-//       children: <Widget>[
-//         SizedBox(width: 10),
-//         MyTab(text: 'Recent', isSelected: true),
-//         MyTab(text: 'Like#', isSelected: false),
-//         MyTab(text: 'Share#', isSelected: false),
-//         MyTab(text: 'Basic', isSelected: false),
-//         MyTab(text: 'Advanced', isSelected: false),
-//       ],
-//     );
-//   }
-// }
+class MarkdownWidget extends StatelessWidget {
+  const MarkdownWidget({
+    Key? key,
+  }) : super(key: key);
 
-// class MyTab extends StatelessWidget {
-//   final String text;
-//   final bool isSelected;
+  @override
+  Widget build(BuildContext context) {
+    return Markdown(
+        data: Get.arguments[1],
+        styleSheetTheme: MarkdownStyleSheetBaseTheme.platform,
+        physics: const BouncingScrollPhysics(),
+        styleSheet: MarkdownStyleSheet(
+            h1: const TextStyle(color: Colors.black),
+            h2: const TextStyle(color: Colors.black),
+            h3: const TextStyle(color: Colors.black),
+            h4: const TextStyle(
+                color: Colors.black, fontWeight: FontWeight.w100),
+            h5: const TextStyle(
+              color: Colors.red,
+            ),
+            h6: const TextStyle(
+                color: Colors.indigo, fontWeight: FontWeight.w600),
+            p: const TextStyle(
+              color: Colors.black54,
+              fontWeight: FontWeight.w600,
+              fontSize: 12,
+            ),
+            tableBody: const TextStyle(
+              color: Colors.black54,
+              fontWeight: FontWeight.w600,
+              fontSize: 12,
+            ),
+            tableHead: const TextStyle(
+              color: Colors.black54,
+              fontWeight: FontWeight.w900,
+              fontSize: 13,
+            ),
+            tableCellsPadding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+            strong: const TextStyle(color: Colors.black87),
+            blockSpacing: 10.0,
+            listIndent: 24.0,
+            horizontalRuleDecoration: BoxDecoration(
+              border: Border(
+                top: BorderSide(
+                  width: 3.0,
+                  color: Colors.grey,
+                ),
+              ),
+            ),
+            blockquote: const TextStyle(color: Colors.red)));
+  }
+}
 
-//   const MyTab({Key? key, required this.isSelected, required this.text})
-//       : super(key: key);
+Future saveAndShare(Uint8List bytes) async {
+  final directory = await getApplicationDocumentsDirectory();
+  final image = File('${directory.path}/flutter.png');
+  image.writeAsBytesSync(bytes);
 
-//   @override
-//   Widget build(BuildContext context) {
-//     return Padding(
-//       padding: const EdgeInsets.all(8.0),
-//       child: Column(
-//         crossAxisAlignment: CrossAxisAlignment.start,
-//         children: <Widget>[
-//           Text(
-//             text,
-//             style: TextStyle(
-//               fontSize: isSelected ? 16 : 14,
-//               color: isSelected ? Colors.black.withOpacity(0.6) : Colors.grey,
-//               fontWeight: isSelected ? FontWeight.w600 : FontWeight.w500,
-//             ),
-//           ),
-//           Container(
-//             height: 6,
-//             width: 20,
-//             decoration: BoxDecoration(
-//               borderRadius: BorderRadius.circular(4),
-//               color: isSelected ? Color(0xFFFF5A1D) : Colors.white,
-//             ),
-//           )
-//         ],
-//       ),
-//     );
-//   }
-// }
+  const text = 'Shared From Enkornese';
+  await Share.shareFiles([image.path], text: text);
+}
+
+Future<String> saveImage(Uint8List bytes) async {
+  await [Permission.storage].request();
+
+  final time = DateTime.now()
+      .toIso8601String()
+      .replaceAll('.', '-')
+      .replaceAll(':', '-');
+  final name = 'screenshot_$time';
+  final result = await ImageGallerySaver.saveImage(bytes, name: name);
+
+  return result['filePath'];
+}
+
+
+
 
 // list of colors that we use in our app
 

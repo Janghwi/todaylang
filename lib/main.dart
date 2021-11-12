@@ -111,7 +111,7 @@ class _MyAppState extends State<MyApp> {
     //   // }
     // });
 
-    ThemeMode themeMode = ThemeMode.dark;
+    ThemeMode themeMode = ThemeMode.light;
     // ThemeMode themeMode = ThemeMode.light;
 
     FirebaseMessaging.onMessage.listen((RemoteMessage message) {

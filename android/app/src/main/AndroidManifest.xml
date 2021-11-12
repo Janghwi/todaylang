@@ -2,8 +2,12 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="com.example.todaylang">
     <uses-permission android:name="android.permission.INTERNET" />
+    <!-- Permissions options for the `storage` group -->
+  <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"/>
+  <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE"/>
    <application
         android:label="EnKorJap"
+        android:requestLegacyExternalStorage="true"
         android:icon="@mipmap/ic_launcher"
         android:usesCleartextTraffic="true">
         <activity
