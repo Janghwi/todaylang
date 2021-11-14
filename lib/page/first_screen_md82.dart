@@ -54,12 +54,12 @@ const kDefaultShadow = BoxShadow(
   color: Colors.black12, // Black color with 12% opacity
 );
 
-class FirstScreenMd81 extends StatefulWidget {
+class FirstScreenMd82 extends StatefulWidget {
   @override
-  State<FirstScreenMd81> createState() => _FirstScreenMd81State();
+  State<FirstScreenMd82> createState() => _FirstScreenMd82State();
 }
 
-class _FirstScreenMd81State extends State<FirstScreenMd81> {
+class _FirstScreenMd82State extends State<FirstScreenMd82> {
   // const FirstScreenMd({Key? key}) : super(key: key);
   @override
   List records = [];
@@ -302,9 +302,9 @@ class _FirstScreenMd81State extends State<FirstScreenMd81> {
                           width: 50,
                           height: 50,
                           child: CircularProgressIndicator(
-                            value: 0.5,
-                            strokeWidth: 12,
-                            backgroundColor: Colors.grey,
+                            // value: 0.5,
+                            strokeWidth: 6,
+                            // backgroundColor: Colors.amber,
                             valueColor:
                                 const AlwaysStoppedAnimation(Colors.amber),
                           ),
@@ -340,7 +340,10 @@ class _FirstScreenMd81State extends State<FirstScreenMd81> {
                                             records[index]['fields']['likeCnt'],
                                             records[index]['fields']
                                                     ['Attachments'][0]
-                                                ['thumbnails']['large']['url']
+                                                ['thumbnails']['large']['url'],
+                                            records[index]['fields']
+                                                ['content_copy'],
+
                                             //this.records[index]['fields']['cat1'],
                                           ],
                                           duration: Duration(seconds: 1),
@@ -631,6 +634,7 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   var title = Get.arguments[0];
   var content = Get.arguments[1];
+  var content1 = Get.arguments[5];
   var id = Get.arguments[2];
   int likecount = Get.arguments[3];
   var imageUrl = Get.arguments[4];
@@ -665,17 +669,22 @@ class _DetailPageState extends State<DetailPage> {
         },
       );
     }
+    // if (mounted) {
+
+    //   setState(() {});
+    // }
+    return !isLiked;
+    // ignore: dead_code
     if (mounted) {
       setState(() {});
     }
-    return !isLiked;
   }
 
   final controller = ScreenshotController();
   Color mColor = Color(0xFF6200EE),
       mColor0 = Color(0xFF6200EE),
       mColor1 = Color(0xFF6200EE);
-  final isSelected = <bool>[false, false, false, false, false, false];
+  final isSelected = <bool>[true, false, false, false, false, false];
 
   @override
   Widget build(BuildContext context) {
@@ -734,8 +743,8 @@ class _DetailPageState extends State<DetailPage> {
               mainAxisAlignment: MainAxisAlignment.spaceEvenly,
               children: [
                 Wrap(
-                  spacing: 0,
-                  runSpacing: 0,
+                  spacing: 10,
+                  runSpacing: 10,
                   alignment: WrapAlignment.start,
                   children: [
                     ToggleButtons(
@@ -749,27 +758,33 @@ class _DetailPageState extends State<DetailPage> {
                       constraints: BoxConstraints(minHeight: 36.0),
                       isSelected: isSelected,
                       onPressed: (index) {
-                        isSelected[0] = false;
-                        isSelected[1] = false;
-                        isSelected[2] = false;
-                        isSelected[3] = false;
-                        isSelected[4] = false;
-                        isSelected[5] = false;
                         // Respond to button selection
-                        if (index == 0) {
-                          mColor = Colors.blue;
-                          mColor0 = Colors.blue;
-                          mColor1 = Colors.blue;
-                          Get.to(() => MarkdownWidget(Get.arguments[1]));
-                        }
-                        if (index == 1) {
-                          mColor = Colors.blue;
-                          mColor0 = Colors.blue;
-                          mColor1 = Colors.blue;
-                          Get.to(() => MarkdownWidget(Get.arguments[1]));
-                        }
+                        if (mounted) {
+                          setState(() {
+                            isSelected[0] = false;
+                            isSelected[1] = false;
+                            isSelected[2] = false;
+                            isSelected[3] = false;
+                            isSelected[4] = false;
+                            isSelected[5] = false;
+                            if (index == 0) {
+                              mColor = Colors.blue;
+                              mColor0 = Colors.blue;
+                              mColor1 = Colors.blue;
+                              content = Get.arguments[1];
+                              // print(content);
+                            }
 
-                        isSelected[index] = !isSelected[index];
+                            if (index == 1) {
+                              mColor = Colors.blue;
+                              mColor0 = Colors.blue;
+                              mColor1 = Colors.blue;
+                              content = Get.arguments[5];
+                            }
+
+                            isSelected[index] = !isSelected[index];
+                          });
+                        }
                       },
 
                       // ignore: prefer_const_literals_to_create_immutables
@@ -777,8 +792,8 @@ class _DetailPageState extends State<DetailPage> {
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
-                            '가나다',
-                            style: TextStyle(fontSize: 12),
+                            '본문',
+                            style: TextStyle(fontSize: 16),
 
                             // isSelected ? 16 : 14
                           ),
@@ -786,36 +801,36 @@ class _DetailPageState extends State<DetailPage> {
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
-                            '라마바',
-                            style: TextStyle(fontSize: 12),
+                            '단어',
+                            style: TextStyle(fontSize: 16),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
-                            '사아',
-                            style: TextStyle(fontSize: 12),
+                            '반말',
+                            style: TextStyle(fontSize: 16),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
-                            '자차',
-                            style: TextStyle(fontSize: 12),
+                            '겸양어',
+                            style: TextStyle(fontSize: 16),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
-                            '카타',
-                            style: TextStyle(fontSize: 12),
+                            '설명',
+                            style: TextStyle(fontSize: 16),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
                             '파하',
-                            style: TextStyle(fontSize: 12),
+                            style: TextStyle(fontSize: 16),
                           ),
                         ),
                       ],
@@ -823,8 +838,9 @@ class _DetailPageState extends State<DetailPage> {
                   ],
                 ),
                 Expanded(
-                  child: MarkdownWidget(Get.arguments[1]),
-                ),
+                    child: markdownWidget(
+                  content,
+                )),
               ],
             ),
           ),
@@ -934,64 +950,53 @@ class _DetailPageState extends State<DetailPage> {
   }
 }
 
-class MarkdownWidget extends StatefulWidget {
-  const MarkdownWidget(
-    param0, {
-    Key? key,
-    data,
-  }) : super(key: key);
+Widget markdownWidget(String content) {
+  // print('markdown widget passed ==>');
+  // print(content);
+  // final String content;
 
-  @override
-  State<MarkdownWidget> createState() => _MarkdownWidgetState();
-}
-
-class _MarkdownWidgetState extends State<MarkdownWidget> {
-  @override
-  Widget build(BuildContext context) {
-    return Markdown(
-        data: Get.arguments[1],
-        styleSheetTheme: MarkdownStyleSheetBaseTheme.platform,
-        physics: const BouncingScrollPhysics(),
-        styleSheet: MarkdownStyleSheet(
-            h1: const TextStyle(color: Colors.black),
-            h2: const TextStyle(color: Colors.black),
-            h3: const TextStyle(color: Colors.black),
-            h4: const TextStyle(
-                color: Colors.black, fontWeight: FontWeight.w100),
-            h5: const TextStyle(
-              color: Colors.red,
-            ),
-            h6: const TextStyle(
-                color: Colors.indigo, fontWeight: FontWeight.w600),
-            p: const TextStyle(
-              color: Colors.black54,
-              fontWeight: FontWeight.w600,
-              fontSize: 12,
-            ),
-            tableBody: const TextStyle(
-              color: Colors.black54,
-              fontWeight: FontWeight.w600,
-              fontSize: 12,
-            ),
-            tableHead: const TextStyle(
-              color: Colors.black54,
-              fontWeight: FontWeight.w900,
-              fontSize: 13,
-            ),
-            tableCellsPadding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
-            strong: const TextStyle(color: Colors.black87),
-            blockSpacing: 10.0,
-            listIndent: 24.0,
-            horizontalRuleDecoration: BoxDecoration(
-              border: Border(
-                top: BorderSide(
-                  width: 3.0,
-                  color: Colors.grey,
-                ),
+  return Markdown(
+      data: content,
+      styleSheetTheme: MarkdownStyleSheetBaseTheme.platform,
+      physics: const BouncingScrollPhysics(),
+      styleSheet: MarkdownStyleSheet(
+          h1: const TextStyle(color: Colors.black),
+          h2: const TextStyle(color: Colors.black),
+          h3: const TextStyle(color: Colors.black),
+          h4: const TextStyle(color: Colors.black, fontWeight: FontWeight.w100),
+          h5: const TextStyle(
+            color: Colors.red,
+          ),
+          h6: const TextStyle(
+              color: Colors.indigo, fontWeight: FontWeight.w600),
+          p: const TextStyle(
+            color: Colors.black54,
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
+          ),
+          tableBody: const TextStyle(
+            color: Colors.black54,
+            fontWeight: FontWeight.w600,
+            fontSize: 12,
+          ),
+          tableHead: const TextStyle(
+            color: Colors.black54,
+            fontWeight: FontWeight.w900,
+            fontSize: 13,
+          ),
+          tableCellsPadding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+          strong: const TextStyle(color: Colors.black87),
+          blockSpacing: 10.0,
+          listIndent: 24.0,
+          horizontalRuleDecoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                width: 3.0,
+                color: Colors.grey,
               ),
             ),
-            blockquote: const TextStyle(color: Colors.red)));
-  }
+          ),
+          blockquote: const TextStyle(color: Colors.red)));
 }
 
 Future saveAndShare(Uint8List bytes) async {

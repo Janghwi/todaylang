@@ -1,11 +1,17 @@
 {
     "workbench.colorCustomizations": {
-        "activityBar.background": "#4b1c41",
-        "titleBar.activeBackground": "#260e21",
-        "titleBar.activeForeground": "#e7e7e7",
-        "activityBar.activeBackground": "#4b1c41",
+
+        
+
+
+        "[Atom One Dark]": {},
+
+        "activityBar.background": "#11323a",
+        "titleBar.activeBackground": "#a29dd4",
+        "titleBar.activeForeground": "#211c4e",
+        "activityBar.activeBackground": "#c4ddba",
         "activityBar.activeBorder": "#65742b",
-        "activityBar.foreground": "#e7e7e7",
+        "activityBar.foreground": "#7a4646",
         "activityBar.inactiveForeground": "#e7e7e799",
         "activityBarBadge.background": "#65742b",
         "activityBarBadge.foreground": "#e7e7e7",
@@ -21,5 +27,8 @@
         "statusBarItem.remoteBackground": "#260e21",
         "statusBarItem.remoteForeground": "#e7e7e7"
     },
-    "peacock.color": "#260e21"
+    "peacock.color": "#260e21",
+    "workbench.colorTheme": "Solarized Dark",
+    "workbench.preferredHighContrastColorTheme": "Kimbie Dark",
+    "editor.minimap.scale": 3
 }

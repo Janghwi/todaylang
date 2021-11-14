@@ -9,26 +9,26 @@ class LangTranslations extends Translations {
         'ko_KR': {
           'appbar_title1': '문장',
           'appbar_title2': '단어',
-          'appbar_title3': '자료',
-          'favorites': '즐겨찾기',
+          'appbar_title3': '즐겨찾기',
+          'appbar_title4': '좋은글',
         },
         'en_US': {
           'appbar_title1': 'phrases',
           'appbar_title2': 'words',
-          'appbar_title3': 'document',
-          'favorites': 'favorites',
+          'appbar_title3': 'favorites',
+          'appbar_title4': 'good words',
         },
         'ja_JP': {
           'appbar_title1': '文章',
           'appbar_title2': '単語',
-          'appbar_title3': '資料',
-          'favorites': 'お気に入り',
+          'appbar_title3': 'お気に入り',
+          'appbar_title4': '良い文章',
         },
         'zh_CN': {
           'appbar_title1': '句子',
           'appbar_title2': '词',
           'appbar_title3': '材料',
-          'favorites': '收藏夹',
+          'appbar_title4': '收藏夹',
         },
       };
 }

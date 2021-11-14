@@ -11,6 +11,7 @@ import 'package:todaylang/page/first_screen_md6.dart';
 import 'package:todaylang/page/first_screen_md7.dart';
 import 'package:todaylang/page/first_screen_md8.dart';
 import 'package:todaylang/page/first_screen_md81.dart';
+import 'package:todaylang/page/first_screen_md82.dart';
 import 'package:todaylang/page/first_screen_md9.dart';
 import 'package:todaylang/page/first_screen_of.dart';
 import 'package:todaylang/page/first_screen_ph.dart';
@@ -32,7 +33,7 @@ class HomePage extends StatefulWidget {
 }
 
 class _HomePageState extends State<HomePage> {
-  final String title = "플러터 테스트";
+  final String title = "ENKORNESE";
 
   // final List<Map<String, dynamic>> locales = [
   //   {'name': 'English', 'locale': (Locale('en', 'US'))},
@@ -90,7 +91,11 @@ class _HomePageState extends State<HomePage> {
     });
   }
 
-  String apptitle = "appbar_title1";
+  String apptitle1 = "appbar_title1";
+  String apptitle2 = "appbar_title2";
+  String apptitle3 = "appbar_title3";
+  String apptitle4 = "appbar_title4";
+
   @override
   Widget build(BuildContext context) => Scaffold(
         backgroundColor: Color(0xfff0e5d6),
@@ -132,7 +137,7 @@ class _HomePageState extends State<HomePage> {
           // title: 'appbar_title1'.tr,
           tabs: [
             Tab(
-              text: apptitle.tr,
+              text: apptitle1.tr,
               // text: 'appbar_title1'.tr,
               // text: LangText(text:'appbar_title1'),
               // icon: Icon(Icons.feed_outlined),
@@ -142,15 +147,18 @@ class _HomePageState extends State<HomePage> {
             //   // icon: Icon(Icons.feed_outlined),
             // ),
             Tab(
-              text: '단어',
+              text: apptitle2.tr,
+              // text: '단어',
               // icon: Icon(Icons.feed_outlined),
             ),
             Tab(
-              text: '즐겨찾기',
+              text: apptitle3.tr,
+              // text: '즐겨찾기',
               // icon: Icon(Icons.feed_outlined),
             ),
             Tab(
-              text: '좋은글',
+              text: apptitle4.tr,
+              // text: '좋은글',
               // icon: Icon(Icons.feed_outlined),
             ),
             Tab(
@@ -202,7 +210,7 @@ class _HomePageState extends State<HomePage> {
             FirstScreenPh(),
             FirstScreenPh(),
             FirstScreenPh(),
-            FirstScreenMd81(),
+            FirstScreenMd82(),
             FirstScreenAd(),
             FirstScreenAi(),
             FirstScreenDt(),

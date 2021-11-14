@@ -84,7 +84,7 @@ Future main() async {
   ]);
 
   //----------------------------------------------------get put------------------
-  Get.put(PhrasesLoader());
+  // Get.put(PhrasesLoader());
 
   runApp(const MyApp());
 }
