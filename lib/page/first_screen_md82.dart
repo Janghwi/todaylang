@@ -974,17 +974,20 @@ Widget markdownWidget(String content) {
             fontWeight: FontWeight.w600,
             fontSize: 16,
           ),
+          //table property
           tableBody: const TextStyle(
             color: Colors.black54,
             fontWeight: FontWeight.w600,
             fontSize: 12,
           ),
           tableHead: const TextStyle(
-            color: Colors.black54,
+            color: Colors.lightBlue,
             fontWeight: FontWeight.w900,
             fontSize: 13,
           ),
-          tableCellsPadding: const EdgeInsets.fromLTRB(8, 8, 8, 8),
+          tableCellsPadding: const EdgeInsets.fromLTRB(3, 8, 8, 3),
+          tableColumnWidth: const FlexColumnWidth(100.0),
+          //table end
           strong: const TextStyle(color: Colors.black87),
           blockSpacing: 10.0,
           listIndent: 24.0,
