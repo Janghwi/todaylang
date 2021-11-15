@@ -808,7 +808,7 @@ class _DetailPageState extends State<DetailPage> {
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
-                            '반말',
+                            '스피킹',
                             style: TextStyle(fontSize: 16),
                           ),
                         ),
@@ -957,8 +957,9 @@ Widget markdownWidget(String content) {
 
   return Markdown(
       data: content,
-      styleSheetTheme: MarkdownStyleSheetBaseTheme.platform,
-      physics: const BouncingScrollPhysics(),
+      // controller: controller,
+      styleSheetTheme: MarkdownStyleSheetBaseTheme.material,
+      // physics: const BouncingScrollPhysics(),
       styleSheet: MarkdownStyleSheet(
           h1: const TextStyle(color: Colors.black),
           h2: const TextStyle(color: Colors.black),
