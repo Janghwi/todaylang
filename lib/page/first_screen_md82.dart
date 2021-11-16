@@ -1,3 +1,6 @@
+//**마크다운을 테이블 형식으로 들어가 있음
+//togglebutton적용함
+//캡쳐&쉐어를 적용함 */
 // ignore_for_file: sized_box_for_whitespace
 
 import 'dart:convert';
@@ -941,8 +944,8 @@ class _DetailPageState extends State<DetailPage> {
         return FloatingActionButton.extended(
           shape: shape,
           icon: Icon(Icons.add),
-          label: Text('View Comment'),
-          onPressed: () => Get.to(() => CommentsList()),
+          label: Text('View & Comment Write'),
+          onPressed: () => Get.to(() => CommentWrite()),
         );
       default:
         return null;
@@ -951,60 +954,56 @@ class _DetailPageState extends State<DetailPage> {
 }
 
 Widget markdownWidget(String content) {
-  final ScrollController controller = ScrollController();
   // print('markdown widget passed ==>');
   // print(content);
   // final String content;
 
   return Markdown(
-    data: content,
-    controller: controller,
-    selectable: true,
-    // controller: controller,
-    styleSheetTheme: MarkdownStyleSheetBaseTheme.material,
-    physics: const BouncingScrollPhysics(),
-    styleSheet: MarkdownStyleSheet(
-        h1: const TextStyle(color: Colors.black),
-        h2: const TextStyle(color: Colors.black),
-        h3: const TextStyle(color: Colors.black),
-        h4: const TextStyle(color: Colors.black, fontWeight: FontWeight.w100),
-        h5: const TextStyle(
-          color: Colors.red,
-        ),
-        h6: const TextStyle(color: Colors.indigo, fontWeight: FontWeight.w600),
-        p: const TextStyle(
-          color: Colors.black54,
-          fontWeight: FontWeight.w600,
-          fontSize: 16,
-        ),
-        //table property
-        tableBody: const TextStyle(
-          // color: Colors.red,
-          color: Colors.black54,
-          fontWeight: FontWeight.w600,
-          fontSize: 12,
-        ),
-        tableHead: const TextStyle(
-          color: Colors.lightBlue,
-          fontWeight: FontWeight.w900,
-          fontSize: 13,
-        ),
-        tableCellsPadding: const EdgeInsets.fromLTRB(3, 8, 8, 3),
-        tableColumnWidth: const FlexColumnWidth(100.0),
-        //table end
-        strong: const TextStyle(color: Colors.black87),
-        blockSpacing: 10.0,
-        listIndent: 24.0,
-        horizontalRuleDecoration: BoxDecoration(
-          border: Border(
-            top: BorderSide(
-              width: 3.0,
-              color: Colors.grey,
+      data: content,
+      // controller: controller,
+      styleSheetTheme: MarkdownStyleSheetBaseTheme.material,
+      // physics: const BouncingScrollPhysics(),
+      styleSheet: MarkdownStyleSheet(
+          h1: const TextStyle(color: Colors.black),
+          h2: const TextStyle(color: Colors.black),
+          h3: const TextStyle(color: Colors.black),
+          h4: const TextStyle(color: Colors.black, fontWeight: FontWeight.w100),
+          h5: const TextStyle(
+            color: Colors.red,
+          ),
+          h6: const TextStyle(
+              color: Colors.indigo, fontWeight: FontWeight.w600),
+          p: const TextStyle(
+            color: Colors.black54,
+            fontWeight: FontWeight.w600,
+            fontSize: 16,
+          ),
+          //table property
+          tableBody: const TextStyle(
+            color: Colors.black54,
+            fontWeight: FontWeight.w600,
+            fontSize: 12,
+          ),
+          tableHead: const TextStyle(
+            color: Colors.lightBlue,
+            fontWeight: FontWeight.w900,
+            fontSize: 13,
+          ),
+          tableCellsPadding: const EdgeInsets.fromLTRB(3, 8, 8, 3),
+          tableColumnWidth: const FlexColumnWidth(100.0),
+          //table end
+          strong: const TextStyle(color: Colors.black87),
+          blockSpacing: 10.0,
+          listIndent: 24.0,
+          horizontalRuleDecoration: BoxDecoration(
+            border: Border(
+              top: BorderSide(
+                width: 3.0,
+                color: Colors.grey,
+              ),
             ),
           ),
-        ),
-        blockquote: const TextStyle(color: Colors.red)),
-  );
+          blockquote: const TextStyle(color: Colors.red)));
 }
 
 Future saveAndShare(Uint8List bytes) async {
@@ -1033,4 +1032,3 @@ Future<String> saveImage(Uint8List bytes) async {
 
 
 // list of colors that we use in our app
-
