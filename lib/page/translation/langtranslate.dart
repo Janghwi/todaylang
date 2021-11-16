@@ -9,8 +9,8 @@ class LangTranslations extends Translations {
         'ko_KR': {
           'appbar_title1': '문장',
           'appbar_title2': '단어',
-          'appbar_title3': '즐겨찾기',
-          'appbar_title4': '좋은글',
+          'appbar_title3': 'KPOP',
+          'appbar_title4': '문법',
         },
         'en_US': {
           'appbar_title1': 'phrases',

@@ -13,6 +13,7 @@ import 'package:todaylang/page/first_screen_md8.dart';
 import 'package:todaylang/page/first_screen_md81.dart';
 import 'package:todaylang/page/first_screen_md82.dart';
 import 'package:todaylang/page/first_screen_md9.dart';
+import 'package:todaylang/page/first_screen_md92.dart';
 import 'package:todaylang/page/first_screen_of.dart';
 import 'package:todaylang/page/first_screen_ph.dart';
 import 'package:todaylang/page/first_screen_wb.dart';
@@ -153,12 +154,12 @@ class _HomePageState extends State<HomePage> {
             ),
             Tab(
               text: apptitle3.tr,
-              // text: '즐겨찾기',
+              // text: 'KPOP',
               // icon: Icon(Icons.feed_outlined),
             ),
             Tab(
               text: apptitle4.tr,
-              // text: '좋은글',
+              // text: '문장',
               // icon: Icon(Icons.feed_outlined),
             ),
             Tab(
@@ -207,8 +208,8 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
           children: [
-            FirstScreenPh(),
-            FirstScreenPh(),
+            FirstScreenMd82(),
+            FirstScreenMd92(),
             FirstScreenPh(),
             FirstScreenMd82(),
             FirstScreenAd(),
