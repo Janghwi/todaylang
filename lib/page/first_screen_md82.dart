@@ -1,3 +1,6 @@
+//**마크다운을 테이블 형식으로 들어가 있음
+//togglebutton적용함
+//캡쳐&쉐어를 적용함 */
 // ignore_for_file: sized_box_for_whitespace
 
 import 'dart:convert';
@@ -941,8 +944,8 @@ class _DetailPageState extends State<DetailPage> {
         return FloatingActionButton.extended(
           shape: shape,
           icon: Icon(Icons.add),
-          label: Text('View Comment'),
-          onPressed: () => Get.to(() => CommentsList()),
+          label: Text('View & Comment Write'),
+          onPressed: () => Get.to(() => CommentWrite()),
         );
       default:
         return null;
