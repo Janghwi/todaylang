@@ -1,6 +1,7 @@
 //**마크다운을 테이블 형식으로 들어가 있음
 //togglebutton적용함
-//캡쳐&쉐어를 적용함 */
+//캡쳐&쉐어를 적용함
+//단어부문의 모듈 첫페이지 */
 // ignore_for_file: sized_box_for_whitespace
 
 import 'dart:convert';
@@ -33,11 +34,11 @@ enum MenuType { first, second, third }
 
 const kBackgroundColor = Color(0xFFF1EFF1);
 const kPrimaryColor = Color(0xFF035AA6);
-const kSecondaryColor = Color(0xFFE9D8C0);
+const kSecondaryColor = Color(0xFFb8d5d6);
 // const kSecondaryColor = Color(0xFFFFA41B);
 const kTextColor = Color(0xFF000839);
 const kTextLightColor = Color(0xFF747474);
-const kBlueColor = Color(0xFF82D9EC);
+const kBlueColor = Color(0xFF42ecf5);
 // const kBlueColor = Color(0xFF40BAD5);
 
 const kDefaultPadding = 20.0;
@@ -84,7 +85,7 @@ class _FirstScreenMd92State extends State<FirstScreenMd92> {
     try {
       Dio dio = Dio();
       var response = await dio.get(
-        "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest?maxRecords=500&view=$view",
+        "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/goodTest1?maxRecords=500&view=$view",
         // "https://api.airtable.com/v0/app95nB2yi0WAYDyn/comments?maxRecords=200&view=Gridview",
         options: Options(contentType: 'Application/json', headers: {
           'Authorization': 'Bearer keyyG7I9nxyG5SmTq',
@@ -365,13 +366,16 @@ class _FirstScreenMd92State extends State<FirstScreenMd92> {
                                           // Colors.grey, BlendMode.saturation),
                                           child: Container(
                                             height: 160,
-                                            width: 120,
+                                            width: 240,
                                             decoration: BoxDecoration(
                                               borderRadius:
                                                   BorderRadius.circular(22),
                                               color: index.isEven
                                                   ? kBlueColor
                                                   : kSecondaryColor,
+                                              // color: index.isEven
+                                              // ? kBlueColor
+                                              // : kSecondaryColor,
                                               boxShadow: const [kDefaultShadow],
                                             ),
                                             // color: Colors.amber,
@@ -408,16 +412,17 @@ class _FirstScreenMd92State extends State<FirstScreenMd92> {
                                                     ),
                                                   ),
                                                   Positioned(
-                                                    top: 0,
+                                                    top: 3,
                                                     right: 0,
                                                     child: Hero(
                                                       tag: records[index]['id'],
+                                                      //카드안 이미지
                                                       child: Container(
                                                         padding: EdgeInsets
                                                             .symmetric(
                                                                 horizontal: 20),
-                                                        height: 90,
-                                                        width: 120,
+                                                        height: 40,
+                                                        width: 80,
                                                         child: Opacity(
                                                           opacity: 0.5,
                                                           child: ClipRRect(
@@ -447,6 +452,8 @@ class _FirstScreenMd92State extends State<FirstScreenMd92> {
                                                     padding:
                                                         const EdgeInsets.all(
                                                             8.0),
+                                                    //* 카드안 카운트 정보
+
                                                     child: SizedBox(
                                                       width: size.width - 130,
                                                       child: Column(
@@ -455,9 +462,11 @@ class _FirstScreenMd92State extends State<FirstScreenMd92> {
                                                                 .start,
                                                         children: [
                                                           Spacer(),
+                                                          Spacer(),
+                                                          Spacer(),
                                                           Transform.rotate(
                                                             angle:
-                                                                -math.pi / 35,
+                                                                -math.pi / 120,
                                                             child: Column(
                                                               children: [
                                                                 Text(
@@ -475,8 +484,8 @@ class _FirstScreenMd92State extends State<FirstScreenMd92> {
                                                                       // backgroundColor: Colors.white70,
                                                                       fontStyle: FontStyle.normal,
                                                                       fontWeight: FontWeight.w500,
-                                                                      color: Colors.amber.shade200,
-                                                                      fontSize: 22),
+                                                                      color: Colors.blue.shade200,
+                                                                      fontSize: 18),
                                                                   // overflow:
                                                                   //     TextOverflow
                                                                   //         .ellipsis,
@@ -498,7 +507,7 @@ class _FirstScreenMd92State extends State<FirstScreenMd92> {
                                                                       fontStyle: FontStyle.normal,
                                                                       fontWeight: FontWeight.w500,
                                                                       color: Colors.black38,
-                                                                      fontSize: 18),
+                                                                      fontSize: 16),
                                                                   overflow:
                                                                       TextOverflow
                                                                           .ellipsis,
@@ -507,7 +516,8 @@ class _FirstScreenMd92State extends State<FirstScreenMd92> {
                                                               ],
                                                             ),
                                                           ),
-                                                          Spacer(),
+                                                          // Spacer(),
+                                                          //레벨과 좋아요 들어가는 부분
                                                           Row(
                                                             mainAxisAlignment:
                                                                 MainAxisAlignment
@@ -518,10 +528,10 @@ class _FirstScreenMd92State extends State<FirstScreenMd92> {
                                                                     .symmetric(
                                                                   horizontal:
                                                                       kDefaultPadding *
-                                                                          1.5, // 30 padding
+                                                                          0.8, // 30 padding
                                                                   vertical:
                                                                       kDefaultPadding /
-                                                                          4, // 5 top and bottom
+                                                                          8, // 5 top and bottom
                                                                 ),
                                                                 decoration:
                                                                     BoxDecoration(
@@ -552,59 +562,60 @@ class _FirstScreenMd92State extends State<FirstScreenMd92> {
                                                                       fontSize: 14),
                                                                 ),
                                                               ),
-                                                              Spacer(),
-                                                              IconButton(
-                                                                iconSize: 20,
-                                                                icon: Icon(
-                                                                    Icons
-                                                                        .favorite_border,
-                                                                    color: Colors
-                                                                        .grey),
-                                                                onPressed: () {
-                                                                  Get.to(() {
-                                                                    return DetailPage();
-                                                                  },
-                                                                      arguments: [
-                                                                        records[index]['fields']
-                                                                            [
-                                                                            'title'],
-                                                                        records[index]['fields']
-                                                                            [
-                                                                            'content'],
-                                                                        records[index]
-                                                                            [
-                                                                            'id'],
-                                                                        records[index]['fields']
-                                                                            [
-                                                                            'likeCnt'],
-                                                                      ],
-                                                                      transition:
-                                                                          Transition
-                                                                              .zoom,
-                                                                      preventDuplicates:
-                                                                          true);
-                                                                },
-                                                              ),
-                                                              Text(
-                                                                records[index][
-                                                                            'fields']
-                                                                        [
-                                                                        'likeCnt']
-                                                                    .toString(),
-                                                                style: GoogleFonts
-                                                                    .notoSans(
-                                                                        // backgroundColor: Colors.white70,
-                                                                        fontStyle:
-                                                                            FontStyle
-                                                                                .italic,
-                                                                        fontWeight:
-                                                                            FontWeight
-                                                                                .w400,
-                                                                        color: Colors
-                                                                            .grey,
-                                                                        fontSize:
-                                                                            14),
-                                                              ),
+                                                              // Spacer(),
+                                                              // //좋아요 버튼
+                                                              // IconButton(
+                                                              //   iconSize: 20,
+                                                              //   icon: Icon(
+                                                              //       Icons
+                                                              //           .favorite_border,
+                                                              //       color: Colors
+                                                              //           .grey),
+                                                              //   onPressed: () {
+                                                              //     Get.to(() {
+                                                              //       return DetailPage();
+                                                              //     },
+                                                              //         arguments: [
+                                                              //           records[index]['fields']
+                                                              //               [
+                                                              //               'title'],
+                                                              //           records[index]['fields']
+                                                              //               [
+                                                              //               'content'],
+                                                              //           records[index]
+                                                              //               [
+                                                              //               'id'],
+                                                              //           records[index]['fields']
+                                                              //               [
+                                                              //               'likeCnt'],
+                                                              //         ],
+                                                              //         transition:
+                                                              //             Transition
+                                                              //                 .zoom,
+                                                              //         preventDuplicates:
+                                                              //             true);
+                                                              //   },
+                                                              // ),
+                                                              // Text(
+                                                              //   records[index][
+                                                              //               'fields']
+                                                              //           [
+                                                              //           'likeCnt']
+                                                              //       .toString(),
+                                                              //   style: GoogleFonts
+                                                              //       .notoSans(
+                                                              //           // backgroundColor: Colors.white70,
+                                                              //           fontStyle:
+                                                              //               FontStyle
+                                                              //                   .italic,
+                                                              //           fontWeight:
+                                                              //               FontWeight
+                                                              //                   .w400,
+                                                              //           color: Colors
+                                                              //               .grey,
+                                                              //           fontSize:
+                                                              //               14),
+                                                              // ),
                                                             ],
                                                           ),
                                                         ],
@@ -1031,8 +1042,5 @@ Future<String> saveImage(Uint8List bytes) async {
 
   return result['filePath'];
 }
-
-
-
 
 // list of colors that we use in our app
