@@ -46,6 +46,7 @@ dependencies:
   marquee: ^2.2.0
   menu_button: ^1.4.2+1
   dio: ^4.0.0
+  http: ^0.13.4
   open_file: ^3.2.1
   path_provider: ^2.0.5
   file_picker: ^4.1.3

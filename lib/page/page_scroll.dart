@@ -1,3 +1,7 @@
+//** 페이지 스ㅌㅋ롤 태스트
+// http 프로토콜
+// */ page scroll 테스트
+
 import 'dart:convert';
 import 'dart:io';
 import 'package:flutter/material.dart';
@@ -9,12 +13,12 @@ import 'package:google_fonts/google_fonts.dart';
 //import '2menutwolevel_page_p.dart';
 import 'package:http/http.dart' as http;
 
-class FirstScreen extends StatefulWidget {
+class PageScroll extends StatefulWidget {
   @override
-  State<FirstScreen> createState() => _FirstScreenState();
+  State<PageScroll> createState() => _PageScrollState();
 }
 
-class _FirstScreenState extends State<FirstScreen> {
+class _PageScrollState extends State<PageScroll> {
   List records = [];
   String offsetId = "";
 
@@ -22,7 +26,8 @@ class _FirstScreenState extends State<FirstScreen> {
     final url = Uri.parse(
       //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Gridview",
       //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&cat2=2",
-      "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=10&view=Gridview",
+      "https://api.airtable.com/v0/appd6UAEYNzI9kaVJ/word01?maxRecords=10&view=Gridview",
+      // "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=10&view=Gridview",
       //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?%3D1&maxRecords=500&filterByFormula=({cat1}='2')&fields[]=id",
       //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?fields%5B%5D=&filterByFormula=%7Bcat1%7D+%3D+%222%22',
     );
@@ -33,11 +38,13 @@ class _FirstScreenState extends State<FirstScreen> {
       Map<String, dynamic> result = json.decode(response.body);
       final String _offsetId = result['offset'];
       print(_offsetId);
+      print(response);
 
       final List _value = result['records'];
       offsetId = _offsetId;
+      // ignore: avoid_function_literals_in_foreach_calls
       _value.forEach((element) {
-        this.records.add(element);
+        records.add(element);
       });
       return;
     } catch (e) {
@@ -49,7 +56,7 @@ class _FirstScreenState extends State<FirstScreen> {
     final url = Uri.parse(
       //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Gridview",
       //"https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&cat2=2",
-      "https://api.airtable.com/v0/appgEJ6eE8ijZJtAp/menus?maxRecords=500&view=Gridview&offset=$offsetId",
+      "https://api.airtable.com/v0/appd6UAEYNzI9kaVJ/word01?maxRecords=10&view=Gridview&offset=$offsetId",
       //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?%3D1&maxRecords=500&filterByFormula=({cat1}='2')&fields[]=id",
       //"https://api.airtable.com/v0/%2FappgEJ6eE8ijZJtAp/menus?fields%5B%5D=&filterByFormula=%7Bcat1%7D+%3D+%222%22',
     );
@@ -60,7 +67,9 @@ class _FirstScreenState extends State<FirstScreen> {
       final String _offsetId = result['offset'];
       final List _value = result['records'];
       this.offsetId = _offsetId;
+      // ignore: avoid_function_literals_in_foreach_calls
       _value.forEach((element) {
+        // ignore: unnecessary_this
         this.records.add(element);
       });
       return;
@@ -74,8 +83,7 @@ class _FirstScreenState extends State<FirstScreen> {
   void initState() {
     controller = ScrollController()
       ..addListener(() async {
-        if (this.controller.offset >=
-            this.controller.position.maxScrollExtent) {
+        if (controller.offset >= controller.position.maxScrollExtent) {
           // ignore: unnecessary_this
           await this.nextFetch(offsetId: this.offsetId);
           setState(() {});
@@ -96,7 +104,7 @@ class _FirstScreenState extends State<FirstScreen> {
       body: ListView.builder(
         physics: BouncingScrollPhysics(),
         controller: controller,
-        itemCount: this.records.length,
+        itemCount: records.length,
         itemBuilder: (BuildContext context, int index) {
           return Card(
             color: Colors.black54,
@@ -133,11 +141,11 @@ class _FirstScreenState extends State<FirstScreen> {
                 right: 16,
                 left: 16,
                 child: Text(
-                  this.records[index]['fields']['eng'].toString(),
+                  records[index]['fields']['title'].toString(),
                   style: GoogleFonts.nanumGothic(
                     // backgroundColor: Colors.white70,
                     // fontStyle: FontStyle.italic,
-                    color: Colors.white,
+                    color: Colors.black45,
                   ),
                 ),
               ),
@@ -146,11 +154,11 @@ class _FirstScreenState extends State<FirstScreen> {
                 right: 5,
                 // left: 16,
                 child: Text(
-                  this.records[index]['fields']['topic_no'].toString(),
+                  records[index]['fields']['content'].toString(),
                   style: GoogleFonts.nanumGothic(
                     // backgroundColor: Colors.white70,
                     // fontStyle: FontStyle.italic,
-                    color: Colors.white70,
+                    color: Colors.black45,
                   ),
                 ),
               )

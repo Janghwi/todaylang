@@ -14,6 +14,7 @@ import 'package:todaylang/page/first_screen_md81.dart';
 import 'package:todaylang/page/first_screen_md82.dart';
 import 'package:todaylang/page/first_screen_md9.dart';
 import 'package:todaylang/page/first_screen_md92.dart';
+import 'package:todaylang/page/first_screen_md93.dart';
 import 'package:todaylang/page/first_screen_of.dart';
 import 'package:todaylang/page/first_screen_ph.dart';
 import 'package:todaylang/page/first_screen_wb.dart';
@@ -21,6 +22,7 @@ import 'package:todaylang/page/first_screen_wb1.dart';
 import 'package:todaylang/page/first_screen_yt.dart';
 import 'package:todaylang/page/first_screen_ytCre.dart';
 import 'package:todaylang/page/first_screen_ytLan.dart';
+import 'package:todaylang/page/page_scroll.dart';
 import 'package:todaylang/page/translation/langtranslate.dart';
 import 'package:todaylang/page/translation/langtext.dart';
 import 'package:todaylang/widget/sortable.dart';
@@ -209,7 +211,8 @@ class _HomePageState extends State<HomePage> {
           ],
           children: [
             FirstScreenMd82(),
-            FirstScreenMd92(),
+            // FirstScreenMd93(),
+            PageScroll(),
             FirstScreenPh(),
             FirstScreenMd82(),
             FirstScreenAd(),
