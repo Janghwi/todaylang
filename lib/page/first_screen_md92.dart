@@ -334,301 +334,253 @@ class _FirstScreenMd92State extends State<FirstScreenMd92> {
                               int likeCount =
                                   records[index]['fields']['likeCnt'];
 
-                              return Column(
-                                children: [
-                                  GestureDetector(
-                                    onTap: () {
-                                      _readRequest(records[index]['id'],
-                                          records[index]['fields']['readCnt']);
-                                      Get.to(() => DetailPage(),
-                                          arguments: [
-                                            records[index]['fields']['title'],
-                                            records[index]['fields']['content'],
-                                            records[index]['id'],
-                                            records[index]['fields']['likeCnt'],
-                                            records[index]['fields']
-                                                    ['Attachments'][0]
-                                                ['thumbnails']['large']['url'],
-                                            records[index]['fields']
-                                                ['content_copy'],
+                              return GestureDetector(
+                                onTap: () {
+                                  _readRequest(records[index]['id'],
+                                      records[index]['fields']['readCnt']);
+                                  Get.to(() => DetailPage(),
+                                      arguments: [
+                                        records[index]['fields']['title'],
+                                        records[index]['fields']['content'],
+                                        records[index]['id'],
+                                        records[index]['fields']['likeCnt'],
+                                        records[index]['fields']['Attachments']
+                                            [0]['thumbnails']['large']['url'],
+                                        records[index]['fields']
+                                            ['content_copy'],
 
-                                            //this.records[index]['fields']['cat1'],
-                                          ],
-                                          duration: Duration(seconds: 1),
-                                          transition: Transition.fadeIn,
-                                          preventDuplicates: false);
-                                    },
-                                    child: Column(
-                                      children: [
-                                        ColorFiltered(
-                                          colorFilter:
-                                              ColorFilter.srgbToLinearGamma(),
-                                          // Colors.grey, BlendMode.saturation),
-                                          child: Container(
-                                            height: 160,
-                                            width: 240,
-                                            decoration: BoxDecoration(
-                                              borderRadius:
-                                                  BorderRadius.circular(22),
-                                              color: index.isEven
-                                                  ? kBlueColor
-                                                  : kSecondaryColor,
-                                              // color: index.isEven
-                                              // ? kBlueColor
-                                              // : kSecondaryColor,
-                                              boxShadow: const [kDefaultShadow],
-                                            ),
-                                            // color: Colors.amber,
-                                            margin: EdgeInsets.symmetric(
-                                              horizontal: 20,
-                                              vertical: 20 / 2,
-                                            ),
-                                            child: Stack(
-                                                alignment: Alignment.topLeft,
-                                                children: [
-                                                  Container(
-                                                    height: 150,
-                                                    decoration: BoxDecoration(
-                                                      borderRadius:
-                                                          BorderRadius.circular(
-                                                              12),
-                                                      color: index.isEven
-                                                          ? kBlueColor
-                                                          : kSecondaryColor,
-                                                      // ignore: prefer_const_literals_to_create_immutables
-                                                      boxShadow: [
-                                                        kDefaultShadow
-                                                      ],
-                                                    ),
-                                                    child: Container(
-                                                      margin: EdgeInsets.only(
-                                                          right: 5),
-                                                      decoration: BoxDecoration(
-                                                        color: Colors.white,
+                                        //this.records[index]['fields']['cat1'],
+                                      ],
+                                      duration: Duration(seconds: 1),
+                                      transition: Transition.fadeIn,
+                                      preventDuplicates: false);
+                                },
+                                child: Column(
+                                  children: [
+                                    ColorFiltered(
+                                      colorFilter:
+                                          ColorFilter.srgbToLinearGamma(),
+                                      // Colors.grey, BlendMode.saturation),
+                                      child: Container(
+                                        height: 160,
+                                        width: 260,
+                                        decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(22),
+                                          color: index.isEven
+                                              ? kBlueColor
+                                              : kSecondaryColor,
+                                          // color: index.isEven
+                                          // ? kBlueColor
+                                          // : kSecondaryColor,
+                                          boxShadow: const [kDefaultShadow],
+                                        ),
+                                        // color: Colors.amber,
+                                        margin: EdgeInsets.symmetric(
+                                          horizontal: 10,
+                                          vertical: 20 / 2,
+                                        ),
+                                        child: Stack(
+                                            alignment: Alignment.topLeft,
+                                            children: [
+                                              Container(
+                                                height: 160,
+                                                decoration: BoxDecoration(
+                                                  borderRadius:
+                                                      BorderRadius.circular(12),
+                                                  color: index.isEven
+                                                      ? kBlueColor
+                                                      : kSecondaryColor,
+                                                  // ignore: prefer_const_literals_to_create_immutables
+                                                  boxShadow: [kDefaultShadow],
+                                                ),
+                                                child: Container(
+                                                  margin:
+                                                      EdgeInsets.only(right: 5),
+                                                  decoration: BoxDecoration(
+                                                    color: Colors.white,
+                                                    borderRadius:
+                                                        BorderRadius.circular(
+                                                            12),
+                                                  ),
+                                                ),
+                                              ),
+                                              Positioned(
+                                                bottom: 8,
+                                                right: 0,
+                                                child: Hero(
+                                                  tag: records[index]['id'],
+                                                  //카드안 이미지
+                                                  child: Container(
+                                                    padding:
+                                                        EdgeInsets.symmetric(
+                                                            horizontal: 20),
+                                                    height: 40,
+                                                    width: 80,
+                                                    child: Opacity(
+                                                      opacity: 0.5,
+                                                      child: ClipRRect(
                                                         borderRadius:
                                                             BorderRadius
-                                                                .circular(12),
-                                                      ),
-                                                    ),
-                                                  ),
-                                                  Positioned(
-                                                    top: 3,
-                                                    right: 0,
-                                                    child: Hero(
-                                                      tag: records[index]['id'],
-                                                      //카드안 이미지
-                                                      child: Container(
-                                                        padding: EdgeInsets
-                                                            .symmetric(
-                                                                horizontal: 20),
-                                                        height: 40,
-                                                        width: 80,
-                                                        child: Opacity(
-                                                          opacity: 0.5,
-                                                          child: ClipRRect(
-                                                            borderRadius:
-                                                                BorderRadius
-                                                                    .circular(
-                                                                        8),
-                                                            child:
-                                                                CachedNetworkImage(
-                                                              imageUrl: records[index]
-                                                                              [
-                                                                              'fields']
+                                                                .circular(8),
+                                                        child:
+                                                            CachedNetworkImage(
+                                                          imageUrl: records[index]
                                                                           [
-                                                                          'Attachments'][0]
+                                                                          'fields']
                                                                       [
-                                                                      'thumbnails']
+                                                                      'Attachments']
                                                                   [
-                                                                  'large']['url'],
-                                                              fit: BoxFit.cover,
-                                                            ),
-                                                          ),
+                                                                  0]['thumbnails']
+                                                              ['large']['url'],
+                                                          fit: BoxFit.cover,
                                                         ),
                                                       ),
                                                     ),
                                                   ),
-                                                  Padding(
-                                                    padding:
-                                                        const EdgeInsets.all(
-                                                            8.0),
-                                                    //* 카드안 카운트 정보
+                                                ),
+                                              ),
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                //* 카드안 카운트 정보
 
-                                                    child: SizedBox(
-                                                      width: size.width - 130,
-                                                      child: Column(
-                                                        crossAxisAlignment:
-                                                            CrossAxisAlignment
-                                                                .start,
-                                                        children: [
-                                                          Spacer(),
-                                                          Spacer(),
-                                                          Spacer(),
-                                                          Transform.rotate(
-                                                            angle:
-                                                                -math.pi / 120,
-                                                            child: Column(
-                                                              children: [
-                                                                Text(
-                                                                  records[index]
-                                                                              [
-                                                                              'fields']
-                                                                          [
-                                                                          'count']
-                                                                      .toString(),
-                                                                  // style: GoogleFonts.aBeeZee(
-                                                                  // style: GoogleFonts.hiMelody(
-                                                                  // style: GoogleFonts.blackHanSans(
-                                                                  style: GoogleFonts.blackHanSans(
-                                                                      letterSpacing: 0.2,
-                                                                      // backgroundColor: Colors.white70,
-                                                                      fontStyle: FontStyle.normal,
-                                                                      fontWeight: FontWeight.w500,
-                                                                      color: Colors.blue.shade200,
-                                                                      fontSize: 18),
-                                                                  // overflow:
-                                                                  //     TextOverflow
-                                                                  //         .ellipsis,
-                                                                  maxLines: 1,
-                                                                ),
-                                                                Text(
-                                                                  records[index]
-                                                                              [
-                                                                              'fields']
-                                                                          [
-                                                                          'title']
-                                                                      .toString(),
-                                                                  // style: GoogleFonts.aBeeZee(
-                                                                  // style: GoogleFonts.hiMelody(
-                                                                  // style: GoogleFonts.blackHanSans(
-                                                                  style: GoogleFonts.blackHanSans(
-                                                                      letterSpacing: 0.2,
-                                                                      // backgroundColor: Colors.white70,
-                                                                      fontStyle: FontStyle.normal,
-                                                                      fontWeight: FontWeight.w500,
-                                                                      color: Colors.black38,
-                                                                      fontSize: 16),
-                                                                  overflow:
-                                                                      TextOverflow
-                                                                          .ellipsis,
-                                                                  maxLines: 2,
-                                                                ),
-                                                              ],
-                                                            ),
-                                                          ),
-                                                          // Spacer(),
-                                                          //레벨과 좋아요 들어가는 부분
-                                                          Row(
-                                                            mainAxisAlignment:
-                                                                MainAxisAlignment
-                                                                    .spaceEvenly,
-                                                            children: [
-                                                              Container(
-                                                                padding: EdgeInsets
-                                                                    .symmetric(
-                                                                  horizontal:
-                                                                      kDefaultPadding *
-                                                                          0.8, // 30 padding
-                                                                  vertical:
-                                                                      kDefaultPadding /
-                                                                          8, // 5 top and bottom
-                                                                ),
-                                                                decoration:
-                                                                    BoxDecoration(
-                                                                  color: Colors
-                                                                          .grey[
-                                                                      300],
-                                                                  borderRadius:
-                                                                      BorderRadius
-                                                                          .only(
-                                                                    bottomLeft:
-                                                                        Radius.circular(
-                                                                            22),
-                                                                    topRight: Radius
-                                                                        .circular(
-                                                                            22),
-                                                                  ),
-                                                                ),
-                                                                child: Text(
-                                                                  records[index]
-                                                                          [
+                                                child: SizedBox(
+                                                  width: size.width - 100,
+                                                  child: Column(
+                                                    crossAxisAlignment:
+                                                        CrossAxisAlignment
+                                                            .start,
+                                                    children: [
+                                                      // Spacer(),
+                                                      // Spacer(),
+                                                      // Spacer(),
+                                                      Transform.rotate(
+                                                        angle: -math.pi / 120,
+                                                        child: Column(
+                                                          children: [
+                                                            Text(
+                                                              records[index][
                                                                           'fields']
-                                                                      ['level'],
-                                                                  style: GoogleFonts.notoSans(
+                                                                      ['count']
+                                                                  .toString(),
+                                                              // style: GoogleFonts.aBeeZee(
+                                                              // style: GoogleFonts.hiMelody(
+                                                              // style: GoogleFonts.blackHanSans(
+                                                              style: GoogleFonts
+                                                                  .blackHanSans(
+                                                                      letterSpacing:
+                                                                          0.2,
                                                                       // backgroundColor: Colors.white70,
-                                                                      fontStyle: FontStyle.italic,
-                                                                      fontWeight: FontWeight.w400,
-                                                                      color: Colors.white,
-                                                                      fontSize: 14),
-                                                                ),
+                                                                      fontStyle:
+                                                                          FontStyle
+                                                                              .normal,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      color: Colors
+                                                                          .blue
+                                                                          .shade200,
+                                                                      fontSize:
+                                                                          18),
+                                                              // overflow:
+                                                              //     TextOverflow
+                                                              //         .ellipsis,
+                                                              maxLines: 1,
+                                                            ),
+                                                            Text(
+                                                              records[index][
+                                                                          'fields']
+                                                                      ['title']
+                                                                  .toString(),
+                                                              // style: GoogleFonts.aBeeZee(
+                                                              // style: GoogleFonts.hiMelody(
+                                                              // style: GoogleFonts.blackHanSans(
+                                                              style: GoogleFonts
+                                                                  .blackHanSans(
+                                                                      letterSpacing:
+                                                                          0.2,
+                                                                      // backgroundColor: Colors.white70,
+                                                                      fontStyle:
+                                                                          FontStyle
+                                                                              .normal,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w500,
+                                                                      color: Colors
+                                                                          .black38,
+                                                                      fontSize:
+                                                                          16),
+                                                              overflow:
+                                                                  TextOverflow
+                                                                      .ellipsis,
+                                                              maxLines: 2,
+                                                            ),
+                                                          ],
+                                                        ),
+                                                      ),
+                                                      // Spacer(),
+                                                      //레벨과 좋아요 들어가는 부분
+                                                      Row(
+                                                        mainAxisAlignment:
+                                                            MainAxisAlignment
+                                                                .spaceEvenly,
+                                                        children: [
+                                                          Container(
+                                                            padding: EdgeInsets
+                                                                .symmetric(
+                                                              horizontal:
+                                                                  kDefaultPadding *
+                                                                      0.8, // 30 padding
+                                                              vertical:
+                                                                  kDefaultPadding /
+                                                                      8, // 5 top and bottom
+                                                            ),
+                                                            decoration:
+                                                                BoxDecoration(
+                                                              color: Colors
+                                                                  .grey[300],
+                                                              borderRadius:
+                                                                  BorderRadius
+                                                                      .only(
+                                                                bottomLeft: Radius
+                                                                    .circular(
+                                                                        22),
+                                                                topRight: Radius
+                                                                    .circular(
+                                                                        22),
                                                               ),
-                                                              // Spacer(),
-                                                              // //좋아요 버튼
-                                                              // IconButton(
-                                                              //   iconSize: 20,
-                                                              //   icon: Icon(
-                                                              //       Icons
-                                                              //           .favorite_border,
-                                                              //       color: Colors
-                                                              //           .grey),
-                                                              //   onPressed: () {
-                                                              //     Get.to(() {
-                                                              //       return DetailPage();
-                                                              //     },
-                                                              //         arguments: [
-                                                              //           records[index]['fields']
-                                                              //               [
-                                                              //               'title'],
-                                                              //           records[index]['fields']
-                                                              //               [
-                                                              //               'content'],
-                                                              //           records[index]
-                                                              //               [
-                                                              //               'id'],
-                                                              //           records[index]['fields']
-                                                              //               [
-                                                              //               'likeCnt'],
-                                                              //         ],
-                                                              //         transition:
-                                                              //             Transition
-                                                              //                 .zoom,
-                                                              //         preventDuplicates:
-                                                              //             true);
-                                                              //   },
-                                                              // ),
-                                                              // Text(
-                                                              //   records[index][
-                                                              //               'fields']
-                                                              //           [
-                                                              //           'likeCnt']
-                                                              //       .toString(),
-                                                              //   style: GoogleFonts
-                                                              //       .notoSans(
-                                                              //           // backgroundColor: Colors.white70,
-                                                              //           fontStyle:
-                                                              //               FontStyle
-                                                              //                   .italic,
-                                                              //           fontWeight:
-                                                              //               FontWeight
-                                                              //                   .w400,
-                                                              //           color: Colors
-                                                              //               .grey,
-                                                              //           fontSize:
-                                                              //               14),
-                                                              // ),
-                                                            ],
+                                                            ),
+                                                            child: Text(
+                                                              records[index]
+                                                                      ['fields']
+                                                                  ['level'],
+                                                              style: GoogleFonts
+                                                                  .notoSans(
+                                                                      // backgroundColor: Colors.white70,
+                                                                      fontStyle:
+                                                                          FontStyle
+                                                                              .italic,
+                                                                      fontWeight:
+                                                                          FontWeight
+                                                                              .w400,
+                                                                      color: Colors
+                                                                          .white,
+                                                                      fontSize:
+                                                                          14),
+                                                            ),
                                                           ),
                                                         ],
                                                       ),
-                                                    ),
+                                                    ],
                                                   ),
-                                                ]),
-                                          ),
-                                        ),
-                                      ],
+                                                ),
+                                              ),
+                                            ]),
+                                      ),
                                     ),
-                                  ),
-                                ],
+                                  ],
+                                ),
                               );
                             });
                       }

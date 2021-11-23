@@ -211,8 +211,9 @@ class _HomePageState extends State<HomePage> {
           ],
           children: [
             FirstScreenMd82(),
-            // FirstScreenMd93(),
-            PageScroll(),
+            FirstScreenMd92(),
+            // FirstScreenMd93(), //단어 300개 테스트 버전
+            // PageScroll(),
             FirstScreenPh(),
             FirstScreenMd82(),
             FirstScreenAd(),
