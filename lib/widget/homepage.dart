@@ -15,6 +15,7 @@ import 'package:todaylang/page/first_screen_md82.dart';
 import 'package:todaylang/page/first_screen_md9.dart';
 import 'package:todaylang/page/first_screen_md92.dart';
 import 'package:todaylang/page/first_screen_md93.dart';
+import 'package:todaylang/page/first_screen_md94.dart';
 import 'package:todaylang/page/first_screen_of.dart';
 import 'package:todaylang/page/first_screen_ph.dart';
 import 'package:todaylang/page/first_screen_wb.dart';
@@ -156,7 +157,7 @@ class _HomePageState extends State<HomePage> {
             ),
             Tab(
               text: apptitle3.tr,
-              // text: 'KPOP',
+              // text: '패턴',
               // icon: Icon(Icons.feed_outlined),
             ),
             Tab(
@@ -211,7 +212,7 @@ class _HomePageState extends State<HomePage> {
           ],
           children: [
             FirstScreenMd82(),
-            FirstScreenMd92(),
+            FirstScreenMd94(),
             // FirstScreenMd93(), //단어 300개 테스트 버전
             // PageScroll(),
             FirstScreenPh(),

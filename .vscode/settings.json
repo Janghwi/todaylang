@@ -1,9 +1,8 @@
 {
     "workbench.colorCustomizations": {
-
         "[Atom One Dark]": {},
         "activityBar.background": "#4b1c41",
-        "titleBar.activeBackground": "#428d81",
+        "titleBar.activeBackground": "#260e21",
         "titleBar.activeForeground": "#e7e7e7",
         "activityBar.activeBackground": "#4b1c41",
         "activityBar.activeBorder": "#65742b",

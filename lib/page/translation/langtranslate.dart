@@ -9,13 +9,13 @@ class LangTranslations extends Translations {
         'ko_KR': {
           'appbar_title1': '문장',
           'appbar_title2': '단어',
-          'appbar_title3': 'KPOP',
+          'appbar_title3': '패턴',
           'appbar_title4': '문법',
         },
         'en_US': {
           'appbar_title1': 'phrases',
           'appbar_title2': 'words',
-          'appbar_title3': 'favorites',
+          'appbar_title3': 'Pattern',
           'appbar_title4': 'good words',
         },
         'ja_JP': {

@@ -13,8 +13,8 @@ import 'package:google_fonts/google_fonts.dart';
 import 'package:http/http.dart' as http;
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:like_button/like_button.dart';
-import 'package:todaylang/widget/commentbox.dart';
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:todaylang/widget/commentbox1.dart';
 import 'package:todaylang/widget/like_button.dart';
 
 import 'commentlist.dart';
