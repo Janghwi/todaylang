@@ -1,10 +1,8 @@
 // ignore_for_file: sized_box_for_whitespace
 
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:async';
@@ -13,16 +11,12 @@ import 'package:like_button/like_button.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:todaylang/controllers/phrase_loader.dart';
-import 'package:todaylang/widget/commentbox1.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:math' as math;
 import 'package:screenshot/screenshot.dart';
 import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
-
-import 'package:animated_text_kit/animated_text_kit.dart';
 
 import 'commentlist.dart';
 

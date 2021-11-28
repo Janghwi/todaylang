@@ -1,3 +1,5 @@
+// ignore_for_file: unnecessary_this
+
 import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
@@ -60,11 +62,11 @@ class Model {
   Model({required this.txt, this.check = false});
 
   void change(String newText) {
-    this.txt = newText;
+    txt = newText;
   }
 
   void changeCheck() {
-    this.check = !this.check;
+    check = !check;
   }
 }
 

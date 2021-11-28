@@ -6,20 +6,16 @@
 //단어부문의 모듈 첫페이지 */
 // ignore_for_file: sized_box_for_whitespace
 
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'dart:async';
 import 'package:like_button/like_button.dart';
 
 import 'package:google_fonts/google_fonts.dart';
-import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:todaylang/controllers/phrase_loader.dart';
 import 'package:todaylang/widget/commentbox1.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:math' as math;
@@ -28,7 +24,8 @@ import 'package:image_gallery_saver/image_gallery_saver.dart';
 import 'package:permission_handler/permission_handler.dart';
 import 'package:share_plus/share_plus.dart';
 import 'package:flutter_staggered_animations/flutter_staggered_animations.dart';
-import 'package:todaylang/widget/markdown_word.dart';
+import 'package:substring_highlight/substring_highlight.dart';
+import 'package:flutter_tts/flutter_tts.dart';
 
 enum MenuType { first, second, third }
 
@@ -1008,6 +1005,18 @@ Future<String> saveImage(Uint8List bytes) async {
   return result['filePath'];
 }
 
+//***
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// */
 // detail page
 class DetailPage extends StatefulWidget {
   const DetailPage({Key? key}) : super(key: key);
@@ -1049,9 +1058,10 @@ class _DetailPageState extends State<DetailPage> {
 
       _records = result['records'];
     } on DioError catch (e) {
-      if (e.response != null) {
+      if (e.error is SocketException) {
+        print('socket exception occured ');
       } else {
-        // if (loadRemoteDatatSucceed == false) retryFuture(_fetchDatas, 200);
+        //  if (loadRemoteDatatSucceed == false) retryFuture(_fetchDatas, 200);
       }
     }
     if (mounted) {
@@ -1113,6 +1123,24 @@ class _DetailPageState extends State<DetailPage> {
       mColor0 = Color(0xFF6200EE),
       mColor1 = Color(0xFF6200EE);
   final isSelected = <bool>[true, false, false, false, false, false];
+  bool isVisible = true;
+  bool engisVisible = true;
+  bool korisVisible = true;
+  bool japisVisible = true;
+  bool prnisVisible = true;
+  bool isTransparent = false;
+
+  late String currentView = "Gridview";
+
+  Future<void> phraseSpeech(String langCode, String phrase) async {
+    FlutterTts flutterTts = FlutterTts();
+
+    await flutterTts.setLanguage(langCode);
+    await flutterTts.setPitch(1.0);
+    await flutterTts.setSpeechRate(0.5);
+    await flutterTts.setVolume(1.0);
+    await flutterTts.speak(phrase);
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -1199,6 +1227,11 @@ class _DetailPageState extends State<DetailPage> {
                               mColor = Colors.blue;
                               mColor0 = Colors.blue;
                               mColor1 = Colors.blue;
+                              setState(() {
+                                engisVisible = true;
+                                korisVisible = true;
+                                japisVisible = true;
+                              });
                               // content = Get.arguments[1];
                               // print(content);
                             }
@@ -1207,6 +1240,42 @@ class _DetailPageState extends State<DetailPage> {
                               mColor = Colors.blue;
                               mColor0 = Colors.blue;
                               mColor1 = Colors.blue;
+                              setState(() {
+                                engisVisible = true;
+                                korisVisible = false;
+                                japisVisible = false;
+                              });
+                              // content = Get.arguments[5];
+                            }
+                            if (index == 2) {
+                              mColor = Colors.blue;
+                              mColor0 = Colors.blue;
+                              mColor1 = Colors.blue;
+                              setState(() {
+                                engisVisible = false;
+                                korisVisible = true;
+                                japisVisible = false;
+                              });
+                              // content = Get.arguments[5];
+                            }
+                            if (index == 3) {
+                              mColor = Colors.blue;
+                              mColor0 = Colors.blue;
+                              mColor1 = Colors.blue;
+                              setState(() {
+                                engisVisible = false;
+                                korisVisible = false;
+                                japisVisible = true;
+                              });
+                              // content = Get.arguments[5];
+                            }
+                            if (index == 4) {
+                              mColor = Colors.blue;
+                              mColor0 = Colors.blue;
+                              mColor1 = Colors.blue;
+                              setState(() {
+                                prnisVisible = !prnisVisible;
+                              });
                               // content = Get.arguments[5];
                             }
 
@@ -1250,14 +1319,14 @@ class _DetailPageState extends State<DetailPage> {
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
-                            '설명',
+                            '발음제거',
                             style: TextStyle(fontSize: 16),
                           ),
                         ),
                         Padding(
                           padding: EdgeInsets.symmetric(horizontal: 8.0),
                           child: Text(
-                            '추가',
+                            '패턴',
                             style: TextStyle(fontSize: 16),
                           ),
                         ),
@@ -1265,10 +1334,177 @@ class _DetailPageState extends State<DetailPage> {
                     ),
                   ],
                 ),
-                // Expanded(
-                //     child: MarkdownWord(
-                //   content,
-                // )),
+                Expanded(
+                  child: FutureBuilder(
+                      future: _fetchDatas(tableName, viewName, token),
+                      builder: (context, snapshot) {
+                        // print('snapshot No.=>');
+                        // print(records.length);
+                        // print("get records:" "{}");
+                        // List<bool> isLiked = List.filled(records.length, false);
+                        // print('22 builder passed');
+                        if (!snapshot.hasData) {
+                          return Center(
+                              child: SizedBox(
+                            width: 50,
+                            height: 50,
+                            child: CircularProgressIndicator(
+                              // value: 0.5,
+                              strokeWidth: 6,
+                              // backgroundColor: Colors.amber,
+                              valueColor:
+                                  const AlwaysStoppedAnimation(Colors.amber),
+                            ),
+                          ));
+                        } else {
+                          return ListView.separated(
+                            separatorBuilder: (context, index) =>
+                                Divider(color: Colors.black),
+                            itemCount: _records.length,
+                            itemBuilder: (context, index) {
+                              return Container(
+                                child: Column(
+                                  children: [
+                                    Visibility(
+                                      visible: engisVisible,
+                                      child: ListTile(
+                                        contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 5.0),
+                                        leading: GestureDetector(
+                                          onTap: () => phraseSpeech('en-US',
+                                              _records[index]['fields']['eng']),
+                                          child: Icon(Icons.volume_up_outlined,
+                                              color: Colors.black),
+                                        ),
+                                        trailing: Text(
+                                          'us',
+                                          style: TextStyle(
+                                              color: Colors.black
+                                                  .withOpacity(0.2)),
+                                        ),
+
+                                        title: SubstringHighlight(
+                                          text: _records[index]['fields']['eng']
+                                              .toString(),
+                                          term: _records[index]['fields']
+                                              ['engh'],
+                                          textStyleHighlight: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                          textStyle: TextStyle(
+                                            fontSize: 17,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                        // subtitle: Text(_records[index]['fields']
+                                        //         ['jap']
+                                        //     .toString()),
+                                      ),
+                                    ),
+                                    Visibility(
+                                      visible: korisVisible,
+                                      child: ListTile(
+                                        contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 5.0),
+                                        leading: GestureDetector(
+                                          onTap: () => phraseSpeech('ko-KR',
+                                              _records[index]['fields']['kor']),
+                                          child: Icon(Icons.volume_up_outlined,
+                                              color: Colors.black),
+                                        ),
+                                        trailing: Text(
+                                          'kr',
+                                          style: TextStyle(
+                                              color: Colors.black
+                                                  .withOpacity(0.2)),
+                                        ),
+                                        title: SubstringHighlight(
+                                          text: _records[index]['fields']['kor']
+                                              .toString(),
+                                          term: _records[index]['fields']
+                                              ['korh'],
+                                          textStyleHighlight: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                          textStyle: TextStyle(
+                                            fontSize: 17,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                        subtitle: Visibility(
+                                          visible: prnisVisible,
+                                          child: SubstringHighlight(
+                                            text: _records[index]['fields']
+                                                    ['korprn']
+                                                .toString(),
+                                            term: _records[index]['fields']
+                                                ['korprnh'],
+                                            textStyleHighlight: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold),
+                                            textStyle: TextStyle(
+                                              color: Colors.black87,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                    Visibility(
+                                      visible: japisVisible,
+                                      child: ListTile(
+                                        contentPadding: EdgeInsets.symmetric(
+                                            horizontal: 5.0),
+                                        leading: GestureDetector(
+                                          onTap: () => phraseSpeech('ja-JP',
+                                              _records[index]['fields']['jap']),
+                                          child: Icon(Icons.volume_up_outlined,
+                                              color: Colors.black),
+                                        ),
+                                        trailing: Text(
+                                          'jp',
+                                          style: TextStyle(
+                                              color: Colors.black
+                                                  .withOpacity(0.2)),
+                                        ),
+                                        title: SubstringHighlight(
+                                          text: _records[index]['fields']['jap']
+                                              .toString(),
+                                          term: _records[index]['fields']
+                                              ['japh'],
+                                          textStyleHighlight: TextStyle(
+                                              color: Colors.black,
+                                              fontWeight: FontWeight.bold),
+                                          textStyle: TextStyle(
+                                            fontSize: 17,
+                                            color: Colors.black87,
+                                          ),
+                                        ),
+                                        subtitle: Visibility(
+                                          visible: prnisVisible,
+                                          child: SubstringHighlight(
+                                            text: _records[index]['fields']
+                                                    ['japprn']
+                                                .toString(),
+                                            term: _records[index]['fields']
+                                                ['japprnh'],
+                                            textStyleHighlight: TextStyle(
+                                                color: Colors.black,
+                                                fontWeight: FontWeight.bold),
+                                            textStyle: TextStyle(
+                                              color: Colors.black87,
+                                            ),
+                                          ),
+                                        ),
+                                      ),
+                                    ),
+                                  ],
+                                ),
+                              );
+                            },
+                          );
+                        }
+                      }),
+                ),
               ],
             ),
           ),

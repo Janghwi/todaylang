@@ -2,7 +2,6 @@
 
 import 'dart:convert';
 import 'dart:developer';
-import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
@@ -13,7 +12,6 @@ import 'package:google_fonts/google_fonts.dart';
 //import '2menutwolevel_page2.dart';
 //import '2menutwolevel_page_p.dart';
 import 'package:http/http.dart' as http;
-import 'package:webview_flutter/webview_flutter.dart';
 import 'package:youtube_player_iframe/youtube_player_iframe.dart';
 
 class FirstScreenYtnb extends StatefulWidget {
