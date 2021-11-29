@@ -1,3 +1,5 @@
+//** TTS적용함 */
+
 //**단어 화면은 메뉴로 들어가야 하기에 메뉴를 둠
 //togglebutton을 새롭게 적용함. 색갈지정등
 //secone menu로 변경하고 두번재 메뉴를 둠
@@ -16,6 +18,7 @@ import 'package:like_button/like_button.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:path_provider/path_provider.dart';
+import 'package:todaylang/controllers/lang_controller.dart';
 import 'package:todaylang/widget/commentbox1.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:math' as math;
@@ -139,6 +142,7 @@ class _FirstScreenMd94State extends State<FirstScreenMd94> {
   }
 
   // final ctr = Get.put(PhrasesLoader());
+  LangController c = Get.put(LangController());
 
   bool isLiked = false;
   late String currentView = "Gridview";
@@ -414,63 +418,67 @@ class _FirstScreenMd94State extends State<FirstScreenMd94> {
                                                         angle: -math.pi / 120,
                                                         child: Column(
                                                           children: [
-                                                            Text(
-                                                              records[index][
-                                                                          'fields']
-                                                                      ['eng']
-                                                                  .toString(),
-                                                              // style: GoogleFonts.aBeeZee(
-                                                              // style: GoogleFonts.hiMelody(
-                                                              // style: GoogleFonts.blackHanSans(
-                                                              style: GoogleFonts
-                                                                  .blackHanSans(
-                                                                      letterSpacing:
-                                                                          0.2,
-                                                                      // backgroundColor: Colors.white70,
-                                                                      fontStyle:
-                                                                          FontStyle
-                                                                              .normal,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      color: Colors
-                                                                          .blue
-                                                                          .shade200,
-                                                                      fontSize:
-                                                                          18),
-                                                              // overflow:
-                                                              //     TextOverflow
-                                                              //         .ellipsis,
-                                                              maxLines: 1,
-                                                            ),
-                                                            Text(
-                                                              records[index][
-                                                                          'fields']
-                                                                      ['jap']
-                                                                  .toString(),
-                                                              // style: GoogleFonts.aBeeZee(
-                                                              // style: GoogleFonts.hiMelody(
-                                                              // style: GoogleFonts.blackHanSans(
-                                                              style: GoogleFonts
-                                                                  .blackHanSans(
-                                                                      letterSpacing:
-                                                                          0.2,
-                                                                      // backgroundColor: Colors.white70,
-                                                                      fontStyle:
-                                                                          FontStyle
-                                                                              .normal,
-                                                                      fontWeight:
-                                                                          FontWeight
-                                                                              .w500,
-                                                                      color: Colors
-                                                                          .black38,
-                                                                      fontSize:
-                                                                          16),
-                                                              overflow:
-                                                                  TextOverflow
-                                                                      .ellipsis,
-                                                              maxLines: 2,
-                                                            ),
+                                                            Obx(
+                                                              () => Text(
+                                                                records[index][
+                                                                            'fields']
+                                                                        [
+                                                                        c.setLang
+                                                                            .value]
+                                                                    .toString(),
+                                                                // style: GoogleFonts.aBeeZee(
+                                                                // style: GoogleFonts.hiMelody(
+                                                                // style: GoogleFonts.blackHanSans(
+                                                                style: GoogleFonts
+                                                                    .blackHanSans(
+                                                                        letterSpacing:
+                                                                            0.2,
+                                                                        // backgroundColor: Colors.white70,
+                                                                        fontStyle:
+                                                                            FontStyle
+                                                                                .normal,
+                                                                        fontWeight:
+                                                                            FontWeight
+                                                                                .w500,
+                                                                        color: Colors
+                                                                            .blue
+                                                                            .shade200,
+                                                                        fontSize:
+                                                                            18),
+                                                                // overflow:
+                                                                //     TextOverflow
+                                                                //         .ellipsis,
+                                                                maxLines: 1,
+                                                              ),
+                                                              // Text(
+                                                              //   records[index][
+                                                              //               'fields']
+                                                              //           ['jap']
+                                                              //       .toString(),
+                                                              //   // style: GoogleFonts.aBeeZee(
+                                                              //   // style: GoogleFonts.hiMelody(
+                                                              //   // style: GoogleFonts.blackHanSans(
+                                                              //   style: GoogleFonts
+                                                              //       .blackHanSans(
+                                                              //           letterSpacing:
+                                                              //               0.2,
+                                                              //           // backgroundColor: Colors.white70,
+                                                              //           fontStyle:
+                                                              //               FontStyle
+                                                              //                   .normal,
+                                                              //           fontWeight:
+                                                              //               FontWeight
+                                                              //                   .w500,
+                                                              //           color: Colors
+                                                              //               .black38,
+                                                              //           fontSize:
+                                                              //               16),
+                                                              //   overflow:
+                                                              //       TextOverflow
+                                                              //           .ellipsis,
+                                                              //   maxLines: 2,
+                                                              // ),
+                                                            )
                                                           ],
                                                         ),
                                                       ),
@@ -1389,6 +1397,7 @@ class _DetailPageState extends State<DetailPage> {
                                           term: _records[index]['fields']
                                               ['engh'],
                                           textStyleHighlight: TextStyle(
+                                              fontFamily: "NotoSansCJKkr",
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold),
                                           textStyle: TextStyle(
@@ -1424,6 +1433,7 @@ class _DetailPageState extends State<DetailPage> {
                                           term: _records[index]['fields']
                                               ['korh'],
                                           textStyleHighlight: TextStyle(
+                                              fontFamily: "NotoSansCJKkr",
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold),
                                           textStyle: TextStyle(
@@ -1472,6 +1482,7 @@ class _DetailPageState extends State<DetailPage> {
                                           term: _records[index]['fields']
                                               ['japh'],
                                           textStyleHighlight: TextStyle(
+                                              fontFamily: "NotoSansCJKkr",
                                               color: Colors.black,
                                               fontWeight: FontWeight.bold),
                                           textStyle: TextStyle(

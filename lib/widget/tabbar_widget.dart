@@ -4,6 +4,7 @@ import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
 import 'package:google_sign_in/google_sign_in.dart';
+import 'package:todaylang/controllers/lang_controller.dart';
 import 'package:todaylang/widget/mydrawer.dart';
 
 class TabBarWidget extends StatelessWidget {
@@ -40,10 +41,13 @@ class TabBarWidget extends StatelessWidget {
                       padding: const EdgeInsets.all(8.0),
                       child: Text(locales[index]['name'].toString()),
                     ),
-                    onTap: () => updateLocale(
-                      locales[index]['locale'],
-                      context,
-                    ),
+                    onTap: () {
+                      Get.find<LangController>().engLoad('jap');
+                      updateLocale(
+                        locales[index]['locale'],
+                        context,
+                      );
+                    },
                   ),
                   separatorBuilder: (context, index) => Divider(
                     color: Colors.black,

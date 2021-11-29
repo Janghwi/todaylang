@@ -125,6 +125,24 @@ flutter:
     - family: 'Roboto Mono'
       fonts:
         - asset: assets/fonts/RobotoMono-Regular.ttf
+    - family: Montserrat
+      fonts:
+        - asset: assets/fonts/Montserrat/Montserrat-Regular.ttf
+        - asset: assets/fonts/Montserrat/Montserrat-Italic.ttf
+          style: italic
+        - asset: assets/fonts/Montserrat/Montserrat-Bold.ttf
+          weight: 700
+        - asset: assets/fonts/Montserrat/Montserrat-SemiBold.ttf
+          weight: 600
+        - asset: assets/fonts/Montserrat/Montserrat-Medium.ttf
+          weight: 500
+        - asset: assets/fonts/Montserrat/Montserrat-Light.ttf
+          weight: 300   
+    - family: NotoSansCJKkr
+      fonts:
+        - asset: assets/fonts/NotoSansCJKkr/NotoSansCJKkr-Bold.otf
+        - asset: assets/fonts/NotoSansCJKkr/NotoSansCJKkr-Light.otf
+        - asset: assets/fonts/NotoSansCJKkr/NotoSansCJKkr-Regular.otf
   #       - asset: fonts/OpenSans-Light.ttf
   #       - asset: fonts/OpenSans-Medium.ttf
   #       - asset: fonts/OpenSans-Regular.ttf

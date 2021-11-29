@@ -25,7 +25,7 @@ import 'package:todaylang/page/first_screen_ytCre.dart';
 import 'package:todaylang/page/first_screen_ytLan.dart';
 import 'package:todaylang/page/page_scroll.dart';
 import 'package:todaylang/page/translation/langtranslate.dart';
-import 'package:todaylang/page/translation/langtext.dart';
+// import 'package:todaylang/page/translation/langtext.dart';
 import 'package:todaylang/widget/sortable.dart';
 
 import 'tabbar_widget.dart';

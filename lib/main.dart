@@ -162,6 +162,7 @@ class _MyAppState extends State<MyApp> {
 
   @override
   Widget build(BuildContext context) {
+    // print(Get.deviceLocale);
     return ChangeNotifierProvider(
       create: (context) {
         return GoogleSignInProvider();
@@ -169,7 +170,9 @@ class _MyAppState extends State<MyApp> {
       child: GetMaterialApp(
         debugShowCheckedModeBanner: false,
         translations: LangTranslations(),
-        locale: Locale('ko', 'KR'),
+        // locale: Locale('en', 'US'),
+        locale: Get.deviceLocale,
+        fallbackLocale: Locale('en', 'US'),
         title: MyApp.title,
         theme: ThemeData(
           fontFamily: GoogleFonts.notoSerif().fontFamily,

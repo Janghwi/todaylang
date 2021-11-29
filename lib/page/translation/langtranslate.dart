@@ -1,5 +1,5 @@
 // ignore_for_file: file_names
-
+//** 언어별로  만든다 */
 // ignore: constant_identifier_names
 import 'package:get/get.dart';
 
