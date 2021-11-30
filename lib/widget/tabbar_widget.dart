@@ -1,3 +1,7 @@
+//2021.11.30일 ** 현재는 icon을 국기로 변환하는 기능을 수정 중 */
+
+//** 언어변환 기능 추가 getx를 사용 */
+
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
@@ -20,29 +24,69 @@ class TabBarWidget extends StatelessWidget {
   }) : super(key: key);
 
   final List<Map<String, dynamic>> locales = [
-    {'name': 'English', 'locale': (Locale('en', 'US'))},
-    {'name': 'Korean', 'locale': (Locale('ko', 'KR'))},
-    {'name': 'Japanese', 'locale': (Locale('ja', 'JP'))},
-    {'name': 'Chinese', 'locale': (Locale('zh', 'CN'))},
+    {
+      'name': 'English',
+      'locale': (Locale('en', 'US')),
+      'putName': 'eng',
+      'image': 'assets/images/usa.png'
+    },
+    {
+      'name': 'Korean',
+      'locale': (Locale('ko', 'KR')),
+      'putName': 'kor',
+      'image': 'assets/images/korea.png'
+    },
+    {
+      'name': 'Japanese',
+      'locale': (Locale('ja', 'JP')),
+      'putName': 'jap',
+      'image': 'assets/images/japan.png'
+    },
+    {
+      'name': 'Chinese',
+      'locale': (Locale('zh', 'CN')),
+      'putName': 'chn',
+      'image': 'assets/images/china.png'
+    },
   ];
+
+  final controller = Get.put(LangController());
 
   showLocalDialog(BuildContext context) {
     showDialog(
         context: context,
         builder: (_) => AlertDialog(
-              title: Text("Choose your language"),
+              title: Text("Choose your Menu language",
+                  style: TextStyle(fontSize: 18, fontWeight: FontWeight.bold)),
               content: Container(
                 // color: Colors.black26,
                 width: double.maxFinite,
+                height: double.maxFinite,
                 child: ListView.separated(
                   shrinkWrap: true,
                   itemBuilder: (context, index) => InkWell(
                     child: Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Text(locales[index]['name'].toString()),
+                      padding: const EdgeInsets.all(5.0),
+                      child: Row(
+                        children: [
+                          CircleAvatar(
+                            radius: 18,
+                            backgroundImage:
+                                AssetImage(locales[index]['image'].toString()),
+                          ),
+                          // child: Image.asset(locales[index]['image'])),
+                          // child: Image.asset(locales[index]['image'])),
+                          Spacer(),
+                          Text(locales[index]['name'].toString()),
+                        ],
+                      ),
                     ),
                     onTap: () {
-                      Get.find<LangController>().engLoad('jap');
+                      controller.engLoad(
+                          RxString(locales[index]['putName'].toString()));
+                      controller.flagLoad(
+                          RxString(locales[index]['image'].toString()));
+                      // print('tabbar widget');
                       updateLocale(
                         locales[index]['locale'],
                         context,
@@ -66,6 +110,8 @@ class TabBarWidget extends StatelessWidget {
   final user = FirebaseAuth.instance.currentUser ?? "";
   // final user = FirebaseAuth.instance.currentUser!;
 
+  LangController c = Get.put(LangController());
+
   @override
   Widget build(BuildContext context) => DefaultTabController(
         length: tabs.length,
@@ -87,11 +133,20 @@ class TabBarWidget extends StatelessWidget {
                     Scaffold.of(context).openDrawer();
                   },
                 ),
+                // ignore: prefer_const_literals_to_create_immutables
                 actions: <Widget>[
-                  IconButton(
-                    icon: Icon(Icons.language),
-                    onPressed: () => showLocalDialog(context),
-                  ),
+                  Obx(() => GestureDetector(
+                        onTap: () => showLocalDialog(context),
+                        child: CircleAvatar(
+                          radius: 16,
+                          backgroundImage: AssetImage(c.setFlag.value),
+                          // backgroundImage: AssetImage("assets/images/usa.png"),
+                        ),
+                      )),
+                  // IconButton(
+                  //   icon: Icon(Icons.language),
+                  //  onPressed: () => showLocalDialog(context),
+                  // ),
                   SizedBox(
                     width: 7,
                   ),

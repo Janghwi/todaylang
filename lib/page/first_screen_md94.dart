@@ -1,4 +1,5 @@
-//** TTS적용함 */
+//**2021.11.30 다국어 적용함 메뉴및 내용도 같이 적용함 */
+//**2021. 11.25 ** TTS적용함 */
 
 //**단어 화면은 메뉴로 들어가야 하기에 메뉴를 둠
 //togglebutton을 새롭게 적용함. 색갈지정등
@@ -252,7 +253,7 @@ class _FirstScreenMd94State extends State<FirstScreenMd94> {
                 child: FutureBuilder(
                     future: _fetchDatas(currentView),
                     builder: (context, snapshot) {
-                      // print('snapshot No.=>');
+                      // print(c._setLang.value);
                       // print(records.length);
                       // print("get records:" "{}");
                       // List<bool> isLiked = List.filled(records.length, false);

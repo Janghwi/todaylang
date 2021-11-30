@@ -1,25 +1,25 @@
-import 'dart:convert';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
-import 'package:dio/dio.dart';
 
 class LangController extends GetxController {
   // static LangController get to => Get.find();
 
-  var setLang = 'kor'.obs;
+  RxString setLang = 'kor'.obs;
+  RxString setFlag = 'assets/images/usa.png'.obs;
   // var devLang = Get.deviceLocale;
-  // RxString get setLang => _setLang;
 
-  void engLoad(String setLang) {
-    setLang = 'eng';
+  void engLoad(RxString setLang1) {
+    setLang = setLang1;
+    // update();
+  }
 
-    update();
+  void flagLoad(RxString setFlag1) {
+    setFlag = setFlag1;
+    // update();
   }
 
   void langSet(String setLang) {
     var devLang = Get.deviceLocale;
-    print('getx');
-    print(devLang);
+
     // ignore: unrelated_type_equality_checks
     if (devLang == 'ko_KR') {
       setLang = 'kor';
@@ -33,6 +33,5 @@ class LangController extends GetxController {
     } else {
       setLang = 'eng';
     }
-    update();
   }
 }

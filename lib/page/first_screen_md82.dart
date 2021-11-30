@@ -1,22 +1,22 @@
+//** 다국어 적용 안 함 */
 //**마크다운을 테이블 형식으로 들어가 있음
 //togglebutton적용함
 //캡쳐&쉐어를 적용함 */
 // ignore_for_file: sized_box_for_whitespace
 
-import 'dart:convert';
 import 'dart:io';
 import 'dart:typed_data';
 import 'package:dio/dio.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/material.dart';
 import 'package:get/get.dart';
+import 'package:todaylang/controllers/lang_controller.dart';
+
 import 'dart:async';
 import 'package:like_button/like_button.dart';
 
 import 'package:google_fonts/google_fonts.dart';
 import 'package:flutter_markdown/flutter_markdown.dart';
 import 'package:path_provider/path_provider.dart';
-import 'package:todaylang/controllers/phrase_loader.dart';
 import 'package:todaylang/widget/commentbox1.dart';
 import 'package:cached_network_image/cached_network_image.dart';
 import 'dart:math' as math;
