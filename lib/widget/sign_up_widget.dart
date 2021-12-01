@@ -1,5 +1,4 @@
-import 'dart:ui';
-
+//** 로고 변경 enkornese로....... */
 import 'package:flutter/material.dart';
 import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:provider/provider.dart';
@@ -14,34 +13,40 @@ class SignUpWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Spacer(),
-            FlutterLogo(size: 120),
+            SizedBox(
+                height: 120,
+                width: 120,
+                child: Image.asset('assets/images/logo.png')),
             Spacer(),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Hey There,\nWelcome Back',
+                'Hey Friends!\nWelcome to ENKORNESE',
                 style: TextStyle(
-                  fontSize: 32,
+                  fontSize: 20,
                   fontWeight: FontWeight.bold,
                 ),
               ),
             ),
-            SizedBox(height: 10),
+            SizedBox(height: 15),
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Login to your account to continue',
-                style: TextStyle(fontSize: 20),
+                'Login to your account',
+                style: TextStyle(fontSize: 18),
               ),
             ),
             Spacer(),
             ElevatedButton.icon(
               onPressed: () {},
               icon: Icon(Icons.email_outlined),
-              label: Text('Sign Up with Email'),
+              label: Text(
+                'Sign Up with Email',
+                style: TextStyle(fontSize: 20),
+              ),
               style: ElevatedButton.styleFrom(
                 primary: Colors.blue,
-                minimumSize: Size(double.infinity, 100),
+                minimumSize: Size(double.infinity, 40),
               ),
             ),
             SizedBox(height: 20),
@@ -49,7 +54,7 @@ class SignUpWidget extends StatelessWidget {
               style: ElevatedButton.styleFrom(
                 primary: Colors.white,
                 onPrimary: Colors.black,
-                minimumSize: Size(double.infinity, 180),
+                minimumSize: Size(double.infinity, 40),
               ),
               icon: FaIcon(FontAwesomeIcons.google, color: Colors.red),
               label: Text(

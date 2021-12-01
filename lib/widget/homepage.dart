@@ -16,6 +16,7 @@ import 'package:todaylang/page/first_screen_md9.dart';
 import 'package:todaylang/page/first_screen_md92.dart';
 import 'package:todaylang/page/first_screen_md93.dart';
 import 'package:todaylang/page/first_screen_md94.dart';
+import 'package:todaylang/page/first_screen_md95.dart';
 import 'package:todaylang/page/first_screen_of.dart';
 import 'package:todaylang/page/first_screen_ph.dart';
 import 'package:todaylang/page/first_screen_wb.dart';
@@ -147,12 +148,12 @@ class _HomePageState extends State<HomePage> {
               // icon: Icon(Icons.feed_outlined),
             ),
             // Tab(
-            //   text: '문장',
+            //   text: '단어',
             //   // icon: Icon(Icons.feed_outlined),
             // ),
             Tab(
               text: apptitle2.tr,
-              // text: '단어',
+              // text: '문장',
               // icon: Icon(Icons.feed_outlined),
             ),
             Tab(
@@ -211,8 +212,8 @@ class _HomePageState extends State<HomePage> {
             ),
           ],
           children: [
-            FirstScreenMd82(),
             FirstScreenMd94(),
+            FirstScreenMd82(),
             // FirstScreenMd93(), //단어 300개 테스트 버전
             // PageScroll(),
             FirstScreenPh(),

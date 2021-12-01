@@ -1,4 +1,5 @@
-//2021.11.30일 ** 현재는 icon을 국기로 변환하는 기능을 수정 중 */
+//** 2021.11.31일 ** google signin 사진 출력 기능 보강 */
+//** 2021.11.30일 ** 현재는 icon을 국기로 변환하는 기능을 수정  */
 
 //** 언어변환 기능 추가 getx를 사용 */
 
@@ -7,6 +8,8 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:google_fonts/google_fonts.dart';
 import 'package:new_gradient_app_bar/new_gradient_app_bar.dart';
+import 'package:provider/provider.dart';
+
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:todaylang/controllers/lang_controller.dart';
 import 'package:todaylang/widget/mydrawer.dart';
@@ -108,7 +111,7 @@ class TabBarWidget extends StatelessWidget {
   }
 
   final user = FirebaseAuth.instance.currentUser ?? "";
-  // final user = FirebaseAuth.instance.currentUser!;
+  final user1 = FirebaseAuth.instance.currentUser!;
 
   LangController c = Get.put(LangController());
 
@@ -140,6 +143,7 @@ class TabBarWidget extends StatelessWidget {
                         child: CircleAvatar(
                           radius: 16,
                           backgroundImage: AssetImage(c.setFlag.value),
+                          backgroundColor: Colors.white,
                           // backgroundImage: AssetImage("assets/images/usa.png"),
                         ),
                       )),
@@ -152,7 +156,7 @@ class TabBarWidget extends StatelessWidget {
                   ),
                   CircleAvatar(
                     radius: 17,
-                    // backgroundImage: NetworkImage(user.photoURL!),
+                    backgroundImage: NetworkImage(user1.photoURL!),
                   )
                 ],
                 title: Text(

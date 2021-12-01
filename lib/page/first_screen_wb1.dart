@@ -99,7 +99,7 @@ class _FirstScreenWb1State extends State<FirstScreenWb1> {
                         children: List.generate(
                             records.length,
                             (index) => InkWell(
-                                  onTap: () => Get.to(const DetailPage(),
+                                  onTap: () => Get.to(() => const DetailPage(),
                                       arguments: [
                                         records[index]['fields']['title'],
                                         records[index]['fields']['url'],

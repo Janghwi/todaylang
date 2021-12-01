@@ -96,7 +96,7 @@ class _FirstScreenAiState extends State<FirstScreenAi> {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: InkWell(
-                      onTap: () => Get.to(const DetailPage(),
+                      onTap: () => Get.to(() => DetailPage(),
                           arguments: [
                             records[index]['fields']['title'],
                             records[index]['fields']['content'],

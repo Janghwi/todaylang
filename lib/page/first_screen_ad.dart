@@ -96,7 +96,7 @@ class _FirstScreenAdState extends State<FirstScreenAd> {
                   return Padding(
                     padding: const EdgeInsets.all(8.0),
                     child: InkWell(
-                      onTap: () => Get.to(const DetailPage(),
+                      onTap: () => Get.to(() => DetailPage(),
                           arguments: [
                             records[index]['fields']['menu'],
                             records[index]['fields']['title'],

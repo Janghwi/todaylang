@@ -369,9 +369,10 @@ class _FirstScreenMd8State extends State<FirstScreenMd8> {
                                                                     color: Colors
                                                                         .grey),
                                                                 onPressed: () {
-                                                                  Get.to(() {
-                                                                    return DetailPage();
-                                                                  },
+                                                                  Get.to(
+                                                                      () => () {
+                                                                            return DetailPage();
+                                                                          },
                                                                       arguments: [
                                                                         records[index]['fields']
                                                                             [

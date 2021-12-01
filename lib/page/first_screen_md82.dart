@@ -1,4 +1,5 @@
 //** 다국어 적용 안 함 */
+//** 다국어 적용 안 함 */
 //**마크다운을 테이블 형식으로 들어가 있음
 //togglebutton적용함
 //캡쳐&쉐어를 적용함 */
@@ -326,8 +327,7 @@ class _FirstScreenMd82State extends State<FirstScreenMd82> {
                               // print(records[index]['fields']['likeCnt']);
                               // ctr.currentIdSave.value = ctr.records[index]['id'];
 
-                              int likeCount =
-                                  records[index]['fields']['likeCnt'];
+                              // likeCount = records[index]['fields']['likeCnt'];
 
                               return Column(
                                 children: [
@@ -345,7 +345,7 @@ class _FirstScreenMd82State extends State<FirstScreenMd82> {
                                                     ['Attachments'][0]
                                                 ['thumbnails']['large']['url'],
                                             records[index]['fields']
-                                                ['content_copy'],
+                                                ['content1'],
 
                                             //this.records[index]['fields']['cat1'],
                                           ],
@@ -573,6 +573,12 @@ class _FirstScreenMd82State extends State<FirstScreenMd82> {
                                                                         records[index]['fields']
                                                                             [
                                                                             'likeCnt'],
+                                                                        records[index]['fields']['Attachments'][0]['thumbnails']['large']
+                                                                            [
+                                                                            'url'],
+                                                                        records[index]['fields']
+                                                                            [
+                                                                            'content1'],
                                                                       ],
                                                                       transition:
                                                                           Transition
@@ -625,6 +631,20 @@ class _FirstScreenMd82State extends State<FirstScreenMd82> {
   }
 }
 
+//**  Detail Page
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+// */
 class DetailPage extends StatefulWidget {
   const DetailPage({Key? key}) : super(key: key);
 
@@ -637,13 +657,13 @@ class DetailPage extends StatefulWidget {
 class _DetailPageState extends State<DetailPage> {
   var title = Get.arguments[0];
   var content = Get.arguments[1];
-  var content1 = Get.arguments[5];
   var id = Get.arguments[2];
   int likecount = Get.arguments[3];
   var imageUrl = Get.arguments[4];
+  var content1 = Get.arguments[5];
   int index = 0;
   String? currentIdSave;
-  // int? likeCount = likecount ;
+  //  int? likeCount = likecount ;
 
   Future<bool> onLikeButtonTapped(
     bool isLiked,
@@ -698,9 +718,10 @@ class _DetailPageState extends State<DetailPage> {
     return Screenshot(
       controller: controller,
       child: Scaffold(
+        //**앱바 타이틀 */
         appBar: AppBar(
           title: Text(
-            Get.arguments[0],
+            title,
             style: const TextStyle(color: Colors.black, fontSize: 14),
           ),
           backgroundColor: Colors.white,
@@ -723,6 +744,12 @@ class _DetailPageState extends State<DetailPage> {
                 ),
               ),
             ),
+            //** 좋아요 버튼 클릭 루틴
+            //
+            //
+            //
+            //
+            // */
             Padding(
               padding: const EdgeInsets.all(8.0),
               child: ClipRRect(
@@ -750,6 +777,7 @@ class _DetailPageState extends State<DetailPage> {
                   runSpacing: 10,
                   alignment: WrapAlignment.start,
                   children: [
+                    //**토글버튼 */
                     ToggleButtons(
                       color: Colors.black.withOpacity(0.9),
                       selectedColor: mColor,
@@ -957,6 +985,7 @@ Widget markdownWidget(String content) {
   // print('markdown widget passed ==>');
   // print(content);
   // final String content;
+  //**콘텐트 */
 
   return Markdown(
       data: content,
@@ -1027,8 +1056,5 @@ Future<String> saveImage(Uint8List bytes) async {
 
   return result['filePath'];
 }
-
-
-
 
 // list of colors that we use in our app

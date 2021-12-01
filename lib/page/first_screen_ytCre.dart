@@ -217,7 +217,7 @@ class _FirstScreenYtCreState extends State<FirstScreenYtCre> {
                             itemCount: records.length,
                             itemBuilder: (BuildContext context, int index) {
                               return InkWell(
-                                onTap: () => Get.to(const DetailPage(),
+                                onTap: () => Get.to(() => const DetailPage(),
                                     arguments: [
                                       records[index]['fields']['title'],
                                       records[index]['fields']['url'],

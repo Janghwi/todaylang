@@ -608,7 +608,7 @@ class _DetailPageState extends State<DetailPage> {
           icon: Icon(Icons.add),
           label: Text('View Comment'),
           onPressed: () => Get.to(
-            CommentsList(),
+            () => CommentsList(),
           ),
         );
       default:

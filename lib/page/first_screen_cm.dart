@@ -173,7 +173,7 @@ class _FirstScreenCmState extends State<FirstScreenCm> {
                         itemCount: records.length,
                         itemBuilder: (BuildContext context, int index) {
                           return InkWell(
-                            onTap: () => Get.to(const YoutubePage(),
+                            onTap: () => Get.to(() => YoutubePage(),
                                 arguments: [
                                   records[index]['fields']['content']
                                       .toString(),

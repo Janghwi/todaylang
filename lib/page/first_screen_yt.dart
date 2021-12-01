@@ -197,7 +197,7 @@ class _FirstScreenYtState extends State<FirstScreenYt> {
                         itemCount: records.length,
                         itemBuilder: (BuildContext context, int index) {
                           return InkWell(
-                            onTap: () => Get.to(const YoutubePage(),
+                            onTap: () => Get.to(() => const YoutubePage(),
                                 arguments: [
                                   records[index]['fields']['content']
                                       .toString(),

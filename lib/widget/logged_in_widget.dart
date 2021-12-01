@@ -13,7 +13,7 @@ class LoggedInWidget extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Logged In'),
+        title: Text('OK! Logged In'),
         centerTitle: true,
         actions: [
           TextButton(
@@ -40,20 +40,20 @@ class LoggedInWidget extends StatelessWidget {
           SizedBox(height: 8),
           Text(
             'Name: ' + user.displayName!,
-            style: TextStyle(color: Colors.white, fontSize: 16),
+            style: TextStyle(color: Colors.yellow, fontSize: 16),
           ),
           SizedBox(height: 8),
           Text(
             'Email: ' + user.email!,
-            style: TextStyle(color: Colors.white, fontSize: 16),
+            style: TextStyle(color: Colors.yellow, fontSize: 16),
           ),
           SizedBox(height: 18),
           TextButton(
             style: ElevatedButton.styleFrom(
               padding: EdgeInsets.symmetric(horizontal: 17, vertical: 8),
             ),
-            child: Text("메뉴로 이동", style: TextStyle(fontSize: 26)),
-            onPressed: () => Get.to(HomePage()),
+            child: Text("Go to Menu", style: TextStyle(fontSize: 26)),
+            onPressed: () => Get.to(() => HomePage()),
           )
         ]),
       ),

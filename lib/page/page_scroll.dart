@@ -124,7 +124,7 @@ class _PageScrollState extends State<PageScroll> {
                     Colors.black.withOpacity(0.7), BlendMode.dstATop),
                 child: InkWell(
                   onTap: () {},
-                  // onTap: () => Get.to(TwoMenuPhraseVs(),
+                  // onTap: () => Get.to(() => TwoMenuPhraseVs(),
                   //     arguments: [
                   //       this.records[index]['fields']['go_tbl'],
                   //       this.records[index]['fields']['go_view'],

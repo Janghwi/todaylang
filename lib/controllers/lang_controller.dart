@@ -4,8 +4,8 @@ class LangController extends GetxController {
   // static LangController get to => Get.find();
 
   RxString setLang = 'kor'.obs;
-  RxString setFlag = 'assets/images/usa.png'.obs;
-  // var devLang = Get.deviceLocale;
+  RxString setFlag = 'assets/images/ios7-world.png'.obs;
+  // default flag를 넣음;
 
   void engLoad(RxString setLang1) {
     setLang = setLang1;
@@ -17,6 +17,7 @@ class LangController extends GetxController {
     // update();
   }
 
+  //** 아래는 현재 사용하지 않는 기능임 */
   void langSet(String setLang) {
     var devLang = Get.deviceLocale;
 

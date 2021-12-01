@@ -139,7 +139,7 @@ class _FirstScreen1State extends State<FirstScreen1> {
                                   BlendMode.dstATop),
                               child: InkWell(
                                 // onTap: () {},
-                                onTap: () => Get.to(DetailPage(),
+                                onTap: () => Get.to(() => DetailPage(),
                                     arguments: [
                                       this.records[index]['fields']['title'],
                                       this.records[index]['fields']['content'],

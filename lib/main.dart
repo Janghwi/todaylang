@@ -178,7 +178,8 @@ class _MyAppState extends State<MyApp> {
           fontFamily: GoogleFonts.notoSerif().fontFamily,
         ),
         // Use the above dark or light theme based on active themeMode.
-        home: HomePage(),
+        // home: HomePage(),
+        home: LoginPage(),
       ),
       // theme: ThemeData(
       //   primarySwatch: Colors.blue,
@@ -191,8 +192,6 @@ class _MyAppState extends State<MyApp> {
       //     ),
       //   ),
       // ),
-
-      // home: LoginPage(),
     );
   }
 }

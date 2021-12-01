@@ -279,7 +279,7 @@ class FirstScreenMd7 extends StatelessWidget {
                                         icon: Icon(Icons.speaker_notes,
                                             color: Colors.amber),
                                         onPressed: () {
-                                          Get.to(CommentWrite());
+                                          Get.to(() => CommentWrite());
                                         },
                                       ),
                                       // Divider(

@@ -188,7 +188,7 @@ class _FirstScreenMd1State extends State<FirstScreenMd1> {
                       child: Column(
                         children: [
                           GestureDetector(
-                            onTap: () => Get.to(const DetailPage(),
+                            onTap: () => Get.to(() => const DetailPage(),
                                 arguments: [
                                   records[index]['fields']['title'],
                                   records[index]['fields']['content'],
@@ -593,7 +593,7 @@ class _DetailPageState extends State<DetailPage> {
           shape: shape,
           icon: Icon(Icons.add),
           label: Text('View Comment'),
-          onPressed: () => Get.to(CommentsList()),
+          onPressed: () => Get.to(() => CommentsList()),
         );
       default:
         return null;
