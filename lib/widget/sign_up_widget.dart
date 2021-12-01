@@ -13,7 +13,7 @@ class SignUpWidget extends StatelessWidget {
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             Spacer(),
-            SizedBox(
+            Container(
                 height: 120,
                 width: 120,
                 child: Image.asset('assets/images/logo.png')),
@@ -32,7 +32,7 @@ class SignUpWidget extends StatelessWidget {
             Align(
               alignment: Alignment.centerLeft,
               child: Text(
-                'Login to your account',
+                'Login to your account to continue',
                 style: TextStyle(fontSize: 18),
               ),
             ),
